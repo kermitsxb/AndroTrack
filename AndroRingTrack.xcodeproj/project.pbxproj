@@ -20,6 +20,7 @@
 		31FDB54AAFA5F99FF84193C6 /* Comparable+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A93AF2D26A5B22600702DC7 /* Comparable+Extension.swift */; };
 		3F8CA63F2C5367E2A652A0FD /* WearStatusWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FA2DB43B27FD33FC0CE76E5 /* WearStatusWidgetView.swift */; };
 		41749DC7EF8D7570D58C09E6 /* DateFormatter+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE99A34274289E5002837B7 /* DateFormatter+extension.swift */; };
+		45AF91A2ADC58B49C62C9C65 /* WidgetBackgroundCompat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B1D98A36E26ED166E7CE5 /* WidgetBackgroundCompat.swift */; };
 		4DFE7CC7F1F6EC0E2D6DD297 /* When.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AEA3B1A26F7CE5200C72CEF /* When.swift */; };
 		4F11F072EA30037955C99F14 /* TimeInterval+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A93AF2A26A5A10B00702DC7 /* TimeInterval+Extension.swift */; };
 		55DE8E9C1588FE1F28E46F37 /* CSVFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A040AA1277CF52000D69C0A /* CSVFile.swift */; };
@@ -143,7 +144,6 @@
 		C5E8F116A7F4C67BCD6017A1 /* WearStatusAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E11BC2DEF73D986C7647C23 /* WearStatusAccessoryView.swift */; };
 		C72B49204BF1CE16E6EB81D6 /* AppLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A59423526A8415900986619 /* AppLogger.swift */; };
 		D835DF3B0976DA01942D9453 /* Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9A6F5F269E178500A78C5C /* Record.swift */; };
-		E2043F4739A5C942C7DC2F0E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36273FE41419BD0B8680B5BC /* Foundation.framework */; };
 		E231488D1353B47666EE0024 /* WearStatusWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75D7F5404EE7262DFAF7463C /* WearStatusWidget.swift */; };
 		F0CB98C9AA4AC22FF6226A67 /* RingShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9A6F79269E439400A78C5C /* RingShape.swift */; };
 /* End PBXBuildFile section */
@@ -209,8 +209,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1A2B1D98A36E26ED166E7CE5 /* WidgetBackgroundCompat.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WidgetBackgroundCompat.swift; sourceTree = "<group>"; };
 		20CCD4F57E79B7E612499007 /* AndroRingTrackWidget.entitlements */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.entitlements; path = AndroRingTrackWidget.entitlements; sourceTree = "<group>"; };
-		36273FE41419BD0B8680B5BC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		5E11BC2DEF73D986C7647C23 /* WearStatusAccessoryView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WearStatusAccessoryView.swift; sourceTree = "<group>"; };
 		6A0322DD26A5E7D0008E97C8 /* NotificationsSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsSettings.swift; sourceTree = "<group>"; };
 		6A0322E826A60584008E97C8 /* Bundle+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extension.swift"; sourceTree = "<group>"; };
@@ -313,7 +313,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E2043F4739A5C942C7DC2F0E /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -372,7 +371,6 @@
 			isa = PBXGroup;
 			children = (
 				6AE14C67277D28B300501866 /* HealthKit.framework */,
-				8761BA49CE17DB0F8E69EFD1 /* iOS */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -603,20 +601,13 @@
 			path = Modifiers;
 			sourceTree = "<group>";
 		};
-		8761BA49CE17DB0F8E69EFD1 /* iOS */ = {
-			isa = PBXGroup;
-			children = (
-				36273FE41419BD0B8680B5BC /* Foundation.framework */,
-			);
-			name = iOS;
-			sourceTree = "<group>";
-		};
 		DE1902D982E1C6310D939C48 /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				CEE05680D517832ECBB4CFF3 /* DurationFormatting.swift */,
 				6FA2DB43B27FD33FC0CE76E5 /* WearStatusWidgetView.swift */,
 				5E11BC2DEF73D986C7647C23 /* WearStatusAccessoryView.swift */,
+				1A2B1D98A36E26ED166E7CE5 /* WidgetBackgroundCompat.swift */,
 			);
 			name = Views;
 			path = Views;
@@ -940,6 +931,7 @@
 				2BA57BC04700719AEE3A3D63 /* WearStatusAccessoryWidget.swift in Sources */,
 				C5E8F116A7F4C67BCD6017A1 /* WearStatusAccessoryView.swift in Sources */,
 				5B0017EB58B8D3E42C1374C4 /* ToggleWearIntent.swift in Sources */,
+				45AF91A2ADC58B49C62C9C65 /* WidgetBackgroundCompat.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

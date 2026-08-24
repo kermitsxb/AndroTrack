@@ -29,6 +29,10 @@ class SettingsStore: ObservableObject {
     @Published var sessionLength: Int {
         didSet {
             UserDefaults.standard.set(sessionLength, forKey: "sessionLength")
+            #if os(iOS)
+            // Mirrored into the App Group suite so the widget extension can read it.
+            UserDefaults(suiteName: "group.com.astralym.AndroRingTrack")?.set(sessionLength, forKey: "sessionLength")
+            #endif
             watchConnectivity.sync()
             Notifications.scheduleNotifyEnd()
         }

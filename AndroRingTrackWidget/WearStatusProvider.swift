@@ -8,7 +8,7 @@ struct WearStatusProvider: TimelineProvider {
             state: .off,
             sessionStart: nil,
             todayDurationInHours: 1.5,
-            goalInHours: SettingsStore.shared.sessionLength,
+            goalInHours: currentGoalInHours(),
             isAuthorized: true
         )
     }
@@ -44,16 +44,16 @@ struct WearStatusProvider: TimelineProvider {
             let today = Day(records: allRecords.filter {
                 $0.start != nil && Calendar.current.isDateInToday($0.start!)
             })
-            let lastRecord = allRecords.last
-            let state: RingState = (lastRecord != nil && lastRecord!.end == nil) ? .worn : .off
-            let sessionStart = state == .worn ? lastRecord?.start : nil
+            let openRecord = allRecords.first(where: { $0.end == nil })
+            let state: RingState = openRecord != nil ? .worn : .off
+            let sessionStart = openRecord?.start
 
             let entry = WearStatusEntry(
                 date: Date(),
                 state: state,
                 sessionStart: sessionStart,
                 todayDurationInHours: today.duration,
-                goalInHours: SettingsStore.shared.sessionLength,
+                goalInHours: self.currentGoalInHours(),
                 isAuthorized: true
             )
 
@@ -63,13 +63,21 @@ struct WearStatusProvider: TimelineProvider {
         }
     }
 
+    private func currentGoalInHours() -> Int {
+        let suite = UserDefaults(suiteName: "group.com.astralym.AndroRingTrack")
+        if let stored = suite?.object(forKey: "sessionLength") as? Int {
+            return stored
+        }
+        return 15
+    }
+
     private func unauthorizedEntry() -> WearStatusEntry {
         WearStatusEntry(
             date: Date(),
             state: .off,
             sessionStart: nil,
             todayDurationInHours: 0,
-            goalInHours: SettingsStore.shared.sessionLength,
+            goalInHours: currentGoalInHours(),
             isAuthorized: false
         )
     }

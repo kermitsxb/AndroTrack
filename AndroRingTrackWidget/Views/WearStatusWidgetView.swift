@@ -6,6 +6,12 @@ struct WearStatusWidgetView: View {
     let entry: WearStatusEntry
 
     var body: some View {
+        content
+            .widgetBackgroundCompat()
+    }
+
+    @ViewBuilder
+    private var content: some View {
         if !entry.isAuthorized {
             unauthorizedView
         } else if family == .systemMedium {
@@ -48,7 +54,6 @@ struct WearStatusWidgetView: View {
             }
             Spacer()
             ProgressView(value: min(entry.todayDurationInHours / Double(max(entry.goalInHours, 1)), 1.0))
-                .progressViewStyle(.circular)
         }
         .padding()
     }
