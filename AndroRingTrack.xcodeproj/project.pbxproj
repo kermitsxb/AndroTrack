@@ -15,6 +15,7 @@
 		224CEB9227AB4EDBA4E480B9 /* SettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ADBD5DD26A1D4FF009FDB3D /* SettingsStore.swift */; };
 		291B5931C01A9A05B35ADA90 /* Bundle+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A0322E826A60584008E97C8 /* Bundle+Extension.swift */; };
 		2941B8DBC80C80982FA30048 /* AndroRingTrackWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = C9FA7996931E6F5D3E349848 /* AndroRingTrackWidget.appex */; };
+		2BA57BC04700719AEE3A3D63 /* WearStatusAccessoryWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5EC3E5E71D1288F7CFF4BA /* WearStatusAccessoryWidget.swift */; };
 		313CBB04BD3651FB7C2868F5 /* Day.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A4FD2C4269F0A6D00F7081D /* Day.swift */; };
 		31FDB54AAFA5F99FF84193C6 /* Comparable+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A93AF2D26A5B22600702DC7 /* Comparable+Extension.swift */; };
 		3F8CA63F2C5367E2A652A0FD /* WearStatusWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FA2DB43B27FD33FC0CE76E5 /* WearStatusWidgetView.swift */; };
@@ -138,6 +139,7 @@
 		B739F7ADEA6071F6C850AE8B /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AEA3B1E26F7E2D500C72CEF /* String+Extension.swift */; };
 		C1EF279C0F2AD5BB0B063B08 /* RecordStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9A6F6B269E2FE700A78C5C /* RecordStore.swift */; };
 		C3080A04748E9F627EF08B18 /* Bool+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A4E5FCF2704949A00E09AC4 /* Bool+Extension.swift */; };
+		C5E8F116A7F4C67BCD6017A1 /* WearStatusAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E11BC2DEF73D986C7647C23 /* WearStatusAccessoryView.swift */; };
 		C72B49204BF1CE16E6EB81D6 /* AppLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A59423526A8415900986619 /* AppLogger.swift */; };
 		D835DF3B0976DA01942D9453 /* Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9A6F5F269E178500A78C5C /* Record.swift */; };
 		E2043F4739A5C942C7DC2F0E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36273FE41419BD0B8680B5BC /* Foundation.framework */; };
@@ -208,6 +210,7 @@
 /* Begin PBXFileReference section */
 		20CCD4F57E79B7E612499007 /* AndroRingTrackWidget.entitlements */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.entitlements; path = AndroRingTrackWidget.entitlements; sourceTree = "<group>"; };
 		36273FE41419BD0B8680B5BC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		5E11BC2DEF73D986C7647C23 /* WearStatusAccessoryView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WearStatusAccessoryView.swift; sourceTree = "<group>"; };
 		6A0322DD26A5E7D0008E97C8 /* NotificationsSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsSettings.swift; sourceTree = "<group>"; };
 		6A0322E826A60584008E97C8 /* Bundle+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extension.swift"; sourceTree = "<group>"; };
 		6A0322EC26A60FA0008E97C8 /* WatchConnectivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchConnectivity.swift; sourceTree = "<group>"; };
@@ -297,6 +300,7 @@
 		798B5ABE065217B03E13D95C /* WearStatusEntry.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WearStatusEntry.swift; sourceTree = "<group>"; };
 		8E8C09C1557EBB9B2ABBB7D1 /* AndroRingTrackWidgetBundle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AndroRingTrackWidgetBundle.swift; sourceTree = "<group>"; };
 		AEB8C80B396DCF06D49A6981 /* WearStatusProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WearStatusProvider.swift; sourceTree = "<group>"; };
+		AF5EC3E5E71D1288F7CFF4BA /* WearStatusAccessoryWidget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WearStatusAccessoryWidget.swift; sourceTree = "<group>"; };
 		C9FA7996931E6F5D3E349848 /* AndroRingTrackWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = AndroRingTrackWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEE05680D517832ECBB4CFF3 /* DurationFormatting.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DurationFormatting.swift; sourceTree = "<group>"; };
 		FAC1F209E74B63FA13E1FFE7 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -610,6 +614,7 @@
 			children = (
 				CEE05680D517832ECBB4CFF3 /* DurationFormatting.swift */,
 				6FA2DB43B27FD33FC0CE76E5 /* WearStatusWidgetView.swift */,
+				5E11BC2DEF73D986C7647C23 /* WearStatusAccessoryView.swift */,
 			);
 			name = Views;
 			path = Views;
@@ -625,6 +630,7 @@
 				AEB8C80B396DCF06D49A6981 /* WearStatusProvider.swift */,
 				DE1902D982E1C6310D939C48 /* Views */,
 				75D7F5404EE7262DFAF7463C /* WearStatusWidget.swift */,
+				AF5EC3E5E71D1288F7CFF4BA /* WearStatusAccessoryWidget.swift */,
 			);
 			name = AndroRingTrackWidget;
 			path = AndroRingTrackWidget;
@@ -928,6 +934,8 @@
 				025175D7A4A7E415DB0C21CF /* DurationFormatting.swift in Sources */,
 				3F8CA63F2C5367E2A652A0FD /* WearStatusWidgetView.swift in Sources */,
 				E231488D1353B47666EE0024 /* WearStatusWidget.swift in Sources */,
+				2BA57BC04700719AEE3A3D63 /* WearStatusAccessoryWidget.swift in Sources */,
+				C5E8F116A7F4C67BCD6017A1 /* WearStatusAccessoryView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
