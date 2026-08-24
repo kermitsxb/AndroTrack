@@ -138,6 +138,8 @@
 		9ECC0EE1E1510C81ED206E5D /* NotificationsSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A0322DD26A5E7D0008E97C8 /* NotificationsSettings.swift */; };
 		A6114A223E8E6AC11A6303ED /* Number+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A0D4903277215B50043125F /* Number+Extension.swift */; };
 		AC34AA1DE25AC580E87035B9 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9A6F75269E402300A78C5C /* Date+Extension.swift */; };
+		ACAE20A8AC62F962C1D1DCC3 /* AndroRingTrackWatchWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0CD730FC2AB33895607DD5 /* AndroRingTrackWatchWidgetBundle.swift */; };
+		AF5AED2D1FA5B882DC9A0366 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B20064F44855864BC1F4E939 /* Foundation.framework */; };
 		B739F7ADEA6071F6C850AE8B /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AEA3B1E26F7E2D500C72CEF /* String+Extension.swift */; };
 		C1EF279C0F2AD5BB0B063B08 /* RecordStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9A6F6B269E2FE700A78C5C /* RecordStore.swift */; };
 		C3080A04748E9F627EF08B18 /* Bool+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A4E5FCF2704949A00E09AC4 /* Bool+Extension.swift */; };
@@ -146,9 +148,17 @@
 		D835DF3B0976DA01942D9453 /* Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9A6F5F269E178500A78C5C /* Record.swift */; };
 		E231488D1353B47666EE0024 /* WearStatusWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75D7F5404EE7262DFAF7463C /* WearStatusWidget.swift */; };
 		F0CB98C9AA4AC22FF6226A67 /* RingShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9A6F79269E439400A78C5C /* RingShape.swift */; };
+		F1AA7F04C6A83B2EFF3FBA4B /* AndroRingTrackWatchWidget.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 75529B45FFA8926F54DD7B48 /* AndroRingTrackWatchWidget.appex */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		0FF84362343F9FE916C1695E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6A9A6F39269E15B800A78C5C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8502E96FCF9C84CCBB4E16C4;
+			remoteInfo = AndroRingTrackWatchWidget;
+		};
 		6A922C5126A4574A005782DB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 6A9A6F39269E15B800A78C5C /* Project object */;
@@ -191,6 +201,7 @@
 			dstSubfolderSpec = 13;
 			files = (
 				6A922C5026A4574A005782DB /* WatchAndroRingTrack Extension.appex in Embed App Extensions */,
+				F1AA7F04C6A83B2EFF3FBA4B /* AndroRingTrackWatchWidget.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -211,6 +222,7 @@
 /* Begin PBXFileReference section */
 		1A2B1D98A36E26ED166E7CE5 /* WidgetBackgroundCompat.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WidgetBackgroundCompat.swift; sourceTree = "<group>"; };
 		20CCD4F57E79B7E612499007 /* AndroRingTrackWidget.entitlements */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.entitlements; path = AndroRingTrackWidget.entitlements; sourceTree = "<group>"; };
+		307ED21EDED627FBF414CAAE /* AndroRingTrackWatchWidget.entitlements */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.entitlements; path = AndroRingTrackWatchWidget.entitlements; sourceTree = "<group>"; };
 		5E11BC2DEF73D986C7647C23 /* WearStatusAccessoryView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WearStatusAccessoryView.swift; sourceTree = "<group>"; };
 		6A0322DD26A5E7D0008E97C8 /* NotificationsSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsSettings.swift; sourceTree = "<group>"; };
 		6A0322E826A60584008E97C8 /* Bundle+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extension.swift"; sourceTree = "<group>"; };
@@ -298,13 +310,17 @@
 		6AEA3B1E26F7E2D500C72CEF /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		6EA61F7D03DDCF7F917E0862 /* ToggleWearIntent.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ToggleWearIntent.swift; sourceTree = "<group>"; };
 		6FA2DB43B27FD33FC0CE76E5 /* WearStatusWidgetView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WearStatusWidgetView.swift; sourceTree = "<group>"; };
+		75529B45FFA8926F54DD7B48 /* AndroRingTrackWatchWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = AndroRingTrackWatchWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		75D7F5404EE7262DFAF7463C /* WearStatusWidget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WearStatusWidget.swift; sourceTree = "<group>"; };
 		798B5ABE065217B03E13D95C /* WearStatusEntry.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WearStatusEntry.swift; sourceTree = "<group>"; };
+		8A0CD730FC2AB33895607DD5 /* AndroRingTrackWatchWidgetBundle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AndroRingTrackWatchWidgetBundle.swift; sourceTree = "<group>"; };
 		8E8C09C1557EBB9B2ABBB7D1 /* AndroRingTrackWidgetBundle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AndroRingTrackWidgetBundle.swift; sourceTree = "<group>"; };
 		AEB8C80B396DCF06D49A6981 /* WearStatusProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WearStatusProvider.swift; sourceTree = "<group>"; };
 		AF5EC3E5E71D1288F7CFF4BA /* WearStatusAccessoryWidget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WearStatusAccessoryWidget.swift; sourceTree = "<group>"; };
+		B20064F44855864BC1F4E939 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS11.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		C9FA7996931E6F5D3E349848 /* AndroRingTrackWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = AndroRingTrackWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEE05680D517832ECBB4CFF3 /* DurationFormatting.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DurationFormatting.swift; sourceTree = "<group>"; };
+		F71F6FBDCBA558ED9728A355 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FAC1F209E74B63FA13E1FFE7 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -328,6 +344,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		813D76DC15559962AF6297EC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AF5AED2D1FA5B882DC9A0366 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -371,6 +395,7 @@
 			isa = PBXGroup;
 			children = (
 				6AE14C67277D28B300501866 /* HealthKit.framework */,
+				E80041AD34B58C167FFDED4D /* watchOS */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -441,6 +466,7 @@
 				6A9A6F46269E15BA00A78C5C /* Products */,
 				6A4FD2CE269F807600F7081D /* Frameworks */,
 				EEC217BA7FDA126D4195C75F /* AndroRingTrackWidget */,
+				812143D531461F626E95CA51 /* AndroRingTrackWatchWidget */,
 			);
 			sourceTree = "<group>";
 		};
@@ -465,6 +491,7 @@
 				6A922C4626A45747005782DB /* WatchAndroRingTrack.app */,
 				6A922C4F26A4574A005782DB /* WatchAndroRingTrack Extension.appex */,
 				C9FA7996931E6F5D3E349848 /* AndroRingTrackWidget.appex */,
+				75529B45FFA8926F54DD7B48 /* AndroRingTrackWatchWidget.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -601,6 +628,17 @@
 			path = Modifiers;
 			sourceTree = "<group>";
 		};
+		812143D531461F626E95CA51 /* AndroRingTrackWatchWidget */ = {
+			isa = PBXGroup;
+			children = (
+				8A0CD730FC2AB33895607DD5 /* AndroRingTrackWatchWidgetBundle.swift */,
+				F71F6FBDCBA558ED9728A355 /* Info.plist */,
+				307ED21EDED627FBF414CAAE /* AndroRingTrackWatchWidget.entitlements */,
+			);
+			name = AndroRingTrackWatchWidget;
+			path = AndroRingTrackWatchWidget;
+			sourceTree = "<group>";
+		};
 		DE1902D982E1C6310D939C48 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -611,6 +649,14 @@
 			);
 			name = Views;
 			path = Views;
+			sourceTree = "<group>";
+		};
+		E80041AD34B58C167FFDED4D /* watchOS */ = {
+			isa = PBXGroup;
+			children = (
+				B20064F44855864BC1F4E939 /* Foundation.framework */,
+			);
+			name = watchOS;
 			sourceTree = "<group>";
 		};
 		EEC217BA7FDA126D4195C75F /* AndroRingTrackWidget */ = {
@@ -644,6 +690,7 @@
 			);
 			dependencies = (
 				6A922C5226A4574A005782DB /* PBXTargetDependency */,
+				6B13F5F06B83D0CCB230BB15 /* PBXTargetDependency */,
 			);
 			name = WatchAndroRingTrack;
 			productName = WatchAndroRingTrack;
@@ -687,6 +734,23 @@
 			productName = "AndroRingTrack (iOS)";
 			productReference = 6A9A6F45269E15BA00A78C5C /* AndroRingTrack.app */;
 			productType = "com.apple.product-type.application";
+		};
+		8502E96FCF9C84CCBB4E16C4 /* AndroRingTrackWatchWidget */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CAEA39115DCE411DE7EB429D /* Build configuration list for PBXNativeTarget "AndroRingTrackWatchWidget" */;
+			buildPhases = (
+				91526D5829100045E9C94059 /* Sources */,
+				813D76DC15559962AF6297EC /* Frameworks */,
+				E330D05A40B692AF976D9DB0 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AndroRingTrackWatchWidget;
+			productName = AndroRingTrackWatchWidget;
+			productReference = 75529B45FFA8926F54DD7B48 /* AndroRingTrackWatchWidget.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 		B80886A7F0A487552EE045A6 /* AndroRingTrackWidget */ = {
 			isa = PBXNativeTarget;
@@ -743,6 +807,7 @@
 				6A922C4526A45747005782DB /* WatchAndroRingTrack */,
 				6A922C4E26A4574A005782DB /* WatchAndroRingTrack Extension */,
 				B80886A7F0A487552EE045A6 /* AndroRingTrackWidget */,
+				8502E96FCF9C84CCBB4E16C4 /* AndroRingTrackWatchWidget */,
 			);
 		};
 /* End PBXProject section */
@@ -781,6 +846,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				784EC8D421A15B8517812618 /* Localizable.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E330D05A40B692AF976D9DB0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -890,6 +962,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		91526D5829100045E9C94059 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ACAE20A8AC62F962C1D1DCC3 /* AndroRingTrackWatchWidgetBundle.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B4C517F025767E71AA4837C9 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -954,6 +1034,12 @@
 			target = 6A922C4526A45747005782DB /* WatchAndroRingTrack */;
 			targetProxy = 6A922C6526A4574B005782DB /* PBXContainerItemProxy */;
 		};
+		6B13F5F06B83D0CCB230BB15 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = AndroRingTrackWatchWidget;
+			target = 8502E96FCF9C84CCBB4E16C4 /* AndroRingTrackWatchWidget */;
+			targetProxy = 0FF84362343F9FE916C1695E /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -1012,7 +1098,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 8.0;
+				WATCHOS_DEPLOYMENT_TARGET = 9.0;
 			};
 			name = Debug;
 		};
@@ -1039,7 +1125,7 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				VALIDATE_PRODUCT = YES;
-				WATCHOS_DEPLOYMENT_TARGET = 8.0;
+				WATCHOS_DEPLOYMENT_TARGET = 9.0;
 			};
 			name = Release;
 		};
@@ -1060,7 +1146,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 8.0;
+				WATCHOS_DEPLOYMENT_TARGET = 9.0;
 			};
 			name = Debug;
 		};
@@ -1082,7 +1168,7 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				VALIDATE_PRODUCT = YES;
-				WATCHOS_DEPLOYMENT_TARGET = 8.0;
+				WATCHOS_DEPLOYMENT_TARGET = 9.0;
 			};
 			name = Release;
 		};
@@ -1252,6 +1338,45 @@
 			};
 			name = Release;
 		};
+		D1575BDAFA488240231E3604 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = AndroRingTrackWatchWidget/AndroRingTrackWatchWidget.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8CKMCXN74P;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = AndroRingTrackWatchWidget/Info.plist;
+				MARKETING_VERSION = 1.0.13;
+				PRODUCT_BUNDLE_IDENTIFIER = com.astralym.AndroRingTrack.watchkitapp.widget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 9.0;
+			};
+			name = Release;
+		};
+		D9F9EAD08A44D273865C4EC0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = AndroRingTrackWatchWidget/AndroRingTrackWatchWidget.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8CKMCXN74P;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = AndroRingTrackWatchWidget/Info.plist;
+				MARKETING_VERSION = 1.0.13;
+				PRODUCT_BUNDLE_IDENTIFIER = com.astralym.AndroRingTrack.watchkitapp.widget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 9.0;
+			};
+			name = Debug;
+		};
 		EB4FA1D493BA41395E18B706 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1316,6 +1441,15 @@
 			buildConfigurations = (
 				49A38E54C12C230A141D80C1 /* Release */,
 				EB4FA1D493BA41395E18B706 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CAEA39115DCE411DE7EB429D /* Build configuration list for PBXNativeTarget "AndroRingTrackWatchWidget" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D1575BDAFA488240231E3604 /* Release */,
+				D9F9EAD08A44D273865C4EC0 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
