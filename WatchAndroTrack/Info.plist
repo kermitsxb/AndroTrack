@@ -26,7 +26,7 @@
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
 	<key>WKCompanionAppBundleIdentifier</key>
-	<string>eu.coldiary.AndroTrack</string>
+	<string>com.astralym.AndroTrack</string>
 	<key>WKWatchKitApp</key>
 	<true/>
 </dict>
