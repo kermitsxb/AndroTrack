@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>WatchAndroRingTrack Extension</string>
+	<string>AndroRingTrackWatchWidget</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -22,19 +22,12 @@
 	<string>1</string>
 	<key>NSExtension</key>
 	<dict>
-		<key>NSExtensionAttributes</key>
-		<dict>
-			<key>WKAppBundleIdentifier</key>
-			<string>com.astralym.AndroRingTrack.watchkitapp</string>
-		</dict>
 		<key>NSExtensionPointIdentifier</key>
-		<string>com.apple.watchkit</string>
+		<string>com.apple.widgetkit-extension</string>
 	</dict>
 	<key>NSHealthShareUsageDescription</key>
 	<string>AndroRingTrack a besoin de votre autorisation pour afficher les statistiques du port de l'anneau.</string>
 	<key>NSHealthUpdateUsageDescription</key>
 	<string>AndroRingTrack a besoin de votre autorisation pour mettre à jour les statistiques du port de l'anneau.</string>
-	<key>WKRunsIndependentlyOfCompanionApp</key>
-	<true/>
 </dict>
 </plist>

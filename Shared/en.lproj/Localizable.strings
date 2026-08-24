@@ -71,3 +71,9 @@
 "FIRST_RECORD_DATE" = "First record date";
 "CURRENT_CONSECUTIVE_SERIE_START" = "Start of current consecutive serie";
 "DAYS" = "days";
+
+// WIDGET
+"WIDGET_DISPLAY_NAME" = "Wear Status";
+"WIDGET_DESCRIPTION" = "Shows current wear status and today's worn duration.";
+"WIDGET_UNAUTHORIZED" = "Open app to set up";
+"WIDGET_INLINE_IN_PROGRESS" = "In progress";

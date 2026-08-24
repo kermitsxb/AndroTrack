@@ -202,19 +202,21 @@ class HealthKitService {
         }
     }
     
-    public func fetchRecords(completion: @escaping ([Record]?, HealthKitServiceError?) -> ()) {
+    public func fetchRecords(since: Date? = nil, completion: @escaping ([Record]?, HealthKitServiceError?) -> ()) {
         guard HKHealthStore.isHealthDataAvailable() else {
             completion(nil, HealthKitServiceError.HealthDataUnavailable)
             return
         }
-        
+
         requestAccess { sucess, error in
             guard error == nil else {
                 completion(nil, HealthKitServiceError.AccessDenied)
                 return
             }
-            
-            let query = HKSampleQuery(sampleType: self.contraceptiveType, predicate: nil, limit: Int(HKObjectQueryNoLimit), sortDescriptors: nil) {
+
+            let predicate = since.map { HKQuery.predicateForSamples(withStart: $0, end: nil) }
+
+            let query = HKSampleQuery(sampleType: self.contraceptiveType, predicate: predicate, limit: Int(HKObjectQueryNoLimit), sortDescriptors: nil) {
                 query, results, error in
                 
                 guard error == nil else {
