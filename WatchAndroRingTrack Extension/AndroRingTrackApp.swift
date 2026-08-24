@@ -1,6 +1,6 @@
 //
-//  AndroTrackApp.swift
-//  WatchAndroTrack Extension
+//  AndroRingTrackApp.swift
+//  WatchAndroRingTrack Extension
 //
 //  Created by Benoit Sida on 2021-07-18.
 //
@@ -9,7 +9,7 @@ import SwiftUI
 import ClockKit
 
 @main
-struct AndroTrackApp: App {
+struct AndroRingTrackApp: App {
     @StateObject private var recordStore = RecordStore.shared
     @StateObject private var settingsStore = SettingsStore.shared
     

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
    LastUpgradeVersion = "1250"
-   version = "1.3">
+   version = "2.0">
    <BuildAction
       parallelizeBuildables = "YES"
       buildImplicitDependencies = "YES">
@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "6A922C4526A45747005782DB"
-               BuildableName = "WatchAndroTrack.app"
-               BlueprintName = "WatchAndroTrack"
-               ReferencedContainer = "container:AndroTrack.xcodeproj">
+               BuildableName = "WatchAndroRingTrack.app"
+               BlueprintName = "WatchAndroRingTrack"
+               ReferencedContainer = "container:AndroRingTrack.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -29,9 +29,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "6A9A6F44269E15BA00A78C5C"
-               BuildableName = "AndroTrack.app"
-               BlueprintName = "AndroTrack (iOS)"
-               ReferencedContainer = "container:AndroTrack.xcodeproj">
+               BuildableName = "AndroRingTrack.app"
+               BlueprintName = "AndroRingTrack (iOS)"
+               ReferencedContainer = "container:AndroRingTrack.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -54,15 +54,15 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES"
-      notificationPayloadFile = "WatchAndroTrack Extension/PushNotificationPayload.apns">
+      launchAutomaticallySubstyle = "32">
       <BuildableProductRunnable
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "6A922C4526A45747005782DB"
-            BuildableName = "WatchAndroTrack.app"
-            BlueprintName = "WatchAndroTrack"
-            ReferencedContainer = "container:AndroTrack.xcodeproj">
+            BuildableName = "WatchAndroRingTrack.app"
+            BlueprintName = "WatchAndroRingTrack"
+            ReferencedContainer = "container:AndroRingTrack.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -71,15 +71,16 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
-      debugDocumentVersioning = "YES">
+      debugDocumentVersioning = "YES"
+      launchAutomaticallySubstyle = "32">
       <BuildableProductRunnable
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "6A922C4526A45747005782DB"
-            BuildableName = "WatchAndroTrack.app"
-            BlueprintName = "WatchAndroTrack"
-            ReferencedContainer = "container:AndroTrack.xcodeproj">
+            BuildableName = "WatchAndroRingTrack.app"
+            BlueprintName = "WatchAndroRingTrack"
+            ReferencedContainer = "container:AndroRingTrack.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

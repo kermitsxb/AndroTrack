@@ -1,6 +1,6 @@
 //
 //  HealthKit.swift
-//  AndroTrack
+//  AndroRingTrack
 //
 //  Created by Benoit Sida on 2021-07-15.
 //

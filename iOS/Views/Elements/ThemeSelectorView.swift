@@ -1,6 +1,6 @@
 //
 //  ThemeSelectorView.swift
-//  AndroTrack (iOS)
+//  AndroRingTrack (iOS)
 //
 //  Created by Benoit Sida on 2021-07-16.
 //
