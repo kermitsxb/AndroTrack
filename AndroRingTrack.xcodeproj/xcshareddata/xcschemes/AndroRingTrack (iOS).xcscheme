@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "6A9A6F44269E15BA00A78C5C"
-               BuildableName = "AndroTrack.app"
-               BlueprintName = "AndroTrack (iOS)"
-               ReferencedContainer = "container:AndroTrack.xcodeproj">
+               BuildableName = "AndroRingTrack.app"
+               BlueprintName = "AndroRingTrack (iOS)"
+               ReferencedContainer = "container:AndroRingTrack.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -46,9 +46,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "6A9A6F44269E15BA00A78C5C"
-            BuildableName = "AndroTrack.app"
-            BlueprintName = "AndroTrack (iOS)"
-            ReferencedContainer = "container:AndroTrack.xcodeproj">
+            BuildableName = "AndroRingTrack.app"
+            BlueprintName = "AndroRingTrack (iOS)"
+            ReferencedContainer = "container:AndroRingTrack.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -63,9 +63,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "6A9A6F44269E15BA00A78C5C"
-            BuildableName = "AndroTrack.app"
-            BlueprintName = "AndroTrack (iOS)"
-            ReferencedContainer = "container:AndroTrack.xcodeproj">
+            BuildableName = "AndroRingTrack.app"
+            BlueprintName = "AndroRingTrack (iOS)"
+            ReferencedContainer = "container:AndroRingTrack.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

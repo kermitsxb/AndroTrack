@@ -1,4 +1,4 @@
-# AndroTrack
+# AndroRingTrack
 AndroSwitch masculine contraceptive ring companion app
 
 iOS and  Watch application to manage time while wearing the contraceptive device

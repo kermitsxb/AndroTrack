@@ -1,6 +1,6 @@
 //
 //  RecordEditView.swift
-//  AndroTrack (iOS)
+//  AndroRingTrack (iOS)
 //
 //  Created by Benoit Sida on 2021-09-19.
 //
