@@ -21,7 +21,7 @@ xcodebuild -project AndroRingTrack.xcodeproj -scheme "WatchAndroRingTrack" -conf
 There are no test targets in this project — do not assume `xcodebuild test` works.
 
 - Swift version: 5.0
-- Deployment targets: iOS 14.3, watchOS 7.4
+- Deployment targets: iOS 15.0, watchOS 8.0
 - Bundle IDs: `com.astralym.AndroRingTrack` (iOS), `.watchkitapp` / `.watchkitapp.watchkitextension` (Watch)
 
 ## Architecture
