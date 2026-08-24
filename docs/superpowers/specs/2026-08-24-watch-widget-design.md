@@ -27,9 +27,14 @@ drives the complications, with no separate UI to build or maintain.
   on upgrade, by fixing the App Group mirroring bug found in code review
   (`SettingsStore.sessionLength` mirroring never fires from `init()`, and
   was iOS-only).
-- Keep timelines fresh after a wear-state toggle from either device
-  (`RecordStore`'s `WidgetCenter.reloadAllTimelines()` calls become
-  cross-platform instead of iOS-only).
+- Keep the watch's own timelines fresh after a wear-state toggle on the
+  watch itself (`RecordStore`'s `WidgetCenter.reloadAllTimelines()` calls
+  become cross-platform instead of iOS-only, so the watch now reloads its
+  own widget/complication timelines too — `WidgetCenter.reloadAllTimelines()`
+  is process/device-local, so this does not make a toggle on one device
+  refresh the other device's timeline; cross-device propagation still
+  depends on HealthKit's own sync plus each side's periodic timeline
+  refresh policy).
 
 ## Non-goals
 

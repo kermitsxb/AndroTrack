@@ -8,10 +8,7 @@
 import Foundation
 import SwiftUI
 import Combine
-
-#if os(watchOS)
-import ClockKit
-#endif
+import WidgetKit
 
 class SettingsStore: ObservableObject {
     public static let shared = SettingsStore()
@@ -73,6 +70,7 @@ class SettingsStore: ObservableObject {
     /// calls this explicitly too — see docs/superpowers/specs/2026-08-24-watch-widget-design.md.
     private func mirrorSessionLengthToAppGroup() {
         UserDefaults(suiteName: "group.com.astralym.AndroRingTrack")?.set(sessionLength, forKey: "sessionLength")
+        WidgetCenter.shared.reloadAllTimelines()
     }
 
     #if os(watchOS)
@@ -90,10 +88,7 @@ class SettingsStore: ObservableObject {
                 default: continue
             }
         }
-        let complicationServer = CLKComplicationServer.sharedInstance()
-        for complication in complicationServer.activeComplications ?? [] {
-            complicationServer.reloadTimeline(for: complication)
-        }
+        WidgetCenter.shared.reloadAllTimelines()
     }
     #endif
     

@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import ClockKit
+import WidgetKit
 
 @main
 struct AndroRingTrackApp: App {
@@ -23,10 +23,7 @@ struct AndroRingTrackApp: App {
                     .environmentObject(recordStore)
                     .environmentObject(settingsStore)
                     .onAppear() {
-                        let complicationServer = CLKComplicationServer.sharedInstance()
-                        for complication in complicationServer.activeComplications ?? [] {
-                            complicationServer.reloadTimeline(for: complication)
-                        }
+                        WidgetCenter.shared.reloadAllTimelines()
                     }
                     .onReceive(timer) { _ in
                         self.recordStore.objectWillChange.send()

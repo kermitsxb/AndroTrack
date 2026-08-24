@@ -33,7 +33,8 @@ struct WearStatusProvider: TimelineProvider {
             return
         }
 
-        HealthKitService.shared.fetchRecords { records, error in
+        let twoDaysAgo = Calendar.current.date(byAdding: .day, value: -2, to: Date()) ?? Date().addingTimeInterval(-2 * 24 * 60 * 60)
+        HealthKitService.shared.fetchRecords(since: twoDaysAgo) { records, error in
             if let error = error {
                 AppLogger.error(context: "Widget", "Failed to fetch records: \(error.errorDescription ?? "unknown")")
                 completion(self.unauthorizedEntry())

@@ -6,15 +6,35 @@ struct WatchWearStatusAccessoryView: View {
     let entry: WearStatusEntry
 
     var body: some View {
+        if !entry.isAuthorized {
+            unauthorizedView
+        } else {
+            switch family {
+            case .accessoryCircular:
+                circular
+            case .accessoryCorner:
+                corner
+            case .accessoryInline:
+                inline
+            default:
+                rectangular
+            }
+        }
+    }
+
+    @ViewBuilder
+    private var unauthorizedView: some View {
         switch family {
-        case .accessoryCircular:
-            circular
-        case .accessoryCorner:
-            corner
         case .accessoryInline:
-            inline
+            Text("WIDGET_UNAUTHORIZED")
+        case .accessoryCircular, .accessoryCorner:
+            Image(systemName: "exclamationmark.circle")
         default:
-            rectangular
+            VStack(alignment: .leading, spacing: 2) {
+                Image(systemName: "exclamationmark.circle")
+                Text("WIDGET_UNAUTHORIZED")
+                    .font(.caption2)
+            }
         }
     }
 
