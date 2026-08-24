@@ -54,6 +54,19 @@ struct WearStatusWidgetView: View {
     }
 
     private var statusIcon: some View {
+        Group {
+            if #available(iOS 17.0, *), entry.isAuthorized {
+                Button(intent: ToggleWearIntent()) {
+                    statusIconImage
+                }
+                .buttonStyle(.plain)
+            } else {
+                statusIconImage
+            }
+        }
+    }
+
+    private var statusIconImage: some View {
         Image(systemName: entry.state == .worn ? "checkmark.circle.fill" : "circle")
             .font(.title2)
             .foregroundColor(entry.state == .worn ? .accentColor : .secondary)

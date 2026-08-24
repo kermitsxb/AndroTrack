@@ -7,6 +7,9 @@
 
 import Foundation
 import UserNotifications
+#if os(iOS)
+import WidgetKit
+#endif
 
 enum RingState {
     case worn
@@ -54,6 +57,10 @@ class RecordStore: ObservableObject {
             HealthKitService.shared.storeRecord(record: records[records.endIndex - 1]) { error in
                 if let error = error {
                     AppLogger.error(context: "RecordStore", "Failure: \(error.errorDescription!)")
+                } else {
+                    #if os(iOS)
+                    WidgetCenter.shared.reloadAllTimelines()
+                    #endif
                 }
             }
 
@@ -70,12 +77,20 @@ class RecordStore: ObservableObject {
                 HealthKitService.shared.removeRecord(at: records[records.endIndex - 1].start!) { error in
                     if let error = error {
                         AppLogger.error(context: "RecordStore", "Failure: \(error.errorDescription!)")
+                    } else {
+                        #if os(iOS)
+                        WidgetCenter.shared.reloadAllTimelines()
+                        #endif
                     }
                 }
             } else {
                 HealthKitService.shared.storeRecord(record: records[records.endIndex - 1]) { error in
                     if let error = error {
                         AppLogger.error(context: "RecordStore", "Failure: \(error.errorDescription!)")
+                    } else {
+                        #if os(iOS)
+                        WidgetCenter.shared.reloadAllTimelines()
+                        #endif
                     }
                 }
             }
