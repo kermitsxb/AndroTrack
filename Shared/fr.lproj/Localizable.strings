@@ -71,3 +71,8 @@
 "FIRST_RECORD_DATE" = "Date de la première session";
 "CURRENT_CONSECUTIVE_SERIE_START" = "Début de la série consécutive";
 "DAYS" = "jours";
+
+// WIDGET
+"WIDGET_DISPLAY_NAME" = "Statut du port";
+"WIDGET_DESCRIPTION" = "Affiche le statut de port actuel et la durée de port du jour.";
+"WIDGET_UNAUTHORIZED" = "Ouvrez l'application pour configurer";
