@@ -29,10 +29,7 @@ class SettingsStore: ObservableObject {
     @Published var sessionLength: Int {
         didSet {
             UserDefaults.standard.set(sessionLength, forKey: "sessionLength")
-            #if os(iOS)
-            // Mirrored into the App Group suite so the widget extension can read it.
-            UserDefaults(suiteName: "group.com.astralym.AndroRingTrack")?.set(sessionLength, forKey: "sessionLength")
-            #endif
+            mirrorSessionLengthToAppGroup()
             watchConnectivity.sync()
             Notifications.scheduleNotifyEnd()
         }
@@ -61,14 +58,23 @@ class SettingsStore: ObservableObject {
         }
         sessionLength = UserDefaults.standard.nonNulInteger(forKey: "sessionLength") ?? 15
         notifications = UserDefaults.standard.typed(forKey: "notifications") ?? NotificationsSettings()
-        
+        mirrorSessionLengthToAppGroup()
+
         #if os(watchOS)
         subscription = watchConnectivity.publisher
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: onReceiveContextUpdate)
         #endif
     }
-    
+
+    /// Mirrors `sessionLength` into the App Group suite so the widget/complication
+    /// extensions (which run in a separate process) can read the real goal.
+    /// `didSet` never fires for the value assigned during `init()`, so `init()`
+    /// calls this explicitly too — see docs/superpowers/specs/2026-08-24-watch-widget-design.md.
+    private func mirrorSessionLengthToAppGroup() {
+        UserDefaults(suiteName: "group.com.astralym.AndroRingTrack")?.set(sessionLength, forKey: "sessionLength")
+    }
+
     #if os(watchOS)
     private func onReceiveContextUpdate(context: [String:Any]) {
         for (key, progress) in context {

@@ -7,9 +7,7 @@
 
 import Foundation
 import UserNotifications
-#if os(iOS)
 import WidgetKit
-#endif
 
 enum RingState {
     case worn
@@ -58,9 +56,7 @@ class RecordStore: ObservableObject {
                 if let error = error {
                     AppLogger.error(context: "RecordStore", "Failure: \(error.errorDescription!)")
                 } else {
-                    #if os(iOS)
                     WidgetCenter.shared.reloadAllTimelines()
-                    #endif
                 }
             }
 
@@ -78,9 +74,7 @@ class RecordStore: ObservableObject {
                     if let error = error {
                         AppLogger.error(context: "RecordStore", "Failure: \(error.errorDescription!)")
                     } else {
-                        #if os(iOS)
                         WidgetCenter.shared.reloadAllTimelines()
-                        #endif
                     }
                 }
             } else {
@@ -88,9 +82,7 @@ class RecordStore: ObservableObject {
                     if let error = error {
                         AppLogger.error(context: "RecordStore", "Failure: \(error.errorDescription!)")
                     } else {
-                        #if os(iOS)
                         WidgetCenter.shared.reloadAllTimelines()
-                        #endif
                     }
                 }
             }
