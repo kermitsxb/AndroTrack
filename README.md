@@ -34,7 +34,7 @@ Projet is not distributed on the stores yet
 
 - [ ] Other persistant storage 
 - [ ] Calendar view for session history
-- [ ] Widget
+- [x] Widget
 - [ ] Shortcut
 - [ ] Shortcuts app integration
 - [ ] Siri integration
