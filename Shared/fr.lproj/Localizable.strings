@@ -46,6 +46,9 @@
 "NOTIFY_END_OF_SESSION" = "Notification de durée atteinte";
 "SESSION_START_REMINDER" = "Rappel quotidien";
 "REMINDER_TIME" = "Heure de rappel :";
+"AUTHORS" = "Auteurs";
+"AUTHORS.ORIGINAL" = "Auteur original : Benoit Sida";
+"AUTHORS.MAINTAINER" = "Mainteneur : Thomas Stocker";
 
 // HISTORY_VIEW
 "MODIFY" = "Modifier";

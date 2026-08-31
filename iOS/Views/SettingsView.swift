@@ -123,8 +123,19 @@ struct SettingsView: View {
                         }
                     }
                 }.padding()
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("AUTHORS")
+                        .font(.title2)
+                        .bold()
+                    Text("AUTHORS.ORIGINAL")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                    Text("AUTHORS.MAINTAINER")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                }.padding()
             }
-            
+
             .sheet(isPresented: $showNotifPermissionModal) {
                 GenericModal() {
                     RequestPermission(
