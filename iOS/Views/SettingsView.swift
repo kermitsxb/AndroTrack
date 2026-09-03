@@ -133,7 +133,9 @@ struct SettingsView: View {
                     Text("AUTHORS.MAINTAINER")
                         .font(.subheadline)
                         .foregroundColor(.secondary)
-                }.padding()
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding()
             }
 
             .sheet(isPresented: $showNotifPermissionModal) {
