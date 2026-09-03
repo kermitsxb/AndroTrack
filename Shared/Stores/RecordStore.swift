@@ -134,7 +134,21 @@ class RecordStore: ObservableObject {
     }
     
     public func getDay(forDate date: Date) -> Day {
-        return Day(records: records.filter({ $0.start != nil && Calendar.current.isDate($0.start!, inSameDayAs: date) }))
+        let calendar = Calendar.current
+        let dayStart = calendar.startOfDay(for: date)
+        guard let dayEnd = calendar.date(byAdding: .day, value: 1, to: dayStart) else {
+            return Day(date: date, records: [])
+        }
+
+        // Include any record that overlaps this day, not just ones that started on it,
+        // so a session spanning multiple days shows up (and is clipped) on each of them.
+        let overlapping = records.filter { record in
+            guard let start = record.start else { return false }
+            let end = record.end ?? Date()
+            return start < dayEnd && end > dayStart
+        }
+
+        return Day(date: date, records: overlapping)
     }
     
     public func refreshHealthData() {
