@@ -11,21 +11,21 @@
 "SETTINGS" = "Settings";
 
 // HEALTHKIT_PERMISSIONS
-"HEALTHKIT_ACCESS.TITLE" = "HealthKit Access";
-"HEALTHKIT_ACCESS.DESCRIPTION_1" = "In order for the app to store records about when you wear the device, you need to grant permission to access HealthKit storage.";
-"HEALTHKIT_ACCESS.DESCRIPTION_2" = "In order for the app to store records, it needs access to write to HealthKit. \n\n Please review settings in Health > Data Access & Device > AndroRingtrack, and allow the app to write data.";
+"HEALTHKIT_ACCESS.TITLE" = "Health data";
+"HEALTHKIT_ACCESS.DESCRIPTION_1" = "Wear sessions are stored in the Health app, under the Contraceptive category. On the next screen, you can choose whether to allow this app to read and write that data.";
+"HEALTHKIT_ACCESS.DESCRIPTION_2" = "Wear sessions are stored in the Health app, and this app currently has no access to that data.\n\nYou can change this at any time in Health > Sharing > Apps and Services, by allowing this app to read and write data.";
 "HEALTHKIT_ACCESS.CTA" = "Open settings";
 
 // NOTIFICATIONS_PERMISSIONS
 "NOTIFICATIONS_PERMISSIONS.TITLE" = "Notifications";
-"NOTIFICATIONS_PERMISSIONS.DESCRIPTION" = "In order for the app to send you reminders, you need to grant permission to send notifications.";
+"NOTIFICATIONS_PERMISSIONS.DESCRIPTION" = "Reminders are sent as notifications. On the next screen, you can choose whether to allow this app to send them.";
 
 // TODAY_CTA
 "WEAR" = "WEAR";
 "REMOVE" = "REMOVE";
 
 // REQUEST_PERMISSION
-"REQUEST_PERMISSION.DEFAULT_CTA" = "Grant permission";
+"REQUEST_PERMISSION.DEFAULT_CTA" = "Continue";
 
 // RECORD_VIEW
 "START" = "Start";
