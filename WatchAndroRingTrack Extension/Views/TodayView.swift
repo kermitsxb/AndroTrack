@@ -1,6 +1,6 @@
 //
 //  TodayView.swift
-//  WatchAndroRingTrack Extension
+//  WatchThermoTrack Extension
 //
 //  Created by Benoit Sida on 2021-07-18.
 //

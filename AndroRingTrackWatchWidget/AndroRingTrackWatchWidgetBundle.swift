@@ -2,7 +2,7 @@ import WidgetKit
 import SwiftUI
 
 @main
-struct AndroRingTrackWatchWidgetBundle: WidgetBundle {
+struct ThermoTrackWatchWidgetBundle: WidgetBundle {
     var body: some Widget {
         WatchWearStatusWidget()
     }

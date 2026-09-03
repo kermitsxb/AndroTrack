@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project overview
 
-AndroRingTrack is a SwiftUI iOS + watchOS companion app for thermal masculine contraceptive rings (no brand affiliation). It tracks wear sessions (start/stop timing, history, stats) with HealthKit as the single source of truth for session data, and syncs settings between iPhone and Watch via WatchConnectivity.
+ThermoTrack is a SwiftUI iOS + watchOS companion app for thermal masculine contraceptive rings (no brand affiliation). It tracks wear sessions (start/stop timing, history, stats) with HealthKit as the single source of truth for session data, and syncs settings between iPhone and Watch via WatchConnectivity.
 
 ## Build & run
 
@@ -12,17 +12,17 @@ This is an Xcode project (no SPM/CocoaPods package manifest, no CLI test runner 
 
 ```bash
 # Build the iOS app
-xcodebuild -project AndroRingTrack.xcodeproj -scheme "AndroRingTrack (iOS)" -configuration Debug build
+xcodebuild -project ThermoTrack.xcodeproj -scheme "ThermoTrack (iOS)" -configuration Debug build
 
 # Build the Watch app
-xcodebuild -project AndroRingTrack.xcodeproj -scheme "WatchAndroRingTrack" -configuration Debug build
+xcodebuild -project ThermoTrack.xcodeproj -scheme "WatchThermoTrack" -configuration Debug build
 ```
 
 There are no test targets in this project — do not assume `xcodebuild test` works.
 
 - Swift version: 5.0
 - Deployment targets: iOS 15.0, watchOS 8.0
-- Bundle IDs: `com.astralym.AndroRingTrack` (iOS), `.watchkitapp` / `.watchkitapp.watchkitextension` (Watch)
+- Bundle IDs: `com.astralym.AndroThermoTrack` (iOS), `.watchkitapp` / `.watchkitapp.watchkitextension` (Watch)
 
 ## Architecture
 
@@ -32,7 +32,7 @@ The project is split into three targets that all pull from one shared layer:
 
 - `Shared/` — models, stores, services, extensions, and shared views used by both `iOS/` and the Watch targets. This is where almost all business logic lives.
 - `iOS/` — iOS-only views (`iOS/Views/`) and app entry point.
-- `WatchAndroRingTrack Extension/` — watchOS-only views, complication, and notification controller.
+- `WatchThermoTrack Extension/` — watchOS-only views, complication, and notification controller.
 
 Platform-specific code inside `Shared/` is guarded with `#if os(watchOS)` / `#if os(iOS)` (see `SettingsStore.swift`, `WatchConnectivity.swift`).
 

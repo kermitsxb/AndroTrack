@@ -1,6 +1,6 @@
 //
-//  AndroRingTrackApp.swift
-//  WatchAndroRingTrack Extension
+//  ThermoTrackApp.swift
+//  WatchThermoTrack Extension
 //
 //  Created by Benoit Sida on 2021-07-18.
 //
@@ -9,7 +9,7 @@ import SwiftUI
 import WidgetKit
 
 @main
-struct AndroRingTrackApp: App {
+struct ThermoTrackApp: App {
     @StateObject private var recordStore = RecordStore.shared
     @StateObject private var settingsStore = SettingsStore.shared
     

@@ -1,4 +1,4 @@
-# AndroRingTrack Widget — Design Spec
+# ThermoTrack Widget — Design Spec
 
 Status: Approved
 Date: 2026-08-24
@@ -35,8 +35,8 @@ progress from the Home Screen / Lock Screen without opening the app.
 
 ### New target
 
-`AndroRingTrackWidget` — a WidgetKit App Extension target, added alongside
-`iOS/` and `WatchAndroRingTrack Extension/`. It links `Shared/` directly,
+`ThermoTrackWidget` — a WidgetKit App Extension target, added alongside
+`iOS/` and `WatchThermoTrack Extension/`. It links `Shared/` directly,
 following the project's existing three-target-pulling-from-one-shared-layer
 pattern (see CLAUDE.md "Code sharing model"). Widget-only UI (SwiftUI views,
 the `Widget`/`WidgetBundle` entry point, the `TimelineProvider`, and the

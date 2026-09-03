@@ -1,6 +1,6 @@
 //
 //  RequirementView.swift
-//  AndroRingTrack (iOS)
+//  ThermoTrack (iOS)
 //
 //  Created by Benoit Sida on 2021-07-22.
 //

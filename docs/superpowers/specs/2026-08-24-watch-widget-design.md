@@ -1,4 +1,4 @@
-# AndroRingTrack Watch Widget — Design Spec
+# ThermoTrack Watch Widget — Design Spec
 
 Status: Approved
 Date: 2026-08-24
@@ -8,7 +8,7 @@ Date: 2026-08-24
 The iOS app now has a WidgetKit-based widget (Home Screen + Lock Screen,
 see `docs/superpowers/specs/2026-08-24-widget-design.md`). The watchOS app
 still relies on the legacy ClockKit complications API
-(`WatchAndroRingTrack Extension/ComplicationController.swift` and
+(`WatchThermoTrack Extension/ComplicationController.swift` and
 `Complications.swift`). Apple recommends WidgetKit for watch face
 complications since watchOS 9, and unifying on WidgetKit lets the watch
 gain a Smart Stack widget (watchOS 10+) using the same code that already
@@ -65,7 +65,7 @@ drives the complications, with no separate UI to build or maintain.
 
 ## Architecture
 
-A new WidgetKit extension target, `AndroRingTrackWatchWidget`, embedded in
+A new WidgetKit extension target, `ThermoTrackWatchWidget`, embedded in
 the watch app, replacing `ComplicationController`/`Complications`/the
 `Complication.complicationset` asset catalog entry entirely. One
 `WidgetBundle` with a single `Widget` (`WatchWearStatusWidget`) supporting
@@ -76,7 +76,7 @@ surfaces.
 
 ## Components
 
-New target `AndroRingTrackWatchWidget`:
+New target `ThermoTrackWatchWidget`:
 - `WatchWearStatusWidgetBundle.swift` — `@main WidgetBundle`.
 - `WatchWearStatusWidget.swift` — the `Widget` conformance, supporting
   `[.accessoryCircular, .accessoryCorner, .accessoryRectangular, .accessoryInline]`.
@@ -88,18 +88,18 @@ New target `AndroRingTrackWatchWidget`:
   - `.accessoryInline`: single line of text (e.g. today's duration vs.
     goal, or "En cours" while worn).
 - Reused by file reference (added to this target alongside
-  `AndroRingTrackWidget`, not duplicated): `WearStatusProvider.swift`,
+  `ThermoTrackWidget`, not duplicated): `WearStatusProvider.swift`,
   `WearStatusEntry.swift`, `Views/DurationFormatting.swift`.
-- `AndroRingTrackWatchWidget.entitlements` — HealthKit entitlement +
-  App Group `group.com.astralym.AndroRingTrack` (same pattern as
-  `AndroRingTrackWidget.entitlements`).
+- `ThermoTrackWatchWidget.entitlements` — HealthKit entitlement +
+  App Group `group.com.astralym.AndroThermoTrack` (same pattern as
+  `ThermoTrackWidget.entitlements`).
 - `Info.plist` with `NSExtensionPointIdentifier` =
   `com.apple.widgetkit-extension`, matching the iOS widget's Info.plist
   structure.
 
-Removed: `WatchAndroRingTrack Extension/ComplicationController.swift`,
-`WatchAndroRingTrack Extension/Views/Elements/Complications.swift`,
-`WatchAndroRingTrack Extension/Assets.xcassets/Complication.complicationset`,
+Removed: `WatchThermoTrack Extension/ComplicationController.swift`,
+`WatchThermoTrack Extension/Views/Elements/Complications.swift`,
+`WatchThermoTrack Extension/Assets.xcassets/Complication.complicationset`,
 and their `project.pbxproj` references.
 
 Cross-cutting fixes required for the watch widget to work correctly
@@ -112,8 +112,8 @@ Cross-cutting fixes required for the watch widget to work correctly
   calls (currently `#if os(iOS)`-only, ~3 call sites) become unconditional
   so a toggle on either device refreshes the watch's complications/widget
   timeline too.
-- `WatchAndroRingTrack Extension/WatchAndroRingTrack Extension.entitlements`:
-  add the `group.com.astralym.AndroRingTrack` App Group, needed for
+- `WatchThermoTrack Extension/WatchThermoTrack Extension.entitlements`:
+  add the `group.com.astralym.AndroThermoTrack` App Group, needed for
   `SettingsStore` running in the watch app process to write into the
   shared suite.
 - `project.pbxproj`: `WATCHOS_DEPLOYMENT_TARGET` 8.0 → 9.0 (all 4
@@ -148,10 +148,10 @@ No test target exists in this project (see `CLAUDE.md`). Verification is
 by build:
 
 ```bash
-xcodebuild -project AndroRingTrack.xcodeproj -scheme "WatchAndroRingTrack" -configuration Debug build
+xcodebuild -project ThermoTrack.xcodeproj -scheme "WatchThermoTrack" -configuration Debug build
 ```
 
-plus building the new `AndroRingTrackWatchWidget` target once it's added
+plus building the new `ThermoTrackWatchWidget` target once it's added
 to the scheme, and manual verification in the watchOS simulator (adding
 the complication to a watch face, and checking the Smart Stack) — no
 automated UI testing exists in this project to extend.

@@ -1,48 +1,48 @@
-# AndroRingTrack Watch Widget Implementation Plan
+# ThermoTrack Watch Widget Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Replace the watch app's ClockKit complications with a WidgetKit extension covering both watch face complications (`.accessoryCircular`, `.accessoryCorner`, `.accessoryRectangular`, `.accessoryInline`) and the Smart Stack widget, reusing the iOS widget's data layer.
 
-**Architecture:** A new `AndroRingTrackWatchWidget` WidgetKit extension target, embedded in the `WatchAndroRingTrack` watch app, reuses `WearStatusProvider`/`WearStatusEntry`/`DurationFormatting.swift` by adding the existing physical files (from `AndroRingTrackWidget`) to this new target's source build phase — no duplication. A new accessory-family view covers all four watchOS complication families. `SettingsStore`'s App Group mirroring becomes cross-platform (fixing a bug found in code review) so the watch widget reads the real `sessionLength`, and `RecordStore`'s `WidgetCenter.reloadAllTimelines()` calls become cross-platform so a toggle on the watch itself now also refreshes the watch's own complications (previously the watch never called `reloadAllTimelines()` at all). `WidgetCenter.reloadAllTimelines()` is process/device-local, so this does not make a toggle on one device refresh the other device's timeline — cross-device propagation still depends on HealthKit's own sync plus each side's periodic timeline refresh policy. `ComplicationController`/`Complications.swift`/the ClockKit complication set are deleted.
+**Architecture:** A new `ThermoTrackWatchWidget` WidgetKit extension target, embedded in the `WatchThermoTrack` watch app, reuses `WearStatusProvider`/`WearStatusEntry`/`DurationFormatting.swift` by adding the existing physical files (from `ThermoTrackWidget`) to this new target's source build phase — no duplication. A new accessory-family view covers all four watchOS complication families. `SettingsStore`'s App Group mirroring becomes cross-platform (fixing a bug found in code review) so the watch widget reads the real `sessionLength`, and `RecordStore`'s `WidgetCenter.reloadAllTimelines()` calls become cross-platform so a toggle on the watch itself now also refreshes the watch's own complications (previously the watch never called `reloadAllTimelines()` at all). `WidgetCenter.reloadAllTimelines()` is process/device-local, so this does not make a toggle on one device refresh the other device's timeline — cross-device propagation still depends on HealthKit's own sync plus each side's periodic timeline refresh policy. `ComplicationController`/`Complications.swift`/the ClockKit complication set are deleted.
 
-**Tech Stack:** Swift 5.0, WidgetKit (watchOS 9+), the existing HealthKit-backed `Shared/` layer. Target creation is done by scripting the `xcodeproj` Ruby gem (`xcodeproj 1.27.0`, already installed) rather than the Xcode GUI, matching how `AndroRingTrackWidget` was scaffolded.
+**Tech Stack:** Swift 5.0, WidgetKit (watchOS 9+), the existing HealthKit-backed `Shared/` layer. Target creation is done by scripting the `xcodeproj` Ruby gem (`xcodeproj 1.27.0`, already installed) rather than the Xcode GUI, matching how `ThermoTrackWidget` was scaffolded.
 
 **Spec:** `docs/superpowers/specs/2026-08-24-watch-widget-design.md`
 
 ## Global Constraints
 
-- `WATCHOS_DEPLOYMENT_TARGET` for all watch targets (`WatchAndroRingTrack`, `WatchAndroRingTrack Extension`, and the new `AndroRingTrackWatchWidget`): 9.0. This drops Apple Watch Series 3 support — accepted per the spec.
+- `WATCHOS_DEPLOYMENT_TARGET` for all watch targets (`WatchThermoTrack`, `WatchThermoTrack Extension`, and the new `ThermoTrackWatchWidget`): 9.0. This drops Apple Watch Series 3 support — accepted per the spec.
 - Swift version: 5.0 (matches all other targets).
 - No tap-to-toggle interaction on the watch widget/complications — non-goal per spec.
 - No new persistence, IPC, or App-Group-based data channel beyond the existing `sessionLength` mirror — HealthKit stays the source of truth; the watch widget extension reads it directly via its own HealthKit entitlement.
-- App Group `group.com.astralym.AndroRingTrack` is required on: `AndroRingTrackWidget` (already has it), the new `AndroRingTrackWatchWidget`, and `WatchAndroRingTrack Extension` (currently missing it — added in Task 2).
+- App Group `group.com.astralym.AndroThermoTrack` is required on: `ThermoTrackWidget` (already has it), the new `ThermoTrackWatchWidget`, and `WatchThermoTrack Extension` (currently missing it — added in Task 2).
 - Reuse existing localization convention: `Shared/en.lproj/Localizable.strings` / `Shared/fr.lproj/Localizable.strings`, resolved via `Text("KEY")` / `NSLocalizedString("KEY", comment: "")`.
 - Log failures via `AppLogger` with `context:` identifying the originating type, matching existing usage.
 - No test target exists in this project (confirmed in CLAUDE.md) — "testing" in every task below means a manual `xcodebuild` compile/build check, not `xcodebuild test`.
 - `DEVELOPMENT_TEAM` for all targets is `8CKMCXN74P`; `CODE_SIGN_STYLE` is `Automatic`; `MARKETING_VERSION` is `1.0.13`. Build-verification commands in this plan pass `CODE_SIGNING_ALLOWED=NO` so they can run headless without a signing identity — a verification convenience only, not a target setting change.
-- New target bundle id: `com.astralym.AndroRingTrack.watchkitapp.widget`. `TARGETED_DEVICE_FAMILY`: `4` (watch).
+- New target bundle id: `com.astralym.AndroThermoTrack.watchkitapp.widget`. `TARGETED_DEVICE_FAMILY`: `4` (watch).
 
 ---
 
-### Task 1: Scaffold the `AndroRingTrackWatchWidget` target and bump the watchOS deployment target
+### Task 1: Scaffold the `ThermoTrackWatchWidget` target and bump the watchOS deployment target
 
 **Files:**
-- Create: `AndroRingTrackWatchWidget/Info.plist`
-- Create: `AndroRingTrackWatchWidget/AndroRingTrackWatchWidget.entitlements`
-- Create: `AndroRingTrackWatchWidget/AndroRingTrackWatchWidgetBundle.swift`
-- Modify: `AndroRingTrack.xcodeproj/project.pbxproj` (via a one-off Ruby script, deleted after use)
+- Create: `ThermoTrackWatchWidget/Info.plist`
+- Create: `ThermoTrackWatchWidget/ThermoTrackWatchWidget.entitlements`
+- Create: `ThermoTrackWatchWidget/ThermoTrackWatchWidgetBundle.swift`
+- Modify: `ThermoTrack.xcodeproj/project.pbxproj` (via a one-off Ruby script, deleted after use)
 
 **Interfaces:**
-- Produces: an Xcode target named `AndroRingTrackWatchWidget` (product type `com.apple.product-type.app-extension`, bundle id `com.astralym.AndroRingTrack.watchkitapp.widget`, platform watchOS), embedded in the `WatchAndroRingTrack` watch app target via its existing "Embed App Extensions" copy-files phase, with a placeholder `@main` `WidgetBundle` so the target builds standalone before any real data wiring exists. `WatchAndroRingTrack` and `WatchAndroRingTrack Extension` gain `WATCHOS_DEPLOYMENT_TARGET = 9.0`.
+- Produces: an Xcode target named `ThermoTrackWatchWidget` (product type `com.apple.product-type.app-extension`, bundle id `com.astralym.AndroThermoTrack.watchkitapp.widget`, platform watchOS), embedded in the `WatchThermoTrack` watch app target via its existing "Embed App Extensions" copy-files phase, with a placeholder `@main` `WidgetBundle` so the target builds standalone before any real data wiring exists. `WatchThermoTrack` and `WatchThermoTrack Extension` gain `WATCHOS_DEPLOYMENT_TARGET = 9.0`.
 
 - [ ] **Step 1: Create the widget extension directory and Info.plist**
 
 ```bash
-mkdir -p AndroRingTrackWatchWidget
+mkdir -p ThermoTrackWatchWidget
 ```
 
-Create `AndroRingTrackWatchWidget/Info.plist`:
+Create `ThermoTrackWatchWidget/Info.plist`:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -52,7 +52,7 @@ Create `AndroRingTrackWatchWidget/Info.plist`:
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>AndroRingTrackWatchWidget</string>
+	<string>ThermoTrackWatchWidget</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -73,16 +73,16 @@ Create `AndroRingTrackWatchWidget/Info.plist`:
 		<string>com.apple.widgetkit-extension</string>
 	</dict>
 	<key>NSHealthShareUsageDescription</key>
-	<string>AndroRingTrack a besoin de votre autorisation pour afficher les statistiques du port de l'anneau.</string>
+	<string>ThermoTrack a besoin de votre autorisation pour afficher les statistiques du port de l'anneau.</string>
 	<key>NSHealthUpdateUsageDescription</key>
-	<string>AndroRingTrack a besoin de votre autorisation pour mettre à jour les statistiques du port de l'anneau.</string>
+	<string>ThermoTrack a besoin de votre autorisation pour mettre à jour les statistiques du port de l'anneau.</string>
 </dict>
 </plist>
 ```
 
 - [ ] **Step 2: Create the entitlements file**
 
-Create `AndroRingTrackWatchWidget/AndroRingTrackWatchWidget.entitlements`:
+Create `ThermoTrackWatchWidget/ThermoTrackWatchWidget.entitlements`:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -95,7 +95,7 @@ Create `AndroRingTrackWatchWidget/AndroRingTrackWatchWidget.entitlements`:
 	<array/>
 	<key>com.apple.security.application-groups</key>
 	<array>
-		<string>group.com.astralym.AndroRingTrack</string>
+		<string>group.com.astralym.AndroThermoTrack</string>
 	</array>
 </dict>
 </plist>
@@ -103,7 +103,7 @@ Create `AndroRingTrackWatchWidget/AndroRingTrackWatchWidget.entitlements`:
 
 - [ ] **Step 3: Create a placeholder widget bundle**
 
-Create `AndroRingTrackWatchWidget/AndroRingTrackWatchWidgetBundle.swift`:
+Create `ThermoTrackWatchWidget/ThermoTrackWatchWidgetBundle.swift`:
 
 ```swift
 import WidgetKit
@@ -132,14 +132,14 @@ struct PlaceholderWidget: Widget {
 
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: PlaceholderProvider()) { _ in
-            Text("AndroRingTrack")
+            Text("ThermoTrack")
         }
         .supportedFamilies([.accessoryCircular])
     }
 }
 
 @main
-struct AndroRingTrackWatchWidgetBundle: WidgetBundle {
+struct ThermoTrackWatchWidgetBundle: WidgetBundle {
     var body: some Widget {
         PlaceholderWidget()
     }
@@ -155,21 +155,21 @@ Create `add_watch_widget_target.rb` at the repo root (temporary — deleted in S
 ```ruby
 require 'xcodeproj'
 
-project = Xcodeproj::Project.open('AndroRingTrack.xcodeproj')
-watch_app_target = project.targets.find { |t| t.name == 'WatchAndroRingTrack' }
+project = Xcodeproj::Project.open('ThermoTrack.xcodeproj')
+watch_app_target = project.targets.find { |t| t.name == 'WatchThermoTrack' }
 raise 'watch app target not found' unless watch_app_target
 
 # 1. Group for the new target's files (physical dir already created in Step 1)
-widget_group = project.main_group.new_group('AndroRingTrackWatchWidget', 'AndroRingTrackWatchWidget')
+widget_group = project.main_group.new_group('ThermoTrackWatchWidget', 'ThermoTrackWatchWidget')
 
 # 2. New watchOS app-extension target
-widget_target = project.new_target(:app_extension, 'AndroRingTrackWatchWidget', :watchos, '9.0', nil, :swift)
+widget_target = project.new_target(:app_extension, 'ThermoTrackWatchWidget', :watchos, '9.0', nil, :swift)
 
 widget_target.build_configurations.each do |bc|
-  bc.build_settings['PRODUCT_BUNDLE_IDENTIFIER'] = 'com.astralym.AndroRingTrack.watchkitapp.widget'
+  bc.build_settings['PRODUCT_BUNDLE_IDENTIFIER'] = 'com.astralym.AndroThermoTrack.watchkitapp.widget'
   bc.build_settings['PRODUCT_NAME'] = '$(TARGET_NAME)'
-  bc.build_settings['INFOPLIST_FILE'] = 'AndroRingTrackWatchWidget/Info.plist'
-  bc.build_settings['CODE_SIGN_ENTITLEMENTS'] = 'AndroRingTrackWatchWidget/AndroRingTrackWatchWidget.entitlements'
+  bc.build_settings['INFOPLIST_FILE'] = 'ThermoTrackWatchWidget/Info.plist'
+  bc.build_settings['CODE_SIGN_ENTITLEMENTS'] = 'ThermoTrackWatchWidget/ThermoTrackWatchWidget.entitlements'
   bc.build_settings['CODE_SIGN_STYLE'] = 'Automatic'
   bc.build_settings['DEVELOPMENT_TEAM'] = '8CKMCXN74P'
   bc.build_settings['SWIFT_VERSION'] = '5.0'
@@ -180,24 +180,24 @@ widget_target.build_configurations.each do |bc|
 end
 
 # 3. Placeholder source file reference (physical file created in Step 3)
-bundle_file_ref = widget_group.new_reference('AndroRingTrackWatchWidgetBundle.swift')
+bundle_file_ref = widget_group.new_reference('ThermoTrackWatchWidgetBundle.swift')
 widget_target.source_build_phase.add_file_reference(bundle_file_ref)
 
 # 4. Info.plist + entitlements file references (physical files created in Steps 1-2)
 widget_group.new_reference('Info.plist')
-widget_group.new_reference('AndroRingTrackWatchWidget.entitlements')
+widget_group.new_reference('ThermoTrackWatchWidget.entitlements')
 
 # 5. Embed the extension in the watch app target, reusing its existing
-#    "Embed App Extensions" phase (already embeds "WatchAndroRingTrack Extension").
+#    "Embed App Extensions" phase (already embeds "WatchThermoTrack Extension").
 watch_app_target.add_dependency(widget_target)
 
 embed_phase = watch_app_target.copy_files_build_phases.find { |p| p.name == 'Embed App Extensions' }
-raise 'Embed App Extensions phase not found on WatchAndroRingTrack' unless embed_phase
+raise 'Embed App Extensions phase not found on WatchThermoTrack' unless embed_phase
 embed_phase.add_file_reference(widget_target.product_reference, true)
 
 # 6. Bump watchOS deployment target to 9.0 across the existing watch targets
 #    (required for WidgetKit complications; the new target above is already 9.0).
-['WatchAndroRingTrack', 'WatchAndroRingTrack Extension'].each do |name|
+['WatchThermoTrack', 'WatchThermoTrack Extension'].each do |name|
   t = project.targets.find { |x| x.name == name }
   t.build_configurations.each { |bc| bc.build_settings['WATCHOS_DEPLOYMENT_TARGET'] = '9.0' }
 end
@@ -213,24 +213,24 @@ puts project.targets.map(&:name).inspect
 ruby add_watch_widget_target.rb
 ```
 
-Expected output: `OK` followed by a target list that includes `"AndroRingTrackWatchWidget"`.
+Expected output: `OK` followed by a target list that includes `"ThermoTrackWatchWidget"`.
 
 - [ ] **Step 6: Verify the project file and build the new target**
 
 ```bash
-plutil -lint AndroRingTrack.xcodeproj/project.pbxproj
-xcodebuild -list -project AndroRingTrack.xcodeproj
-xcodebuild build -project AndroRingTrack.xcodeproj -target AndroRingTrackWatchWidget -configuration Debug -destination 'generic/platform=watchOS Simulator' CODE_SIGNING_ALLOWED=NO
+plutil -lint ThermoTrack.xcodeproj/project.pbxproj
+xcodebuild -list -project ThermoTrack.xcodeproj
+xcodebuild build -project ThermoTrack.xcodeproj -target ThermoTrackWatchWidget -configuration Debug -destination 'generic/platform=watchOS Simulator' CODE_SIGNING_ALLOWED=NO
 ```
 
-Expected: `plutil` reports `OK`; `-list` shows `AndroRingTrackWatchWidget` under Targets; the build succeeds (`** BUILD SUCCEEDED **`).
+Expected: `plutil` reports `OK`; `-list` shows `ThermoTrackWatchWidget` under Targets; the build succeeds (`** BUILD SUCCEEDED **`).
 
 - [ ] **Step 7: Delete the one-off script and commit**
 
 ```bash
 rm add_watch_widget_target.rb
-git add AndroRingTrackWatchWidget AndroRingTrack.xcodeproj/project.pbxproj
-git commit -m "feat(watch-widget): scaffold AndroRingTrackWatchWidget extension target, bump watchOS min to 9.0"
+git add ThermoTrackWatchWidget ThermoTrack.xcodeproj/project.pbxproj
+git commit -m "feat(watch-widget): scaffold ThermoTrackWatchWidget extension target, bump watchOS min to 9.0"
 ```
 
 ---
@@ -240,12 +240,12 @@ git commit -m "feat(watch-widget): scaffold AndroRingTrackWatchWidget extension 
 **Files:**
 - Modify: `Shared/Stores/SettingsStore.swift`
 - Modify: `Shared/Stores/RecordStore.swift`
-- Modify: `WatchAndroRingTrack Extension/WatchAndroRingTrack Extension.entitlements`
-- Modify: `AndroRingTrack.xcodeproj/project.pbxproj` (via a one-off Ruby script, deleted after use)
+- Modify: `WatchThermoTrack Extension/WatchThermoTrack Extension.entitlements`
+- Modify: `ThermoTrack.xcodeproj/project.pbxproj` (via a one-off Ruby script, deleted after use)
 
 **Interfaces:**
-- Consumes: `WearStatusEntry`, `WearStatusProvider` (both already exist in `AndroRingTrackWidget/`, from `docs/superpowers/plans/2026-08-24-widget-implementation.md` Task 2), `Double.formattedWidgetDuration()` (`AndroRingTrackWidget/Views/DurationFormatting.swift`).
-- Produces: `SettingsStore.mirrorSessionLengthToAppGroup()` (private, called from both `init()` and `sessionLength`'s `didSet`) — no change to `SettingsStore`'s public surface. `RecordStore`'s `WidgetCenter.reloadAllTimelines()` calls are now unconditional (not `#if os(iOS)`), consumed implicitly by any process (iOS widget, watch widget) with an active `WidgetCenter` timeline. `AndroRingTrackWatchWidget` target gains all `Shared/` sources plus `WearStatusEntry.swift`/`WearStatusProvider.swift`/`DurationFormatting.swift` as target members (file references reused from `AndroRingTrackWidget`, consumed by Task 3's views/widget).
+- Consumes: `WearStatusEntry`, `WearStatusProvider` (both already exist in `ThermoTrackWidget/`, from `docs/superpowers/plans/2026-08-24-widget-implementation.md` Task 2), `Double.formattedWidgetDuration()` (`ThermoTrackWidget/Views/DurationFormatting.swift`).
+- Produces: `SettingsStore.mirrorSessionLengthToAppGroup()` (private, called from both `init()` and `sessionLength`'s `didSet`) — no change to `SettingsStore`'s public surface. `RecordStore`'s `WidgetCenter.reloadAllTimelines()` calls are now unconditional (not `#if os(iOS)`), consumed implicitly by any process (iOS widget, watch widget) with an active `WidgetCenter` timeline. `ThermoTrackWatchWidget` target gains all `Shared/` sources plus `WearStatusEntry.swift`/`WearStatusProvider.swift`/`DurationFormatting.swift` as target members (file references reused from `ThermoTrackWidget`, consumed by Task 3's views/widget).
 
 - [ ] **Step 1: Fix the `SettingsStore` App Group mirroring bug**
 
@@ -257,7 +257,7 @@ Edit `Shared/Stores/SettingsStore.swift` — replace the `sessionLength` propert
             UserDefaults.standard.set(sessionLength, forKey: "sessionLength")
             #if os(iOS)
             // Mirrored into the App Group suite so the widget extension can read it.
-            UserDefaults(suiteName: "group.com.astralym.AndroRingTrack")?.set(sessionLength, forKey: "sessionLength")
+            UserDefaults(suiteName: "group.com.astralym.AndroThermoTrack")?.set(sessionLength, forKey: "sessionLength")
             #endif
             watchConnectivity.sync()
             Notifications.scheduleNotifyEnd()
@@ -299,7 +299,7 @@ Then add the new helper method, right after `init()`'s closing brace (before the
     /// `didSet` never fires for the value assigned during `init()`, so `init()`
     /// calls this explicitly too — see docs/superpowers/specs/2026-08-24-watch-widget-design.md.
     private func mirrorSessionLengthToAppGroup() {
-        UserDefaults(suiteName: "group.com.astralym.AndroRingTrack")?.set(sessionLength, forKey: "sessionLength")
+        UserDefaults(suiteName: "group.com.astralym.AndroThermoTrack")?.set(sessionLength, forKey: "sessionLength")
     }
 ```
 
@@ -399,7 +399,7 @@ with:
 
 - [ ] **Step 3: Add the App Group entitlement to the watch app extension**
 
-Replace the full contents of `WatchAndroRingTrack Extension/WatchAndroRingTrack Extension.entitlements`:
+Replace the full contents of `WatchThermoTrack Extension/WatchThermoTrack Extension.entitlements`:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -414,7 +414,7 @@ Replace the full contents of `WatchAndroRingTrack Extension/WatchAndroRingTrack 
 	<true/>
 	<key>com.apple.security.application-groups</key>
 	<array>
-		<string>group.com.astralym.AndroRingTrack</string>
+		<string>group.com.astralym.AndroThermoTrack</string>
 	</array>
 </dict>
 </plist>
@@ -427,8 +427,8 @@ Create `link_watch_widget_target.rb` at the repo root (temporary — deleted in 
 ```ruby
 require 'xcodeproj'
 
-project = Xcodeproj::Project.open('AndroRingTrack.xcodeproj')
-watch_widget_target = project.targets.find { |t| t.name == 'AndroRingTrackWatchWidget' }
+project = Xcodeproj::Project.open('ThermoTrack.xcodeproj')
+watch_widget_target = project.targets.find { |t| t.name == 'ThermoTrackWatchWidget' }
 raise 'watch widget target not found' unless watch_widget_target
 
 def each_buildable_file_recursive(group)
@@ -471,8 +471,8 @@ end
 
 # Reuse the iOS widget's data layer + formatting helper (not part of Shared/)
 # by adding the SAME file references to this target too — no file duplication.
-widget_group = project.main_group.children.find { |g| g.display_name == 'AndroRingTrackWidget' }
-raise 'AndroRingTrackWidget group not found' unless widget_group
+widget_group = project.main_group.children.find { |g| g.display_name == 'ThermoTrackWidget' }
+raise 'ThermoTrackWidget group not found' unless widget_group
 
 reused_names = ['WearStatusEntry.swift', 'WearStatusProvider.swift', 'DurationFormatting.swift']
 reused_added = 0
@@ -496,7 +496,7 @@ puts "sources added: #{added_sources}, resources added: #{added_resources}, reus
 
 ```bash
 ruby link_watch_widget_target.rb
-plutil -lint AndroRingTrack.xcodeproj/project.pbxproj
+plutil -lint ThermoTrack.xcodeproj/project.pbxproj
 ```
 
 Expected: `sources added: 28, resources added: 1, reused widget files added: 3`, `plutil` reports `OK`.
@@ -510,17 +510,17 @@ rm link_watch_widget_target.rb
 - [ ] **Step 7: Build to verify**
 
 ```bash
-xcodebuild build -project AndroRingTrack.xcodeproj -target AndroRingTrackWatchWidget -configuration Debug -destination 'generic/platform=watchOS Simulator' CODE_SIGNING_ALLOWED=NO
-xcodebuild build -project AndroRingTrack.xcodeproj -scheme "WatchAndroRingTrack" -configuration Debug -destination 'generic/platform=watchOS Simulator' CODE_SIGNING_ALLOWED=NO
-xcodebuild build -project AndroRingTrack.xcodeproj -scheme "AndroRingTrack (iOS)" -configuration Debug -destination 'generic/platform=iOS Simulator' CODE_SIGNING_ALLOWED=NO
+xcodebuild build -project ThermoTrack.xcodeproj -target ThermoTrackWatchWidget -configuration Debug -destination 'generic/platform=watchOS Simulator' CODE_SIGNING_ALLOWED=NO
+xcodebuild build -project ThermoTrack.xcodeproj -scheme "WatchThermoTrack" -configuration Debug -destination 'generic/platform=watchOS Simulator' CODE_SIGNING_ALLOWED=NO
+xcodebuild build -project ThermoTrack.xcodeproj -scheme "ThermoTrack (iOS)" -configuration Debug -destination 'generic/platform=iOS Simulator' CODE_SIGNING_ALLOWED=NO
 ```
 
-Expected: all three `** BUILD SUCCEEDED **`. The watch widget target now compiles against the linked `Shared/` sources and the reused `WearStatusEntry`/`WearStatusProvider`/`DurationFormatting` files (still using the Task 1 placeholder bundle). The `WatchAndroRingTrack` build proves `RecordStore`'s now-unconditional `import WidgetKit` compiles on watchOS. The iOS build proves the same for the iOS app + widget targets.
+Expected: all three `** BUILD SUCCEEDED **`. The watch widget target now compiles against the linked `Shared/` sources and the reused `WearStatusEntry`/`WearStatusProvider`/`DurationFormatting` files (still using the Task 1 placeholder bundle). The `WatchThermoTrack` build proves `RecordStore`'s now-unconditional `import WidgetKit` compiles on watchOS. The iOS build proves the same for the iOS app + widget targets.
 
 - [ ] **Step 8: Commit**
 
 ```bash
-git add AndroRingTrack.xcodeproj/project.pbxproj Shared/Stores/SettingsStore.swift Shared/Stores/RecordStore.swift "WatchAndroRingTrack Extension/WatchAndroRingTrack Extension.entitlements"
+git add ThermoTrack.xcodeproj/project.pbxproj Shared/Stores/SettingsStore.swift Shared/Stores/RecordStore.swift "WatchThermoTrack Extension/WatchThermoTrack Extension.entitlements"
 git commit -m "fix(widget): mirror sessionLength to App Group on all platforms and from init; make widget reload cross-platform"
 ```
 
@@ -531,10 +531,10 @@ git commit -m "fix(widget): mirror sessionLength to App Group on all platforms a
 **Files:**
 - Modify: `Shared/en.lproj/Localizable.strings`
 - Modify: `Shared/fr.lproj/Localizable.strings`
-- Create: `AndroRingTrackWatchWidget/Views/WatchWearStatusAccessoryView.swift`
-- Create: `AndroRingTrackWatchWidget/WatchWearStatusWidget.swift`
-- Modify: `AndroRingTrackWatchWidget/AndroRingTrackWatchWidgetBundle.swift`
-- Modify: `AndroRingTrack.xcodeproj/project.pbxproj` (via a one-off Ruby script, deleted after use)
+- Create: `ThermoTrackWatchWidget/Views/WatchWearStatusAccessoryView.swift`
+- Create: `ThermoTrackWatchWidget/WatchWearStatusWidget.swift`
+- Modify: `ThermoTrackWatchWidget/ThermoTrackWatchWidgetBundle.swift`
+- Modify: `ThermoTrack.xcodeproj/project.pbxproj` (via a one-off Ruby script, deleted after use)
 
 **Interfaces:**
 - Consumes: `WearStatusEntry`, `WearStatusProvider` (Task 2), `Double.formattedWidgetDuration()` (Task 2).
@@ -556,7 +556,7 @@ Add to `Shared/fr.lproj/Localizable.strings` (in the existing `// WIDGET` block,
 
 - [ ] **Step 2: Create the accessory view covering all four complication families**
 
-Create `AndroRingTrackWatchWidget/Views/WatchWearStatusAccessoryView.swift`:
+Create `ThermoTrackWatchWidget/Views/WatchWearStatusAccessoryView.swift`:
 
 ```swift
 import SwiftUI
@@ -627,7 +627,7 @@ struct WatchWearStatusAccessoryView: View {
 
 - [ ] **Step 3: Create the widget configuration**
 
-Create `AndroRingTrackWatchWidget/WatchWearStatusWidget.swift`:
+Create `ThermoTrackWatchWidget/WatchWearStatusWidget.swift`:
 
 ```swift
 import WidgetKit
@@ -649,14 +649,14 @@ struct WatchWearStatusWidget: Widget {
 
 - [ ] **Step 4: Replace the placeholder bundle with the real widget**
 
-Edit `AndroRingTrackWatchWidget/AndroRingTrackWatchWidgetBundle.swift` — replace its entire contents:
+Edit `ThermoTrackWatchWidget/ThermoTrackWatchWidgetBundle.swift` — replace its entire contents:
 
 ```swift
 import WidgetKit
 import SwiftUI
 
 @main
-struct AndroRingTrackWatchWidgetBundle: WidgetBundle {
+struct ThermoTrackWatchWidgetBundle: WidgetBundle {
     var body: some Widget {
         WatchWearStatusWidget()
     }
@@ -672,11 +672,11 @@ Create `add_watch_widget_views.rb` at the repo root (temporary — deleted in St
 ```ruby
 require 'xcodeproj'
 
-project = Xcodeproj::Project.open('AndroRingTrack.xcodeproj')
-widget_target = project.targets.find { |t| t.name == 'AndroRingTrackWatchWidget' }
+project = Xcodeproj::Project.open('ThermoTrack.xcodeproj')
+widget_target = project.targets.find { |t| t.name == 'ThermoTrackWatchWidget' }
 raise 'target not found' unless widget_target
 
-widget_group = project.main_group.children.find { |g| g.display_name == 'AndroRingTrackWatchWidget' }
+widget_group = project.main_group.children.find { |g| g.display_name == 'ThermoTrackWatchWidget' }
 raise 'group not found' unless widget_group
 
 views_group = widget_group.new_group('Views', 'Views')
@@ -694,7 +694,7 @@ puts 'OK'
 
 ```bash
 ruby add_watch_widget_views.rb
-plutil -lint AndroRingTrack.xcodeproj/project.pbxproj
+plutil -lint ThermoTrack.xcodeproj/project.pbxproj
 rm add_watch_widget_views.rb
 ```
 
@@ -703,19 +703,19 @@ Expected: `OK`, `plutil` reports `OK`.
 - [ ] **Step 7: Build to verify**
 
 ```bash
-xcodebuild build -project AndroRingTrack.xcodeproj -target AndroRingTrackWatchWidget -configuration Debug -destination 'generic/platform=watchOS Simulator' CODE_SIGNING_ALLOWED=NO
+xcodebuild build -project ThermoTrack.xcodeproj -target ThermoTrackWatchWidget -configuration Debug -destination 'generic/platform=watchOS Simulator' CODE_SIGNING_ALLOWED=NO
 ```
 
 Expected: `** BUILD SUCCEEDED **`.
 
 - [ ] **Step 8: Manual check in Xcode's widget preview**
 
-Open `AndroRingTrack.xcodeproj` in Xcode, open `WatchWearStatusAccessoryView.swift`, and use the canvas preview (or add a `#Preview` block) to confirm all four families (`.accessoryCircular`, `.accessoryCorner`, `.accessoryRectangular`, `.accessoryInline`) render without clipping for both worn and off states. This is a visual spot-check, not an automated step — note in the task's final review whether it was done.
+Open `ThermoTrack.xcodeproj` in Xcode, open `WatchWearStatusAccessoryView.swift`, and use the canvas preview (or add a `#Preview` block) to confirm all four families (`.accessoryCircular`, `.accessoryCorner`, `.accessoryRectangular`, `.accessoryInline`) render without clipping for both worn and off states. This is a visual spot-check, not an automated step — note in the task's final review whether it was done.
 
 - [ ] **Step 9: Commit**
 
 ```bash
-git add AndroRingTrackWatchWidget AndroRingTrack.xcodeproj/project.pbxproj Shared/en.lproj/Localizable.strings Shared/fr.lproj/Localizable.strings
+git add ThermoTrackWatchWidget ThermoTrack.xcodeproj/project.pbxproj Shared/en.lproj/Localizable.strings Shared/fr.lproj/Localizable.strings
 git commit -m "feat(watch-widget): add complication + Smart Stack widget UI for all accessory families"
 ```
 
@@ -724,17 +724,17 @@ git commit -m "feat(watch-widget): add complication + Smart Stack widget UI for 
 ### Task 4: Remove the legacy ClockKit complications
 
 **Files:**
-- Delete: `WatchAndroRingTrack Extension/ComplicationController.swift`
-- Delete: `WatchAndroRingTrack Extension/Views/Elements/Complications.swift`
-- Delete: `WatchAndroRingTrack Extension/Assets.xcassets/Complication.complicationset` (directory)
-- Modify: `WatchAndroRingTrack Extension/Info.plist`
-- Modify: `AndroRingTrack.xcodeproj/project.pbxproj` (via a one-off Ruby script, deleted after use)
+- Delete: `WatchThermoTrack Extension/ComplicationController.swift`
+- Delete: `WatchThermoTrack Extension/Views/Elements/Complications.swift`
+- Delete: `WatchThermoTrack Extension/Assets.xcassets/Complication.complicationset` (directory)
+- Modify: `WatchThermoTrack Extension/Info.plist`
+- Modify: `ThermoTrack.xcodeproj/project.pbxproj` (via a one-off Ruby script, deleted after use)
 
 **Interfaces:** None — this task only removes now-superseded code; nothing added here is consumed elsewhere.
 
 - [ ] **Step 1: Remove the `CLKComplicationPrincipalClass` key**
 
-Edit `WatchAndroRingTrack Extension/Info.plist` — remove this key/value pair:
+Edit `WatchThermoTrack Extension/Info.plist` — remove this key/value pair:
 
 ```xml
 	<key>CLKComplicationPrincipalClass</key>
@@ -748,7 +748,7 @@ Create `remove_clockkit_complications.rb` at the repo root (temporary — delete
 ```ruby
 require 'xcodeproj'
 
-project = Xcodeproj::Project.open('AndroRingTrack.xcodeproj')
+project = Xcodeproj::Project.open('ThermoTrack.xcodeproj')
 
 names_to_remove = ['ComplicationController.swift', 'Complications.swift']
 removed = 0
@@ -768,7 +768,7 @@ puts "removed: #{removed}"
 
 ```bash
 ruby remove_clockkit_complications.rb
-plutil -lint AndroRingTrack.xcodeproj/project.pbxproj
+plutil -lint ThermoTrack.xcodeproj/project.pbxproj
 ```
 
 Expected: `removed: 2`, `plutil` reports `OK`.
@@ -776,24 +776,24 @@ Expected: `removed: 2`, `plutil` reports `OK`.
 - [ ] **Step 4: Delete the physical files and the script**
 
 ```bash
-rm "WatchAndroRingTrack Extension/ComplicationController.swift"
-rm "WatchAndroRingTrack Extension/Views/Elements/Complications.swift"
-rm -rf "WatchAndroRingTrack Extension/Assets.xcassets/Complication.complicationset"
+rm "WatchThermoTrack Extension/ComplicationController.swift"
+rm "WatchThermoTrack Extension/Views/Elements/Complications.swift"
+rm -rf "WatchThermoTrack Extension/Assets.xcassets/Complication.complicationset"
 rm remove_clockkit_complications.rb
 ```
 
 - [ ] **Step 5: Build to verify**
 
 ```bash
-xcodebuild build -project AndroRingTrack.xcodeproj -scheme "WatchAndroRingTrack" -configuration Debug -destination 'generic/platform=watchOS Simulator' CODE_SIGNING_ALLOWED=NO
+xcodebuild build -project ThermoTrack.xcodeproj -scheme "WatchThermoTrack" -configuration Debug -destination 'generic/platform=watchOS Simulator' CODE_SIGNING_ALLOWED=NO
 ```
 
-Expected: `** BUILD SUCCEEDED **` — proves `WatchAndroRingTrack Extension` still compiles/links with `ComplicationController`/`Complications` gone (nothing else in the codebase references `ComplicationIdentifier`, `Complications`, or `ComplicationDisplayedData`).
+Expected: `** BUILD SUCCEEDED **` — proves `WatchThermoTrack Extension` still compiles/links with `ComplicationController`/`Complications` gone (nothing else in the codebase references `ComplicationIdentifier`, `Complications`, or `ComplicationDisplayedData`).
 
 - [ ] **Step 6: Commit**
 
 ```bash
-git add -A "WatchAndroRingTrack Extension" AndroRingTrack.xcodeproj/project.pbxproj
+git add -A "WatchThermoTrack Extension" ThermoTrack.xcodeproj/project.pbxproj
 git commit -m "refactor(watch-widget): remove legacy ClockKit complications, superseded by WidgetKit"
 ```
 
@@ -808,16 +808,16 @@ git commit -m "refactor(watch-widget): remove legacy ClockKit complications, sup
 - [ ] **Step 1: Build every scheme**
 
 ```bash
-xcodebuild build -project AndroRingTrack.xcodeproj -scheme "AndroRingTrack (iOS)" -configuration Debug -destination 'generic/platform=iOS Simulator' CODE_SIGNING_ALLOWED=NO
-xcodebuild build -project AndroRingTrack.xcodeproj -scheme "WatchAndroRingTrack" -configuration Debug -destination 'generic/platform=watchOS Simulator' CODE_SIGNING_ALLOWED=NO
+xcodebuild build -project ThermoTrack.xcodeproj -scheme "ThermoTrack (iOS)" -configuration Debug -destination 'generic/platform=iOS Simulator' CODE_SIGNING_ALLOWED=NO
+xcodebuild build -project ThermoTrack.xcodeproj -scheme "WatchThermoTrack" -configuration Debug -destination 'generic/platform=watchOS Simulator' CODE_SIGNING_ALLOWED=NO
 ```
 
-Expected: both `** BUILD SUCCEEDED **`. The `WatchAndroRingTrack` build is the first point at which the "Embed App Extensions" wiring from Task 1 (embedding `AndroRingTrackWatchWidget` alongside `WatchAndroRingTrack Extension`) is verified together, not just the widget target in isolation.
+Expected: both `** BUILD SUCCEEDED **`. The `WatchThermoTrack` build is the first point at which the "Embed App Extensions" wiring from Task 1 (embedding `ThermoTrackWatchWidget` alongside `WatchThermoTrack Extension`) is verified together, not just the widget target in isolation.
 
 - [ ] **Step 2: Manual on-device/simulator check**
 
-Run the `WatchAndroRingTrack` scheme on a watchOS 9+ simulator or device:
-- Long-press a watch face, edit it, and confirm `AndroRingTrackWatchWidget` is selectable as a complication in at least one family (e.g. a modular/infograph face's circular or corner slot) — it should show the current wear status and gauge.
+Run the `WatchThermoTrack` scheme on a watchOS 9+ simulator or device:
+- Long-press a watch face, edit it, and confirm `ThermoTrackWatchWidget` is selectable as a complication in at least one family (e.g. a modular/infograph face's circular or corner slot) — it should show the current wear status and gauge.
 - Press the Digital Crown to open the Smart Stack and confirm the same widget appears there in its rectangular layout.
 - Toggle wear status from the iPhone app, then confirm the watch complication/widget updates (allow up to the 15 min/1h refresh window from `WearStatusProvider`, or force a refresh by re-opening the watch face editor).
 

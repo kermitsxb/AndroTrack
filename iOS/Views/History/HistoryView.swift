@@ -1,6 +1,6 @@
 //
 //  HistoryView.swift
-//  AndroRingTrack
+//  ThermoTrack
 //
 //  Created by Benoit Sida on 2021-07-13.
 //
@@ -65,7 +65,7 @@ struct HistoryView: View {
                 isPresented: $showExporter,
                 document: document,
                 contentType: .plainText,
-                defaultFilename: "AndroRingTrack_export_\(Date().compactDate()).csv"
+                defaultFilename: "ThermoTrack_export_\(Date().compactDate()).csv"
             ) { result in
                 lastExportResult = result
                 showConfirmModal = true

@@ -1,6 +1,6 @@
 //
 //  RequestPermission.swift
-//  AndroRingTrack
+//  ThermoTrack
 //
 //  Created by Benoit Sida on 2021-07-20.
 //

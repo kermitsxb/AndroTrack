@@ -1,6 +1,6 @@
 //
 //  when.swift
-//  AndroRingTrack (iOS)
+//  ThermoTrack (iOS)
 //
 //  Created by Benoit Sida on 2021-09-19.
 //

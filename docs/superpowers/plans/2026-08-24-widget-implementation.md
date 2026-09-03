@@ -1,10 +1,10 @@
-# AndroRingTrack Widget Implementation Plan
+# ThermoTrack Widget Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Add a WidgetKit extension (Home Screen small/medium + Lock Screen accessory widgets) showing wear status and today's worn duration, with an iOS 17+ interactive toggle, reusing `Shared/` business logic directly.
 
-**Architecture:** A new `AndroRingTrackWidget` app-extension target links `Shared/` the same way `iOS/` and `WatchAndroRingTrack Extension/` already do. It reads `HealthKitService`/`SettingsStore` directly for its `TimelineProvider` (no App Group, no IPC) and calls `RecordStore.shared.markAsWorn()/markAsRemoved()` from an `AppIntent` for the interactive toggle. `RecordStore` gains a small `#if os(iOS)` hook to reload widget timelines after a successful HealthKit write.
+**Architecture:** A new `ThermoTrackWidget` app-extension target links `Shared/` the same way `iOS/` and `WatchThermoTrack Extension/` already do. It reads `HealthKitService`/`SettingsStore` directly for its `TimelineProvider` (no App Group, no IPC) and calls `RecordStore.shared.markAsWorn()/markAsRemoved()` from an `AppIntent` for the interactive toggle. `RecordStore` gains a small `#if os(iOS)` hook to reload widget timelines after a successful HealthKit write.
 
 **Tech Stack:** Swift 5.0, WidgetKit, AppIntents (iOS 17+), the existing HealthKit-backed `Shared/` layer. Target creation is done by scripting the `xcodeproj` Ruby gem (already installed: `xcodeproj 1.27.0`) rather than the Xcode GUI.
 
@@ -25,24 +25,24 @@
 
 ---
 
-### Task 1: Scaffold the `AndroRingTrackWidget` Xcode target
+### Task 1: Scaffold the `ThermoTrackWidget` Xcode target
 
 **Files:**
-- Create: `AndroRingTrackWidget/Info.plist`
-- Create: `AndroRingTrackWidget/AndroRingTrackWidget.entitlements`
-- Create: `AndroRingTrackWidget/AndroRingTrackWidgetBundle.swift`
-- Modify: `AndroRingTrack.xcodeproj/project.pbxproj` (via a one-off Ruby script, deleted after use)
+- Create: `ThermoTrackWidget/Info.plist`
+- Create: `ThermoTrackWidget/ThermoTrackWidget.entitlements`
+- Create: `ThermoTrackWidget/ThermoTrackWidgetBundle.swift`
+- Modify: `ThermoTrack.xcodeproj/project.pbxproj` (via a one-off Ruby script, deleted after use)
 
 **Interfaces:**
-- Produces: an Xcode target named `AndroRingTrackWidget` (product type `com.apple.product-type.app-extension`, bundle id `com.astralym.AndroRingTrack.widget`), embedded in the `AndroRingTrack (iOS)` app target via a new "Embed Foundation Extensions" copy-files phase, with its own auto-created scheme. A placeholder `@main` `WidgetBundle` so the target builds standalone before any real data wiring exists.
+- Produces: an Xcode target named `ThermoTrackWidget` (product type `com.apple.product-type.app-extension`, bundle id `com.astralym.AndroThermoTrack.widget`), embedded in the `ThermoTrack (iOS)` app target via a new "Embed Foundation Extensions" copy-files phase, with its own auto-created scheme. A placeholder `@main` `WidgetBundle` so the target builds standalone before any real data wiring exists.
 
 - [ ] **Step 1: Create the widget extension directory and Info.plist**
 
 ```bash
-mkdir -p AndroRingTrackWidget
+mkdir -p ThermoTrackWidget
 ```
 
-Create `AndroRingTrackWidget/Info.plist`:
+Create `ThermoTrackWidget/Info.plist`:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -52,7 +52,7 @@ Create `AndroRingTrackWidget/Info.plist`:
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>AndroRingTrackWidget</string>
+	<string>ThermoTrackWidget</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -73,16 +73,16 @@ Create `AndroRingTrackWidget/Info.plist`:
 		<string>com.apple.widgetkit-extension</string>
 	</dict>
 	<key>NSHealthShareUsageDescription</key>
-	<string>AndroRingTrack a besoin de votre autorisation pour afficher les statistiques du port de l'anneau.</string>
+	<string>ThermoTrack a besoin de votre autorisation pour afficher les statistiques du port de l'anneau.</string>
 	<key>NSHealthUpdateUsageDescription</key>
-	<string>AndroRingTrack a besoin de votre autorisation pour mettre à jour les statistiques du port de l'anneau.</string>
+	<string>ThermoTrack a besoin de votre autorisation pour mettre à jour les statistiques du port de l'anneau.</string>
 </dict>
 </plist>
 ```
 
 - [ ] **Step 2: Create the entitlements file**
 
-Create `AndroRingTrackWidget/AndroRingTrackWidget.entitlements`:
+Create `ThermoTrackWidget/ThermoTrackWidget.entitlements`:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -99,7 +99,7 @@ Create `AndroRingTrackWidget/AndroRingTrackWidget.entitlements`:
 
 - [ ] **Step 3: Create a placeholder widget bundle**
 
-Create `AndroRingTrackWidget/AndroRingTrackWidgetBundle.swift`:
+Create `ThermoTrackWidget/ThermoTrackWidgetBundle.swift`:
 
 ```swift
 import WidgetKit
@@ -128,14 +128,14 @@ struct PlaceholderWidget: Widget {
 
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: PlaceholderProvider()) { _ in
-            Text("AndroRingTrack")
+            Text("ThermoTrack")
         }
         .supportedFamilies([.systemSmall])
     }
 }
 
 @main
-struct AndroRingTrackWidgetBundle: WidgetBundle {
+struct ThermoTrackWidgetBundle: WidgetBundle {
     var body: some Widget {
         PlaceholderWidget()
     }
@@ -151,21 +151,21 @@ Create `add_widget_target.rb` at the repo root (temporary — deleted in Step 7)
 ```ruby
 require 'xcodeproj'
 
-project = Xcodeproj::Project.open('AndroRingTrack.xcodeproj')
-app_target = project.targets.find { |t| t.name == 'AndroRingTrack (iOS)' }
+project = Xcodeproj::Project.open('ThermoTrack.xcodeproj')
+app_target = project.targets.find { |t| t.name == 'ThermoTrack (iOS)' }
 raise 'app target not found' unless app_target
 
 # 1. Group for the new target's files (physical dir already created in Step 1)
-widget_group = project.main_group.new_group('AndroRingTrackWidget', 'AndroRingTrackWidget')
+widget_group = project.main_group.new_group('ThermoTrackWidget', 'ThermoTrackWidget')
 
 # 2. New app-extension target
-widget_target = project.new_target(:app_extension, 'AndroRingTrackWidget', :ios, '15.0', nil, :swift)
+widget_target = project.new_target(:app_extension, 'ThermoTrackWidget', :ios, '15.0', nil, :swift)
 
 widget_target.build_configurations.each do |bc|
-  bc.build_settings['PRODUCT_BUNDLE_IDENTIFIER'] = 'com.astralym.AndroRingTrack.widget'
+  bc.build_settings['PRODUCT_BUNDLE_IDENTIFIER'] = 'com.astralym.AndroThermoTrack.widget'
   bc.build_settings['PRODUCT_NAME'] = '$(TARGET_NAME)'
-  bc.build_settings['INFOPLIST_FILE'] = 'AndroRingTrackWidget/Info.plist'
-  bc.build_settings['CODE_SIGN_ENTITLEMENTS'] = 'AndroRingTrackWidget/AndroRingTrackWidget.entitlements'
+  bc.build_settings['INFOPLIST_FILE'] = 'ThermoTrackWidget/Info.plist'
+  bc.build_settings['CODE_SIGN_ENTITLEMENTS'] = 'ThermoTrackWidget/ThermoTrackWidget.entitlements'
   bc.build_settings['CODE_SIGN_STYLE'] = 'Automatic'
   bc.build_settings['DEVELOPMENT_TEAM'] = '8CKMCXN74P'
   bc.build_settings['SWIFT_VERSION'] = '5.0'
@@ -176,12 +176,12 @@ widget_target.build_configurations.each do |bc|
 end
 
 # 3. Placeholder source file reference (physical file created in Step 3)
-bundle_file_ref = widget_group.new_reference('AndroRingTrackWidgetBundle.swift')
+bundle_file_ref = widget_group.new_reference('ThermoTrackWidgetBundle.swift')
 widget_target.source_build_phase.add_file_reference(bundle_file_ref)
 
 # 4. Info.plist + entitlements file references (physical files created in Steps 1-2)
 widget_group.new_reference('Info.plist')
-widget_group.new_reference('AndroRingTrackWidget.entitlements')
+widget_group.new_reference('ThermoTrackWidget.entitlements')
 
 # 5. Embed the extension in the app target
 app_target.add_dependency(widget_target)
@@ -201,24 +201,24 @@ puts project.targets.map(&:name).inspect
 ruby add_widget_target.rb
 ```
 
-Expected output: `OK` followed by a target list that includes `"AndroRingTrackWidget"`.
+Expected output: `OK` followed by a target list that includes `"ThermoTrackWidget"`.
 
 - [ ] **Step 6: Verify the project file and build the new target**
 
 ```bash
-plutil -lint AndroRingTrack.xcodeproj/project.pbxproj
-xcodebuild -list -project AndroRingTrack.xcodeproj
-xcodebuild build -project AndroRingTrack.xcodeproj -target AndroRingTrackWidget -configuration Debug -destination 'generic/platform=iOS Simulator' CODE_SIGNING_ALLOWED=NO
+plutil -lint ThermoTrack.xcodeproj/project.pbxproj
+xcodebuild -list -project ThermoTrack.xcodeproj
+xcodebuild build -project ThermoTrack.xcodeproj -target ThermoTrackWidget -configuration Debug -destination 'generic/platform=iOS Simulator' CODE_SIGNING_ALLOWED=NO
 ```
 
-Expected: `plutil` reports `OK`; `-list` shows `AndroRingTrackWidget` under both Targets and Schemes; the build succeeds (`** BUILD SUCCEEDED **`).
+Expected: `plutil` reports `OK`; `-list` shows `ThermoTrackWidget` under both Targets and Schemes; the build succeeds (`** BUILD SUCCEEDED **`).
 
 - [ ] **Step 7: Delete the one-off script and commit**
 
 ```bash
 rm add_widget_target.rb
-git add AndroRingTrackWidget AndroRingTrack.xcodeproj/project.pbxproj
-git commit -m "feat(widget): scaffold AndroRingTrackWidget extension target"
+git add ThermoTrackWidget ThermoTrack.xcodeproj/project.pbxproj
+git commit -m "feat(widget): scaffold ThermoTrackWidget extension target"
 ```
 
 ---
@@ -226,11 +226,11 @@ git commit -m "feat(widget): scaffold AndroRingTrackWidget extension target"
 ### Task 2: Link `Shared/` into the widget target and add the data layer
 
 **Files:**
-- Modify: `AndroRingTrack.xcodeproj/project.pbxproj` (via a one-off Ruby script, deleted after use)
+- Modify: `ThermoTrack.xcodeproj/project.pbxproj` (via a one-off Ruby script, deleted after use)
 - Modify: `Shared/en.lproj/Localizable.strings`
 - Modify: `Shared/fr.lproj/Localizable.strings`
-- Create: `AndroRingTrackWidget/WearStatusEntry.swift`
-- Create: `AndroRingTrackWidget/WearStatusProvider.swift`
+- Create: `ThermoTrackWidget/WearStatusEntry.swift`
+- Create: `ThermoTrackWidget/WearStatusProvider.swift`
 
 **Interfaces:**
 - Consumes: `RingState` (`.worn`/`.off`), `HealthKitService.shared.healthKitAuthorizationStatus`, `HealthKitService.shared.fetchRecords(completion:)`, `Record` (`start`, `end`), `Day(records:)` / `Day.duration`, `SettingsStore.shared.sessionLength`, `AppLogger.error(context:_:)` — all from `Shared/`.
@@ -243,8 +243,8 @@ Create `link_shared_target.rb` at the repo root (temporary — deleted in Step 3
 ```ruby
 require 'xcodeproj'
 
-project = Xcodeproj::Project.open('AndroRingTrack.xcodeproj')
-widget_target = project.targets.find { |t| t.name == 'AndroRingTrackWidget' }
+project = Xcodeproj::Project.open('ThermoTrack.xcodeproj')
+widget_target = project.targets.find { |t| t.name == 'ThermoTrackWidget' }
 raise 'widget target not found' unless widget_target
 
 shared_group = project.main_group.children.find { |g| g.display_name == 'Shared' }
@@ -295,7 +295,7 @@ puts "sources added: #{added_sources}, resources added: #{added_resources}"
 
 ```bash
 ruby link_shared_target.rb
-plutil -lint AndroRingTrack.xcodeproj/project.pbxproj
+plutil -lint ThermoTrack.xcodeproj/project.pbxproj
 ```
 
 Expected: `sources added: 28, resources added: 1` (all `Shared/**/*.swift` files plus the `Localizable.strings` variant group), `plutil` reports `OK`.
@@ -328,7 +328,7 @@ Add to `Shared/fr.lproj/Localizable.strings` (after the `// STATS_VIEW` block):
 
 - [ ] **Step 5: Create the timeline entry model**
 
-Create `AndroRingTrackWidget/WearStatusEntry.swift`:
+Create `ThermoTrackWidget/WearStatusEntry.swift`:
 
 ```swift
 import WidgetKit
@@ -346,7 +346,7 @@ struct WearStatusEntry: TimelineEntry {
 
 - [ ] **Step 6: Create the timeline provider**
 
-Create `AndroRingTrackWidget/WearStatusProvider.swift`:
+Create `ThermoTrackWidget/WearStatusProvider.swift`:
 
 ```swift
 import WidgetKit
@@ -430,7 +430,7 @@ struct WearStatusProvider: TimelineProvider {
 - [ ] **Step 7: Build to verify it compiles**
 
 ```bash
-xcodebuild build -project AndroRingTrack.xcodeproj -target AndroRingTrackWidget -configuration Debug -destination 'generic/platform=iOS Simulator' CODE_SIGNING_ALLOWED=NO
+xcodebuild build -project ThermoTrack.xcodeproj -target ThermoTrackWidget -configuration Debug -destination 'generic/platform=iOS Simulator' CODE_SIGNING_ALLOWED=NO
 ```
 
 Expected: `** BUILD SUCCEEDED **`. (The placeholder widget from Task 1 doesn't use `WearStatusProvider` yet — this step only proves `WearStatusEntry`/`WearStatusProvider` compile against the now-linked `Shared/` sources.)
@@ -438,7 +438,7 @@ Expected: `** BUILD SUCCEEDED **`. (The placeholder widget from Task 1 doesn't u
 - [ ] **Step 8: Commit**
 
 ```bash
-git add AndroRingTrack.xcodeproj/project.pbxproj Shared/en.lproj/Localizable.strings Shared/fr.lproj/Localizable.strings AndroRingTrackWidget/WearStatusEntry.swift AndroRingTrackWidget/WearStatusProvider.swift
+git add ThermoTrack.xcodeproj/project.pbxproj Shared/en.lproj/Localizable.strings Shared/fr.lproj/Localizable.strings ThermoTrackWidget/WearStatusEntry.swift ThermoTrackWidget/WearStatusProvider.swift
 git commit -m "feat(widget): link Shared/ into widget target, add timeline data layer"
 ```
 
@@ -447,10 +447,10 @@ git commit -m "feat(widget): link Shared/ into widget target, add timeline data 
 ### Task 3: Home Screen widget UI (small/medium)
 
 **Files:**
-- Create: `AndroRingTrackWidget/Views/DurationFormatting.swift`
-- Create: `AndroRingTrackWidget/Views/WearStatusWidgetView.swift`
-- Create: `AndroRingTrackWidget/WearStatusWidget.swift`
-- Modify: `AndroRingTrackWidget/AndroRingTrackWidgetBundle.swift`
+- Create: `ThermoTrackWidget/Views/DurationFormatting.swift`
+- Create: `ThermoTrackWidget/Views/WearStatusWidgetView.swift`
+- Create: `ThermoTrackWidget/WearStatusWidget.swift`
+- Modify: `ThermoTrackWidget/ThermoTrackWidgetBundle.swift`
 
 **Interfaces:**
 - Consumes: `WearStatusEntry`, `WearStatusProvider` (Task 2).
@@ -458,7 +458,7 @@ git commit -m "feat(widget): link Shared/ into widget target, add timeline data 
 
 - [ ] **Step 1: Add the duration formatting helper**
 
-Create `AndroRingTrackWidget/Views/DurationFormatting.swift`:
+Create `ThermoTrackWidget/Views/DurationFormatting.swift`:
 
 ```swift
 import Foundation
@@ -476,7 +476,7 @@ extension Double {
 
 - [ ] **Step 2: Create the small/medium view**
 
-Create `AndroRingTrackWidget/Views/WearStatusWidgetView.swift`:
+Create `ThermoTrackWidget/Views/WearStatusWidgetView.swift`:
 
 ```swift
 import SwiftUI
@@ -556,7 +556,7 @@ struct WearStatusWidgetView: View {
 
 - [ ] **Step 3: Create the widget configuration**
 
-Create `AndroRingTrackWidget/WearStatusWidget.swift`:
+Create `ThermoTrackWidget/WearStatusWidget.swift`:
 
 ```swift
 import WidgetKit
@@ -578,14 +578,14 @@ struct WearStatusWidget: Widget {
 
 - [ ] **Step 4: Replace the placeholder bundle with the real widget**
 
-Edit `AndroRingTrackWidget/AndroRingTrackWidgetBundle.swift` — replace its entire contents:
+Edit `ThermoTrackWidget/ThermoTrackWidgetBundle.swift` — replace its entire contents:
 
 ```swift
 import WidgetKit
 import SwiftUI
 
 @main
-struct AndroRingTrackWidgetBundle: WidgetBundle {
+struct ThermoTrackWidgetBundle: WidgetBundle {
     var body: some Widget {
         WearStatusWidget()
     }
@@ -597,19 +597,19 @@ struct AndroRingTrackWidgetBundle: WidgetBundle {
 - [ ] **Step 5: Build to verify**
 
 ```bash
-xcodebuild build -project AndroRingTrack.xcodeproj -target AndroRingTrackWidget -configuration Debug -destination 'generic/platform=iOS Simulator' CODE_SIGNING_ALLOWED=NO
+xcodebuild build -project ThermoTrack.xcodeproj -target ThermoTrackWidget -configuration Debug -destination 'generic/platform=iOS Simulator' CODE_SIGNING_ALLOWED=NO
 ```
 
 Expected: `** BUILD SUCCEEDED **`.
 
 - [ ] **Step 6: Manual check in Xcode's widget preview**
 
-Open `AndroRingTrack.xcodeproj` in Xcode, open `WearStatusWidgetView.swift`, and use the canvas preview (or `#Preview` if added) to confirm the small and medium layouts render without clipping for both worn and off states. This is a visual spot-check, not an automated step — note in the task's final review whether it was done.
+Open `ThermoTrack.xcodeproj` in Xcode, open `WearStatusWidgetView.swift`, and use the canvas preview (or `#Preview` if added) to confirm the small and medium layouts render without clipping for both worn and off states. This is a visual spot-check, not an automated step — note in the task's final review whether it was done.
 
 - [ ] **Step 7: Commit**
 
 ```bash
-git add AndroRingTrackWidget
+git add ThermoTrackWidget
 git commit -m "feat(widget): add Home Screen small/medium widget UI"
 ```
 
@@ -618,9 +618,9 @@ git commit -m "feat(widget): add Home Screen small/medium widget UI"
 ### Task 4: Lock Screen accessory widget UI (iOS 16+)
 
 **Files:**
-- Create: `AndroRingTrackWidget/Views/WearStatusAccessoryView.swift`
-- Create: `AndroRingTrackWidget/WearStatusAccessoryWidget.swift`
-- Modify: `AndroRingTrackWidget/AndroRingTrackWidgetBundle.swift`
+- Create: `ThermoTrackWidget/Views/WearStatusAccessoryView.swift`
+- Create: `ThermoTrackWidget/WearStatusAccessoryWidget.swift`
+- Modify: `ThermoTrackWidget/ThermoTrackWidgetBundle.swift`
 
 **Interfaces:**
 - Consumes: `WearStatusEntry`, `WearStatusProvider` (Task 2), `Double.formattedWidgetDuration()` (Task 3).
@@ -628,7 +628,7 @@ git commit -m "feat(widget): add Home Screen small/medium widget UI"
 
 - [ ] **Step 1: Create the accessory view**
 
-Create `AndroRingTrackWidget/Views/WearStatusAccessoryView.swift`:
+Create `ThermoTrackWidget/Views/WearStatusAccessoryView.swift`:
 
 ```swift
 import SwiftUI
@@ -675,7 +675,7 @@ struct WearStatusAccessoryView: View {
 
 - [ ] **Step 2: Create the accessory widget configuration**
 
-Create `AndroRingTrackWidget/WearStatusAccessoryWidget.swift`:
+Create `ThermoTrackWidget/WearStatusAccessoryWidget.swift`:
 
 ```swift
 import WidgetKit
@@ -698,14 +698,14 @@ struct WearStatusAccessoryWidget: Widget {
 
 - [ ] **Step 3: Register it in the bundle**
 
-Edit `AndroRingTrackWidget/AndroRingTrackWidgetBundle.swift`:
+Edit `ThermoTrackWidget/ThermoTrackWidgetBundle.swift`:
 
 ```swift
 import WidgetKit
 import SwiftUI
 
 @main
-struct AndroRingTrackWidgetBundle: WidgetBundle {
+struct ThermoTrackWidgetBundle: WidgetBundle {
     var body: some Widget {
         WearStatusWidget()
         if #available(iOS 16.0, *) {
@@ -718,7 +718,7 @@ struct AndroRingTrackWidgetBundle: WidgetBundle {
 - [ ] **Step 4: Build to verify**
 
 ```bash
-xcodebuild build -project AndroRingTrack.xcodeproj -target AndroRingTrackWidget -configuration Debug -destination 'generic/platform=iOS Simulator' CODE_SIGNING_ALLOWED=NO
+xcodebuild build -project ThermoTrack.xcodeproj -target ThermoTrackWidget -configuration Debug -destination 'generic/platform=iOS Simulator' CODE_SIGNING_ALLOWED=NO
 ```
 
 Expected: `** BUILD SUCCEEDED **`.
@@ -726,7 +726,7 @@ Expected: `** BUILD SUCCEEDED **`.
 - [ ] **Step 5: Commit**
 
 ```bash
-git add AndroRingTrackWidget
+git add ThermoTrackWidget
 git commit -m "feat(widget): add Lock Screen accessory widget UI"
 ```
 
@@ -735,8 +735,8 @@ git commit -m "feat(widget): add Lock Screen accessory widget UI"
 ### Task 5: Interactive toggle (iOS 17+) and timeline reload on state change
 
 **Files:**
-- Create: `AndroRingTrackWidget/ToggleWearIntent.swift`
-- Modify: `AndroRingTrackWidget/Views/WearStatusWidgetView.swift`
+- Create: `ThermoTrackWidget/ToggleWearIntent.swift`
+- Modify: `ThermoTrackWidget/Views/WearStatusWidgetView.swift`
 - Modify: `Shared/Stores/RecordStore.swift`
 
 **Interfaces:**
@@ -745,7 +745,7 @@ git commit -m "feat(widget): add Lock Screen accessory widget UI"
 
 - [ ] **Step 1: Create the App Intent**
 
-Create `AndroRingTrackWidget/ToggleWearIntent.swift`:
+Create `ThermoTrackWidget/ToggleWearIntent.swift`:
 
 ```swift
 import AppIntents
@@ -769,7 +769,7 @@ struct ToggleWearIntent: AppIntent {
 
 - [ ] **Step 2: Wire the intent into the status icon**
 
-Edit `AndroRingTrackWidget/Views/WearStatusWidgetView.swift` — replace the `statusIcon` property:
+Edit `ThermoTrackWidget/Views/WearStatusWidgetView.swift` — replace the `statusIcon` property:
 
 ```swift
     private var statusIcon: some View {
@@ -849,8 +849,8 @@ In `markAsRemoved()`, change both branches:
 - [ ] **Step 4: Build both the widget target and the watchOS target to verify the `#if os(iOS)` guard is correct**
 
 ```bash
-xcodebuild build -project AndroRingTrack.xcodeproj -target AndroRingTrackWidget -configuration Debug -destination 'generic/platform=iOS Simulator' CODE_SIGNING_ALLOWED=NO
-xcodebuild build -project AndroRingTrack.xcodeproj -scheme "WatchAndroRingTrack" -configuration Debug -destination 'generic/platform=watchOS Simulator' CODE_SIGNING_ALLOWED=NO
+xcodebuild build -project ThermoTrack.xcodeproj -target ThermoTrackWidget -configuration Debug -destination 'generic/platform=iOS Simulator' CODE_SIGNING_ALLOWED=NO
+xcodebuild build -project ThermoTrack.xcodeproj -scheme "WatchThermoTrack" -configuration Debug -destination 'generic/platform=watchOS Simulator' CODE_SIGNING_ALLOWED=NO
 ```
 
 Expected: both `** BUILD SUCCEEDED **` — the watchOS build proves `RecordStore.swift` still compiles without `WidgetKit` (which isn't imported there).
@@ -858,7 +858,7 @@ Expected: both `** BUILD SUCCEEDED **` — the watchOS build proves `RecordStore
 - [ ] **Step 5: Commit**
 
 ```bash
-git add AndroRingTrackWidget Shared/Stores/RecordStore.swift
+git add ThermoTrackWidget Shared/Stores/RecordStore.swift
 git commit -m "feat(widget): add interactive iOS 17+ toggle and timeline reload triggers"
 ```
 
@@ -874,11 +874,11 @@ git commit -m "feat(widget): add interactive iOS 17+ toggle and timeline reload 
 - [ ] **Step 1: Build every target**
 
 ```bash
-xcodebuild build -project AndroRingTrack.xcodeproj -scheme "AndroRingTrack (iOS)" -configuration Debug -destination 'generic/platform=iOS Simulator' CODE_SIGNING_ALLOWED=NO
-xcodebuild build -project AndroRingTrack.xcodeproj -scheme "WatchAndroRingTrack" -configuration Debug -destination 'generic/platform=watchOS Simulator' CODE_SIGNING_ALLOWED=NO
+xcodebuild build -project ThermoTrack.xcodeproj -scheme "ThermoTrack (iOS)" -configuration Debug -destination 'generic/platform=iOS Simulator' CODE_SIGNING_ALLOWED=NO
+xcodebuild build -project ThermoTrack.xcodeproj -scheme "WatchThermoTrack" -configuration Debug -destination 'generic/platform=watchOS Simulator' CODE_SIGNING_ALLOWED=NO
 ```
 
-Expected: both `** BUILD SUCCEEDED **`. The first command builds `AndroRingTrack (iOS)` with the widget extension embedded (via the "Embed Foundation Extensions" phase from Task 1) — this is the first point at which the embed wiring itself, not just the widget target in isolation, is verified.
+Expected: both `** BUILD SUCCEEDED **`. The first command builds `ThermoTrack (iOS)` with the widget extension embedded (via the "Embed Foundation Extensions" phase from Task 1) — this is the first point at which the embed wiring itself, not just the widget target in isolation, is verified.
 
 - [ ] **Step 2: Update the README**
 
@@ -903,4 +903,4 @@ git commit -m "docs: mark Widget as implemented in README"
 
 - [ ] **Step 4: Manual on-device/simulator check**
 
-Run the `AndroRingTrack (iOS)` scheme on a simulator or device, add the widget from the Home Screen widget gallery (and, on iOS 16+/17+ hardware, the Lock Screen), and confirm: the widget shows the correct wear status and duration, updates after toggling wear status in the app, and (iOS 17+) the tap-to-toggle button works from the widget itself. This is manual verification with no CLI equivalent — note the outcome when closing out this task.
+Run the `ThermoTrack (iOS)` scheme on a simulator or device, add the widget from the Home Screen widget gallery (and, on iOS 16+/17+ hardware, the Lock Screen), and confirm: the widget shows the correct wear status and duration, updates after toggling wear status in the app, and (iOS 17+) the tap-to-toggle button works from the widget itself. This is manual verification with no CLI equivalent — note the outcome when closing out this task.
