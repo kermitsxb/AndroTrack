@@ -79,7 +79,7 @@ struct RequirementView: View {
             } else {
                 RequestPermission(
                     title: "HEALTHKIT_ACCESS.TITLE".localized,
-                    description: "HEALTHKIT_ACCESS.DESCRIPTION_2".localized,
+                    description: "HEALTHKIT_ACCESS.DESCRIPTION_1".localized,
                     illustrationName: "HealthKitPermission",
                     requestPermissionAction: requestAuthorization
                 ).onAppear(perform: updateHKRequestStatus)

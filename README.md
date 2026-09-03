@@ -1,5 +1,5 @@
 # AndroRingTrack
-AndroSwitch masculine contraceptive ring companion app
+Companion app for thermal masculine contraceptive rings: track wear sessions, history and stats.
 
 iOS and  Watch application to manage time while wearing the contraceptive device
 

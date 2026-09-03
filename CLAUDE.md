@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project overview
 
-AndroRingTrack is a SwiftUI iOS + watchOS companion app for the AndroSwitch masculine contraceptive ring. It tracks wear sessions (start/stop timing, history, stats) with HealthKit as the single source of truth for session data, and syncs settings between iPhone and Watch via WatchConnectivity.
+AndroRingTrack is a SwiftUI iOS + watchOS companion app for thermal masculine contraceptive rings (no brand affiliation). It tracks wear sessions (start/stop timing, history, stats) with HealthKit as the single source of truth for session data, and syncs settings between iPhone and Watch via WatchConnectivity.
 
 ## Build & run
 

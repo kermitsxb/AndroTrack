@@ -69,7 +69,7 @@ class HealthKitService {
                             type: self.contraceptiveType,
                             value: HKCategoryValueContraceptive.unspecified.rawValue,
                             start: start, end: end,
-                            metadata: ["name": "AndroSwitch"]
+                            metadata: nil
                         )
 
                         self.store.save(contraceptiveSample) { (success, error) in
@@ -156,7 +156,7 @@ class HealthKitService {
                     type: self.contraceptiveType,
                     value: HKCategoryValueContraceptive.unspecified.rawValue,
                     start: start, end: record.end ?? start,
-                    metadata: ["name": "AndroSwitch"]
+                    metadata: nil
                 )
 
                 self.store.save(contraceptiveSample) { (success, error) in
