@@ -8,17 +8,20 @@ ThermoTrack is a SwiftUI iOS + watchOS companion app for thermal masculine contr
 
 ## Build & run
 
-This is an Xcode project (no SPM/CocoaPods package manifest, no CLI test runner configured). Use Xcode or `xcodebuild`:
+This is an Xcode project (no SPM/CocoaPods package manifest). The project file is still named `AndroRingTrack.xcodeproj` and schemes keep the `AndroRingTrack` prefix. Use Xcode or `xcodebuild`:
 
 ```bash
 # Build the iOS app
-xcodebuild -project ThermoTrack.xcodeproj -scheme "ThermoTrack (iOS)" -configuration Debug build
+xcodebuild -project AndroRingTrack.xcodeproj -scheme "AndroRingTrack (iOS)" -configuration Debug -destination 'generic/platform=iOS' CODE_SIGNING_ALLOWED=NO build
 
 # Build the Watch app
-xcodebuild -project ThermoTrack.xcodeproj -scheme "WatchThermoTrack" -configuration Debug build
+xcodebuild -project AndroRingTrack.xcodeproj -scheme "WatchAndroRingTrack" -configuration Debug -destination 'generic/platform=watchOS' CODE_SIGNING_ALLOWED=NO build
+
+# Run unit tests
+xcodebuild -project AndroRingTrack.xcodeproj -scheme AndroRingTrackTests -destination 'platform=iOS Simulator,name=iPhone 17 Pro' CODE_SIGNING_ALLOWED=NO test
 ```
 
-There are no test targets in this project — do not assume `xcodebuild test` works.
+Unit tests live in `Tests/` in the `AndroRingTrackTests` target. It has no host app: it compiles the pure model files it needs (`Shared/Models/Day.swift`, `Shared/Models/Record.swift`, `Shared/Extensions/Date+Extension.swift`) directly. Add any new pure-logic source under test to that target's compile sources; code depending on HealthKit, WatchConnectivity or SwiftUI is not testable there.
 
 - Swift version: 5.0
 - Deployment targets: iOS 15.0, watchOS 8.0
