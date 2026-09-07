@@ -33,6 +33,31 @@ struct Day {
         return clippedEnd.timeIntervalSince(clippedStart) / DurationUnit.hours.rawValue
     }
 
+    /// The day used for the "today" goal (Today view, widget, end-of-session notification).
+    ///
+    /// Records overlapping today are clipped to the day like any other day, with one exception:
+    /// a session that started on a previous day and is already over does not count. Its hours
+    /// belong to the cycle it started in; once the ring came off, a new cycle starts at zero
+    /// and the full session length has to be worn again. An ongoing session is always kept,
+    /// even if it started on a previous day, so the current wear time stays visible.
+    static func today(from records: [Record], now: Date = Date()) -> Day {
+        let calendar = Calendar.current
+        let dayStart = calendar.startOfDay(for: now)
+        guard let dayEnd = calendar.date(byAdding: .day, value: 1, to: dayStart) else {
+            return Day(date: now, records: [])
+        }
+
+        let relevant = records.filter { record in
+            guard let start = record.start else { return false }
+            let end = record.end ?? now
+            let overlapsToday = start < dayEnd && end > dayStart
+            let finishedSpillover = record.end != nil && start < dayStart
+            return overlapsToday && !finishedSpillover
+        }
+
+        return Day(date: now, records: relevant)
+    }
+
     func durationAsProgress(goal: Int) -> Double {
         return (duration / Double(goal)) * 100
     }

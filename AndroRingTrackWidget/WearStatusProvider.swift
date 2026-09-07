@@ -42,15 +42,7 @@ struct WearStatusProvider: TimelineProvider {
             }
 
             let allRecords = records ?? []
-            let now = Date()
-            let dayStart = Calendar.current.startOfDay(for: now)
-            let dayEnd = Calendar.current.date(byAdding: .day, value: 1, to: dayStart) ?? now
-            let todayOverlapping = allRecords.filter { record in
-                guard let start = record.start else { return false }
-                let end = record.end ?? now
-                return start < dayEnd && end > dayStart
-            }
-            let today = Day(date: now, records: todayOverlapping)
+            let today = Day.today(from: allRecords)
             let openRecord = allRecords.first(where: { $0.end == nil })
             let state: RingState = openRecord != nil ? .worn : .off
             let sessionStart = openRecord?.start

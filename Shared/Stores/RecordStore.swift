@@ -43,8 +43,10 @@ class RecordStore: ObservableObject {
         }
     }
     
+    /// Today's wear cycle, used for the goal/progress. Unlike `getDay(forDate:)`, a session
+    /// that ended today but started on a previous day is not counted (see `Day.today`).
     var current: Day {
-        return getDay(forDate: Date())
+        return Day.today(from: records)
     }
     
     public func markAsWorn() {
