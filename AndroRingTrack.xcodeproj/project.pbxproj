@@ -1206,7 +1206,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = AndroRingTrackWidget/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				MARKETING_VERSION = 1.0.15;
+				MARKETING_VERSION = 1.0.16;
 				PRODUCT_BUNDLE_IDENTIFIER = com.astralym.AndroRingTrack.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -1232,7 +1232,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0.15;
+				MARKETING_VERSION = 1.0.16;
 				PRODUCT_BUNDLE_IDENTIFIER = com.astralym.AndroRingTrack.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
@@ -1258,7 +1258,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0.15;
+				MARKETING_VERSION = 1.0.16;
 				PRODUCT_BUNDLE_IDENTIFIER = com.astralym.AndroRingTrack.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
@@ -1280,7 +1280,7 @@
 				DEVELOPMENT_TEAM = 8CKMCXN74P;
 				IBSC_MODULE = WatchAndroRingTrack_Extension;
 				INFOPLIST_FILE = WatchAndroRingTrack/Info.plist;
-				MARKETING_VERSION = 1.0.15;
+				MARKETING_VERSION = 1.0.16;
 				PRODUCT_BUNDLE_IDENTIFIER = com.astralym.AndroRingTrack.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
@@ -1301,7 +1301,7 @@
 				DEVELOPMENT_TEAM = 8CKMCXN74P;
 				IBSC_MODULE = WatchAndroRingTrack_Extension;
 				INFOPLIST_FILE = WatchAndroRingTrack/Info.plist;
-				MARKETING_VERSION = 1.0.15;
+				MARKETING_VERSION = 1.0.16;
 				PRODUCT_BUNDLE_IDENTIFIER = com.astralym.AndroRingTrack.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
@@ -1445,7 +1445,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.15;
+				MARKETING_VERSION = 1.0.16;
 				PRODUCT_BUNDLE_IDENTIFIER = com.astralym.AndroRingTrack;
 				PRODUCT_NAME = AndroRingTrack;
 				SDKROOT = iphoneos;
@@ -1469,7 +1469,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.15;
+				MARKETING_VERSION = 1.0.16;
 				PRODUCT_BUNDLE_IDENTIFIER = com.astralym.AndroRingTrack;
 				PRODUCT_NAME = AndroRingTrack;
 				SDKROOT = iphoneos;
@@ -1516,7 +1516,7 @@
 				DEVELOPMENT_TEAM = 8CKMCXN74P;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = AndroRingTrackWatchWidget/Info.plist;
-				MARKETING_VERSION = 1.0.15;
+				MARKETING_VERSION = 1.0.16;
 				PRODUCT_BUNDLE_IDENTIFIER = com.astralym.AndroRingTrack.watchkitapp.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
@@ -1536,7 +1536,7 @@
 				DEVELOPMENT_TEAM = 8CKMCXN74P;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = AndroRingTrackWatchWidget/Info.plist;
-				MARKETING_VERSION = 1.0.15;
+				MARKETING_VERSION = 1.0.16;
 				PRODUCT_BUNDLE_IDENTIFIER = com.astralym.AndroRingTrack.watchkitapp.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
@@ -1557,7 +1557,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = AndroRingTrackWidget/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				MARKETING_VERSION = 1.0.15;
+				MARKETING_VERSION = 1.0.16;
 				PRODUCT_BUNDLE_IDENTIFIER = com.astralym.AndroRingTrack.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
