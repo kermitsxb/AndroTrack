@@ -57,6 +57,21 @@ extension Record {
 }
 
 extension Record {
+    /// How far a HealthKit sample's start date may drift from a record's start and still
+    /// identify the same session (guards against date precision loss in the round-trip).
+    static let startMatchTolerance: TimeInterval = 1
+
+    /// Index of the start date identifying the same session as `start`: the closest one
+    /// within `startMatchTolerance`, or nil. Samples that merely overlap don't match.
+    static func indexOfSession(startingAt start: Date, in starts: [Date]) -> Int? {
+        let gap = { (index: Int) in abs(starts[index].timeIntervalSince(start)) }
+        return starts.indices
+            .filter { gap($0) <= startMatchTolerance }
+            .min { gap($0) < gap($1) }
+    }
+}
+
+extension Record {
     static var today: Record {
         return Record(
             start: Date().addingTimeInterval(-18000),
