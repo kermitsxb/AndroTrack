@@ -33,6 +33,12 @@ enum WearSessionLogic {
     /// Sessions strictly shorter than this are treated as accidental toggles.
     static let minimumSessionMinutes: Double = 3
 
+    /// An ongoing session is stored with end == start, so any fetch window looking for an open
+    /// session must reach back to the start of the longest plausible one, not just today. Shared
+    /// by `WearSessionService` and the widget's own HealthKit fetch so both agree on what counts
+    /// as an open session.
+    static let fetchWindowDays = 7
+
     /// The most recent session without an end date, if any.
     static func openRecord(in records: [Record]) -> Record? {
         records

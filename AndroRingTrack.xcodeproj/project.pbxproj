@@ -19,6 +19,7 @@
 		1877C35ABF5648AA49BFBCCF /* TimeRingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9A6F6E269E3C6C00A78C5C /* TimeRingView.swift */; };
 		18FDFFD3FEDAFC49C517352F /* GetWearStatusIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B864CE7A1BF491231636B088 /* GetWearStatusIntent.swift */; };
 		1B1C714B62673E71CE56FE16 /* WearSessionLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857CB56CEBEF340E74BDBCD9 /* WearSessionLogic.swift */; };
+		7C77053031E4F7DFD4B2478A /* WearSessionLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857CB56CEBEF340E74BDBCD9 /* WearSessionLogic.swift */; };
 		1EEABE7CFF973D3E8EB1CA19 /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9A6F72269E3CBC00A78C5C /* Color+Extension.swift */; };
 		1EF603FF29168B3DF1F8B2E6 /* WearSessionError+Intents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B4D2AA79F3D52DFCCFA856 /* WearSessionError+Intents.swift */; };
 		224CEB9227AB4EDBA4E480B9 /* SettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ADBD5DD26A1D4FF009FDB3D /* SettingsStore.swift */; };
@@ -1169,6 +1170,7 @@
 				FFD417A961B07E269B70E66B /* NotificationType.swift in Sources */,
 				02D811154C8FA406AD2EBDA2 /* RecordStore.swift in Sources */,
 				A7568A4E09F7BE42A5BE2E38 /* SettingsStore.swift in Sources */,
+				7C77053031E4F7DFD4B2478A /* WearSessionLogic.swift in Sources */,
 				A03657BA5543A5196D4560AA /* WearStatusEntry.swift in Sources */,
 				C757F5F13CBFC73C71BDCC85 /* WearStatusProvider.swift in Sources */,
 				01037657422FB479212689B6 /* DurationFormatting.swift in Sources */,

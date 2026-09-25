@@ -33,8 +33,9 @@ struct WearStatusProvider: TimelineProvider {
             return
         }
 
-        let twoDaysAgo = Calendar.current.date(byAdding: .day, value: -2, to: Date()) ?? Date().addingTimeInterval(-2 * 24 * 60 * 60)
-        HealthKitService.shared.fetchRecords(since: twoDaysAgo) { records, error in
+        let windowStart = Calendar.current.date(byAdding: .day, value: -WearSessionLogic.fetchWindowDays, to: Date())
+            ?? Date().addingTimeInterval(-Double(WearSessionLogic.fetchWindowDays) * 24 * 60 * 60)
+        HealthKitService.shared.fetchRecords(since: windowStart) { records, error in
             if let error = error {
                 AppLogger.error(context: "Widget", "Failed to fetch records: \(error.errorDescription ?? "unknown")")
                 completion(self.unauthorizedEntry())
@@ -43,7 +44,7 @@ struct WearStatusProvider: TimelineProvider {
 
             let allRecords = records ?? []
             let today = Day.today(from: allRecords)
-            let openRecord = allRecords.first(where: { $0.end == nil })
+            let openRecord = WearSessionLogic.openRecord(in: allRecords)
             let state: RingState = openRecord != nil ? .worn : .off
             let sessionStart = openRecord?.start
 
