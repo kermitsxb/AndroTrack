@@ -43,7 +43,19 @@ enum WearSession {
             return .alreadyWorn(openRecord)
         }
 
-        try await storeRecord(Record(start: Date()))
+        let start = Date()
+        try await storeRecord(Record(start: start))
+
+        // Another caller (e.g. Siri in the app and the widget in its extension) may have
+        // started a session at the same moment: both saw "not worn" and both wrote a sample.
+        // The earliest one wins; the later caller removes its own and reports it as already worn.
+        if let earlier = try await WearStatus.concurrentStart(before: start, in: fetchRecords()) {
+            AppLogger.info(context: "WearSession", "Concurrent start detected, dropping duplicate session")
+            try await removeRecord(at: start)
+            WidgetCenter.shared.reloadAllTimelines()
+            return .alreadyWorn(earlier)
+        }
+
         WidgetCenter.shared.reloadAllTimelines()
         return .started
     }

@@ -95,4 +95,54 @@ final class WearStatusTests: XCTestCase {
 
         XCTAssertTrue(status.currentSession === newer)
     }
+
+    // MARK: - concurrentStart(before:in:)
+
+    func testConcurrentStartIsNilWhenOnlyOwnSessionIsOpen() {
+        let ownStart = at(0, 8)
+        let own = Record(start: ownStart, end: nil)
+
+        XCTAssertNil(WearStatus.concurrentStart(before: ownStart, in: [own]))
+    }
+
+    func testConcurrentStartIgnoresSubMillisecondRoundTripDrift() {
+        // HealthKit may hand our own sample back with a start a hair off the Date we stored.
+        let ownStart = at(0, 8)
+        let own = Record(start: ownStart.addingTimeInterval(-0.0005), end: nil)
+
+        XCTAssertNil(WearStatus.concurrentStart(before: ownStart, in: [own]))
+    }
+
+    func testConcurrentStartFindsEarlierOpenSessionFromAnotherCaller() {
+        let ownStart = at(0, 8)
+        let own = Record(start: ownStart, end: nil)
+        let other = Record(start: ownStart.addingTimeInterval(-0.4), end: nil)
+
+        XCTAssertTrue(WearStatus.concurrentStart(before: ownStart, in: [own, other]) === other)
+    }
+
+    func testConcurrentStartKeepsOwnSessionWhenTheOtherStartedLater() {
+        // The later caller drops its own sample; the earlier one keeps it.
+        let ownStart = at(0, 8)
+        let own = Record(start: ownStart, end: nil)
+        let later = Record(start: ownStart.addingTimeInterval(0.4), end: nil)
+
+        XCTAssertNil(WearStatus.concurrentStart(before: ownStart, in: [own, later]))
+    }
+
+    func testConcurrentStartIgnoresFinishedSessions() {
+        let ownStart = at(0, 8)
+        let own = Record(start: ownStart, end: nil)
+        let finished = Record(start: at(0, 1), end: at(0, 5))
+
+        XCTAssertNil(WearStatus.concurrentStart(before: ownStart, in: [own, finished]))
+    }
+
+    func testConcurrentStartPicksEarliestWhenSeveral() {
+        let ownStart = at(0, 8)
+        let first = Record(start: ownStart.addingTimeInterval(-0.8), end: nil)
+        let second = Record(start: ownStart.addingTimeInterval(-0.3), end: nil)
+
+        XCTAssertTrue(WearStatus.concurrentStart(before: ownStart, in: [second, first]) === first)
+    }
 }
