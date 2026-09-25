@@ -20,8 +20,17 @@ struct WearStatus {
     /// When today's goal will be reached if the ring stays on. Nil when not worn.
     let estimatedEnd: Date?
 
+    /// The ongoing session: the most recent record without an end date. HealthKit returns
+    /// samples unsorted, so this doesn't rely on array order. Shared by the intents, the
+    /// widget and this status so they always agree on what is being worn.
+    static func openSession(in records: [Record]) -> Record? {
+        records
+            .filter { $0.start != nil && $0.end == nil }
+            .max { $0.start! < $1.start! }
+    }
+
     init(records: [Record], sessionLength: Int, now: Date = Date()) {
-        let open = records.last(where: { $0.start != nil && $0.end == nil })
+        let open = Self.openSession(in: records)
         currentSession = open
         isWorn = open != nil
         currentSessionDuration = open?.start.map { now.timeIntervalSince($0) / DurationUnit.hours.rawValue }

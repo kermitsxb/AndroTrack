@@ -167,6 +167,7 @@
 		A6114A223E8E6AC11A6303ED /* Number+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A0D4903277215B50043125F /* Number+Extension.swift */; };
 		A7568A4E09F7BE42A5BE2E38 /* SettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ADBD5DD26A1D4FF009FDB3D /* SettingsStore.swift */; };
 		A77817152307C87762957616 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9A6F75269E402300A78C5C /* Date+Extension.swift */; };
+		A94B9874A2304F244D3D544D /* WearStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = E334B472496794E08823883A /* WearStatus.swift */; };
 		AC34AA1DE25AC580E87035B9 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9A6F75269E402300A78C5C /* Date+Extension.swift */; };
 		ACAE20A8AC62F962C1D1DCC3 /* AndroRingTrackWatchWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0CD730FC2AB33895607DD5 /* AndroRingTrackWatchWidgetBundle.swift */; };
 		AF5AED2D1FA5B882DC9A0366 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B20064F44855864BC1F4E939 /* Foundation.framework */; };
@@ -1138,6 +1139,7 @@
 				01037657422FB479212689B6 /* DurationFormatting.swift in Sources */,
 				A2DA9B126E61E302D3598CC1 /* WatchWearStatusAccessoryView.swift in Sources */,
 				3D93B00B85A40A7521F008D8 /* WatchWearStatusWidget.swift in Sources */,
+				A94B9874A2304F244D3D544D /* WearStatus.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
