@@ -68,12 +68,21 @@ extension Notifications {
     }
     
     static func scheduleNotifyEnd() {
-        if SettingsStore.shared.notifications.notifyEnd {
-            guard let estimatedEnd = RecordStore.shared.current.estimatedEnd(forDuration: SettingsStore.shared.sessionLength) else {
-                AppLogger.error(context: "RecordStore", "Can't determine estimatedEnd")
+        scheduleNotifyEnd(
+            today: RecordStore.shared.current,
+            sessionLength: SettingsStore.shared.sessionLength,
+            settings: SettingsStore.shared.notifications
+        )
+    }
+
+    /// Variant usable outside the app process, where `RecordStore`/`SettingsStore` hold no real data.
+    static func scheduleNotifyEnd(today: Day, sessionLength: Int, settings: NotificationsSettings) {
+        if settings.notifyEnd {
+            guard let estimatedEnd = today.estimatedEnd(forDuration: sessionLength) else {
+                AppLogger.error(context: "Notifications", "Can't determine estimatedEnd")
                 return
             }
-            
+
             Notifications.cancelReminderStartNotification()
             Notifications.cancelNotifyEndNotification()
             Notifications.scheduleNotifyEndNotification(at: estimatedEnd)
@@ -82,26 +91,31 @@ extension Notifications {
 }
 
 extension Notifications {
-    static func scheduleReminderStartNotification() {
+    static func scheduleReminderStartNotification(reminderTime: Date = SettingsStore.shared.notifications.reminderTime) {
         let content = UNMutableNotificationContent()
         content.title = NSLocalizedString("REMINDED_START_NOTIF.TITLE", comment: "")
         content.subtitle = NSLocalizedString("REMINDED_START_NOTIF.SUBTITLE", comment: "")
         content.sound = UNNotificationSound.default
-        
-        let dateComponents = Calendar.current.dateComponents([.hour, .minute], from: SettingsStore.shared.notifications.reminderTime)
-        
+
+        let dateComponents = Calendar.current.dateComponents([.hour, .minute], from: reminderTime)
+
         Notifications.scheduleNotification(content, at: dateComponents, repeats: true, forId: NotificationType.reminderStart.rawValue)
     }
-    
+
     static func cancelReminderStartNotification() {
         Notifications.cancelNotificationWith(id: NotificationType.reminderStart.rawValue)
     }
-    
+
     static func scheduleReminderStart() {
-        if SettingsStore.shared.notifications.reminderStart {
+        scheduleReminderStart(settings: SettingsStore.shared.notifications)
+    }
+
+    /// Variant usable outside the app process, where `SettingsStore` holds no real data.
+    static func scheduleReminderStart(settings: NotificationsSettings) {
+        if settings.reminderStart {
             Notifications.cancelNotifyEndNotification()
             Notifications.cancelReminderStartNotification()
-            Notifications.scheduleReminderStartNotification()
+            Notifications.scheduleReminderStartNotification(reminderTime: settings.reminderTime)
         }
     }
 }
