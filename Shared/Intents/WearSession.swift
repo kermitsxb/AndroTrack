@@ -48,12 +48,18 @@ enum WearSession {
 
         // Another caller (e.g. Siri in the app and the widget in its extension) may have
         // started a session at the same moment: both saw "not worn" and both wrote a sample.
-        // The earliest one wins; the later caller removes its own and reports it as already worn.
-        if let earlier = try await WearStatus.concurrentStart(before: start, in: fetchRecords()) {
+        // The earliest one wins; the later caller removes its own. It still reports `.started`:
+        // the user asked for a session and one has just begun, and `.alreadyWorn` would make
+        // the widget toggle it off again.
+        if try await WearStatus.concurrentStart(before: start, in: fetchRecords()) != nil {
             AppLogger.info(context: "WearSession", "Concurrent start detected, dropping duplicate session")
-            try await removeRecord(at: start)
+            do {
+                try await removeRecord(at: start)
+            } catch HealthKitServiceError.RecordNotFound {
+                // The earlier caller's storeRecord already deleted our overlapping sample.
+            }
             WidgetCenter.shared.reloadAllTimelines()
-            return .alreadyWorn(earlier)
+            return .started
         }
 
         WidgetCenter.shared.reloadAllTimelines()
