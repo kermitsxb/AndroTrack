@@ -65,11 +65,7 @@ struct WearStatusProvider: TimelineProvider {
     }
 
     private func currentGoalInHours() -> Int {
-        let suite = UserDefaults(suiteName: "group.com.astralym.AndroRingTrack")
-        if let stored = suite?.object(forKey: "sessionLength") as? Int {
-            return stored
-        }
-        return 15
+        AppGroupSettings.sessionLength
     }
 
     private func unauthorizedEntry() -> WearStatusEntry {
