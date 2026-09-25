@@ -69,24 +69,30 @@ class RecordStore: ObservableObject {
     public func markAsRemoved() {
         if state == RingState.worn {
             state = RingState.off
-            records[records.endIndex - 1].markEnded()
-            
-            if records[records.endIndex - 1].durationInMinutes ?? 0 < 3 {
-                HealthKitService.shared.removeRecord(at: records[records.endIndex - 1].start!) { error in
-                    if let error = error {
-                        AppLogger.error(context: "RecordStore", "Failure: \(error.errorDescription!)")
-                    } else {
-                        WidgetCenter.shared.reloadAllTimelines()
+
+            // End the session actually open, not whatever record happens to be last.
+            if let open = WearStatus.openSession(in: records), let start = open.start {
+                open.markEnded()
+
+                if open.durationInMinutes ?? 0 < 3 {
+                    HealthKitService.shared.removeRecord(at: start) { error in
+                        if let error = error {
+                            AppLogger.error(context: "RecordStore", "Failure: \(error.errorDescription!)")
+                        } else {
+                            WidgetCenter.shared.reloadAllTimelines()
+                        }
+                    }
+                } else {
+                    HealthKitService.shared.storeRecord(record: open) { error in
+                        if let error = error {
+                            AppLogger.error(context: "RecordStore", "Failure: \(error.errorDescription!)")
+                        } else {
+                            WidgetCenter.shared.reloadAllTimelines()
+                        }
                     }
                 }
             } else {
-                HealthKitService.shared.storeRecord(record: records[records.endIndex - 1]) { error in
-                    if let error = error {
-                        AppLogger.error(context: "RecordStore", "Failure: \(error.errorDescription!)")
-                    } else {
-                        WidgetCenter.shared.reloadAllTimelines()
-                    }
-                }
+                AppLogger.warning(context: "RecordStore", "Marked as removed but no open session was found")
             }
             
             Notifications.scheduleReminderStart()
@@ -163,10 +169,12 @@ class RecordStore: ObservableObject {
             }
             
             if let results = results {
-                self.records = results
+                // HealthKit returns samples unsorted; the rest of the app (history, stats,
+                // markAsWorn appending) expects oldest-first.
+                self.records = results.sorted()
                 WidgetCenter.shared.reloadAllTimelines()
 
-                self.state = self.records.last.map { $0.end == nil ? .worn : .off } ?? .off
+                self.state = WearStatus.openSession(in: self.records) != nil ? .worn : .off
             }
         }
     }

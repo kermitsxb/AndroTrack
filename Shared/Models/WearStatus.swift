@@ -29,6 +29,20 @@ struct WearStatus {
             .max { $0.start! < $1.start! }
     }
 
+    /// Called right after storing a new session starting at `ownStart`: returns another open
+    /// session started just before it, i.e. a start made concurrently by another caller (Siri in
+    /// the app process and the widget in its extension can't share a lock). The earliest open
+    /// session wins, so the caller that gets a non-nil result must drop its own sample. Our own
+    /// sample is recognised by its start date, give or take HealthKit's round-trip precision.
+    static func concurrentStart(before ownStart: Date, in records: [Record]) -> Record? {
+        records
+            .filter { record in
+                guard record.end == nil, let start = record.start else { return false }
+                return start < ownStart && ownStart.timeIntervalSince(start) > 0.001
+            }
+            .min { $0.start! < $1.start! }
+    }
+
     init(records: [Record], sessionLength: Int, now: Date = Date()) {
         let open = Self.openSession(in: records)
         currentSession = open
