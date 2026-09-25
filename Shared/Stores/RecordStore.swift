@@ -166,9 +166,7 @@ class RecordStore: ObservableObject {
                 self.records = results
                 WidgetCenter.shared.reloadAllTimelines()
 
-                if (self.records.count > 0) {
-                    self.state = self.records[self.records.endIndex - 1].end != nil ? RingState.off : RingState.worn
-                }
+                self.state = self.records.last.map { $0.end == nil ? .worn : .off } ?? .off
             }
         }
     }
