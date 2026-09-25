@@ -10,6 +10,7 @@ import AppIntents
 struct ToggleWearIntent: AppIntent {
     static var title: LocalizedStringResource = "INTENT_TOGGLE_TITLE"
     static var openAppWhenRun = false
+    static var authenticationPolicy: IntentAuthenticationPolicy = .requiresAuthentication
 
     func perform() async throws -> some IntentResult & ProvidesDialog {
         let outcome = try await WearSessionService.shared.toggle()

@@ -94,4 +94,5 @@
 "INTENT_STATUS_WORN" = "Porté depuis %1$@ · %2$@ aujourd'hui (%3$d %% de l'objectif de %4$d h).";
 "INTENT_STATUS_OFF" = "Non porté · %1$@ aujourd'hui (%2$d %% de l'objectif de %3$d h).";
 "INTENT_ERROR_NOT_AUTHORIZED" = "Ouvrez ThermoTrack pour autoriser l'accès à Santé.";
-"INTENT_ERROR_HEALTHKIT" = "Erreur Santé : %@";
+"INTENT_ERROR_HEALTHKIT" = "Impossible d'accéder aux données Santé. Réessayez depuis ThermoTrack.";
+"INTENT_ERROR_LOCKED" = "Déverrouillez votre iPhone pour accéder aux données Santé.";

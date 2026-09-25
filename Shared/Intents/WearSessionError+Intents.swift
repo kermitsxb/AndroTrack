@@ -13,9 +13,11 @@ extension WearSessionError: CustomLocalizedStringResourceConvertible {
         switch self {
         case .healthKitNotAuthorized:
             return "INTENT_ERROR_NOT_AUTHORIZED"
-        case .healthKit(let error):
-            let message = String(format: NSLocalizedString("INTENT_ERROR_HEALTHKIT", comment: ""), error.errorDescription ?? "")
-            return "\(message)"
+        case .healthDataLocked:
+            return "INTENT_ERROR_LOCKED"
+        case .healthKit:
+            // The technical detail is already logged by WearSessionService via AppLogger.
+            return "INTENT_ERROR_HEALTHKIT"
         }
     }
 }

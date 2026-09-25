@@ -1341,4 +1341,5 @@ Report each item's result; do not tick items that could not be run.
 8. Widget toggle button → same state change, and notifications now updated (previously skipped).
 9. Siri in English and French: "Start a session in ThermoTrack" / "Démarre une session dans ThermoTrack".
 10. With the app open in foreground, trigger a start via Siri → Today view updates (observer query).
+11. With the iPhone locked, run "Start a session in ThermoTrack" via Siri → Siri asks to unlock, then the session starts.
 ```

@@ -9,6 +9,8 @@ import WidgetKit
 
 enum WearSessionError: Error {
     case healthKitNotAuthorized
+    /// The device is locked, so HealthKit's encrypted store can't be read (HKError.errorDatabaseInaccessible).
+    case healthDataLocked
     case healthKit(HealthKitServiceError)
 }
 
@@ -16,12 +18,12 @@ enum WearSessionError: Error {
 /// app's UI (App Intents from Shortcuts/Siri, the widget button). `RecordStore.shared` can't be
 /// used there: in an extension process it only holds preview data. Changes made here reach a
 /// running app through `RecordStore`'s HealthKit observer query.
-final class WearSessionService {
+///
+/// An `actor` so concurrent callers (a Siri intent racing a widget tap) are serialized: each
+/// call's read-decide-write sequence completes before the next one starts, which prevents two
+/// callers from both reading "no open session" and both writing a start.
+actor WearSessionService {
     static let shared = WearSessionService()
-
-    /// An ongoing session is stored with end == start, so the fetch window must reach back to the
-    /// start of the longest plausible ongoing session, not just today.
-    private static let fetchWindowDays = 7
 
     private let healthKit = HealthKitService.shared
 
@@ -97,14 +99,14 @@ final class WearSessionService {
     }
 
     private func fetchRecentRecords() async throws -> [Record] {
-        let since = Calendar.current.date(byAdding: .day, value: -Self.fetchWindowDays, to: Date())
-            ?? Date().addingTimeInterval(-Double(Self.fetchWindowDays) * 24 * 60 * 60)
+        let since = Calendar.current.date(byAdding: .day, value: -WearSessionLogic.fetchWindowDays, to: Date())
+            ?? Date().addingTimeInterval(-Double(WearSessionLogic.fetchWindowDays) * 24 * 60 * 60)
 
         return try await withCheckedThrowingContinuation { continuation in
             healthKit.fetchRecords(since: since) { records, error in
                 if let error = error {
                     AppLogger.error(context: "WearSessionService", "Failed to fetch records: \(error.errorDescription ?? "unknown")")
-                    continuation.resume(throwing: WearSessionError.healthKit(error))
+                    continuation.resume(throwing: Self.wearSessionError(for: error))
                 } else {
                     continuation.resume(returning: records ?? [])
                 }
@@ -117,7 +119,7 @@ final class WearSessionService {
             healthKit.storeRecord(record: record) { error in
                 if let error = error {
                     AppLogger.error(context: "WearSessionService", "Failed to store record: \(error.errorDescription ?? "unknown")")
-                    continuation.resume(throwing: WearSessionError.healthKit(error))
+                    continuation.resume(throwing: Self.wearSessionError(for: error))
                 } else {
                     continuation.resume(returning: ())
                 }
@@ -130,11 +132,21 @@ final class WearSessionService {
             healthKit.removeRecord(at: start) { error in
                 if let error = error {
                     AppLogger.error(context: "WearSessionService", "Failed to remove record: \(error.errorDescription ?? "unknown")")
-                    continuation.resume(throwing: WearSessionError.healthKit(error))
+                    continuation.resume(throwing: Self.wearSessionError(for: error))
                 } else {
                     continuation.resume(returning: ())
                 }
             }
         }
+    }
+
+    /// The device being locked surfaces from HealthKit as `HealthKitServiceError.Failure`
+    /// wrapping an `HKError.errorDatabaseInaccessible`; report that distinctly so the intent can
+    /// show a message about unlocking rather than a raw HealthKit error.
+    private static func wearSessionError(for error: HealthKitServiceError) -> WearSessionError {
+        if case .Failure(let underlying) = error, (underlying as? HKError)?.code == .errorDatabaseInaccessible {
+            return .healthDataLocked
+        }
+        return .healthKit(error)
     }
 }

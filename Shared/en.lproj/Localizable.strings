@@ -94,4 +94,5 @@
 "INTENT_STATUS_WORN" = "Worn since %1$@ · %2$@ today (%3$d%% of the %4$d h goal).";
 "INTENT_STATUS_OFF" = "Not worn · %1$@ today (%2$d%% of the %3$d h goal).";
 "INTENT_ERROR_NOT_AUTHORIZED" = "Open ThermoTrack to allow Health access.";
-"INTENT_ERROR_HEALTHKIT" = "Health error: %@";
+"INTENT_ERROR_HEALTHKIT" = "Couldn't access Health data. Try again from ThermoTrack.";
+"INTENT_ERROR_LOCKED" = "Unlock your iPhone to access Health data.";

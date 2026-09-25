@@ -10,6 +10,7 @@ import AppIntents
 struct GetWearStatusIntent: AppIntent {
     static var title: LocalizedStringResource = "INTENT_STATUS_TITLE"
     static var openAppWhenRun = false
+    static var authenticationPolicy: IntentAuthenticationPolicy = .requiresAuthentication
 
     func perform() async throws -> some IntentResult & ReturnsValue<Int> & ProvidesDialog {
         let status = try await WearSessionService.shared.status()

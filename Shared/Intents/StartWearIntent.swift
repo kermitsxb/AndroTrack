@@ -9,6 +9,7 @@ import AppIntents
 struct StartWearIntent: AppIntent {
     static var title: LocalizedStringResource = "INTENT_START_TITLE"
     static var openAppWhenRun = false
+    static var authenticationPolicy: IntentAuthenticationPolicy = .requiresAuthentication
 
     func perform() async throws -> some IntentResult & ProvidesDialog {
         let outcome = try await WearSessionService.shared.start()
