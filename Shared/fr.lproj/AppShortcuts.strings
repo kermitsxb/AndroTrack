@@ -1,0 +1,10 @@
+/* Phrases Siri des App Shortcuts déclarés dans iOS/Intents/WearSessionIntents.swift. */
+"Start a session in ${applicationName}" = "Démarrer une session dans ${applicationName}";
+"Start my ${applicationName} session" = "Démarrer ma session ${applicationName}";
+"I put my ring on in ${applicationName}" = "J'ai mis mon anneau dans ${applicationName}";
+"Stop my session in ${applicationName}" = "Arrêter ma session dans ${applicationName}";
+"Stop my ${applicationName} session" = "Arrêter ma session ${applicationName}";
+"I took my ring off in ${applicationName}" = "J'ai retiré mon anneau dans ${applicationName}";
+"How is my ${applicationName} session going" = "Où en est ma session ${applicationName}";
+"${applicationName} status" = "État de ${applicationName}";
+"Am I wearing my ring in ${applicationName}" = "Est-ce que je porte mon anneau dans ${applicationName}";

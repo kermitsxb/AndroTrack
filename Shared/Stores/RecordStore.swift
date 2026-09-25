@@ -153,8 +153,10 @@ class RecordStore: ObservableObject {
         return Day(date: date, records: overlapping)
     }
     
-    public func refreshHealthData() {
+    public func refreshHealthData(completion: (() -> Void)? = nil) {
         HealthKitService.shared.fetchRecords { results, error in
+            defer { completion?() }
+
             if let error = error {
                 AppLogger.error(context: "RecordStore", "Failure: \(error.errorDescription!)")
                 return

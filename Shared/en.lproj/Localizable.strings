@@ -80,3 +80,25 @@
 "WIDGET_DESCRIPTION" = "Shows current wear status and today's worn duration.";
 "WIDGET_UNAUTHORIZED" = "Open app to set up";
 "WIDGET_INLINE_IN_PROGRESS" = "In progress";
+
+// SIRI & SHORTCUTS
+"INTENT_START_TITLE" = "Start Wear Session";
+"INTENT_START_DESCRIPTION" = "Starts a wear session now.";
+"INTENT_STOP_TITLE" = "Stop Wear Session";
+"INTENT_STOP_DESCRIPTION" = "Stops the wear session in progress.";
+"INTENT_STATUS_TITLE" = "Get Wear Status";
+"INTENT_STATUS_DESCRIPTION" = "Tells whether the ring is worn and how much is left for today's goal. Returns true while a session is in progress.";
+"SHORTCUT_START" = "Start Session";
+"SHORTCUT_STOP" = "Stop Session";
+"SHORTCUT_STATUS" = "Session Status";
+"INTENT_STARTED" = "Session started. You'll reach today's goal at %@.";
+"INTENT_STARTED_GOAL_DONE" = "Session started. Today's goal is already reached.";
+"INTENT_ALREADY_WORN" = "A session is already in progress, for %@.";
+"INTENT_STOPPED" = "Session stopped after %@.";
+"INTENT_DISCARDED" = "Session stopped. It lasted under 3 minutes, so it wasn't recorded.";
+"INTENT_NOT_WORN" = "No session in progress.";
+"INTENT_STATUS_WORN" = "Ring worn for %1$@. %2$@ left for today's goal.";
+"INTENT_STATUS_WORN_GOAL_DONE" = "Ring worn for %@. Today's goal is reached.";
+"INTENT_STATUS_OFF" = "Ring not worn. %1$@ worn today, %2$@ left for the goal.";
+"INTENT_STATUS_OFF_GOAL_DONE" = "Ring not worn. Today's goal is reached, with %@ worn.";
+"INTENT_ERROR_HEALTHKIT" = "Couldn't access Health data. Open ThermoTrack to check its permissions.";
