@@ -37,7 +37,17 @@ enum WearDialog {
         )
     }
 
+    /// Time-only when `date` is today, otherwise a short relative date + time (e.g. "yesterday,
+    /// 20:00"): a bare time is misleading for a session that started on an earlier day.
     private static func time(_ date: Date) -> String {
-        DateFormatter.localizedString(from: date, dateStyle: .none, timeStyle: .short)
+        if Calendar.current.isDateInToday(date) {
+            return DateFormatter.localizedString(from: date, dateStyle: .none, timeStyle: .short)
+        }
+
+        let formatter = DateFormatter()
+        formatter.dateStyle = .short
+        formatter.timeStyle = .short
+        formatter.doesRelativeDateFormatting = true
+        return formatter.string(from: date)
     }
 }
