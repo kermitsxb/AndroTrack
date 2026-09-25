@@ -1,0 +1,8 @@
+/* Siri / Shortcuts phrases. Keys are the English phrases from ThermoTrackShortcuts.swift. */
+"Start a session in ${applicationName}" = "Démarre une session dans ${applicationName}";
+"I put on my ring in ${applicationName}" = "J'ai mis mon anneau dans ${applicationName}";
+"Stop my session in ${applicationName}" = "Arrête ma session dans ${applicationName}";
+"I took off my ring in ${applicationName}" = "J'ai retiré mon anneau dans ${applicationName}";
+"Toggle my ring in ${applicationName}" = "Bascule mon anneau dans ${applicationName}";
+"How long have I worn it today in ${applicationName}" = "Combien de temps l'ai-je porté aujourd'hui dans ${applicationName}";
+"${applicationName} status" = "Statut de ${applicationName}";

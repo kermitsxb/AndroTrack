@@ -55,6 +55,8 @@ Platform-specific code inside `Shared/` is guarded with `#if os(watchOS)` / `#if
 
 `SettingsStore` (`Shared/Stores/SettingsStore.swift`) is a singleton `ObservableObject` for user preferences (`themeColor`, `sessionLength`, `notifications`), persisted to `UserDefaults`. Any setter triggers `WatchConnectivity.shared.sync()` to push the new value to the paired device.
 
+Outside the app's UI (App Intents from Shortcuts/Siri, the widget's toggle button), session changes go through `WearSessionService` (`Shared/Services/WearSessionService.swift`), not `RecordStore`: in an extension process `RecordStore.shared` only holds preview data. The service reads and writes HealthKit directly, applies the rules in `WearSessionLogic` (`Shared/Models/WearSessionLogic.swift`, unit-tested), and reads settings from `AppGroupSettings`, which `SettingsStore` mirrors into the `group.com.astralym.AndroRingTrack` App Group. The intents live in `Shared/Intents/` (iOS 17+); Siri phrases are declared in `iOS/Intents/ThermoTrackShortcuts.swift`.
+
 ### iPhone/Watch sync
 
 `WatchConnectivity` (`Shared/Services/WatchConnectivity.swift`) is a singleton wrapping `WCSession`. It only syncs `SettingsStore`'s lightweight `appContext` dict (`themeColor`, `sessionLength`) via `updateApplicationContext` — it does not sync `Record`/session data (each side reads HealthKit directly for that). Incoming context updates are received via a Combine `PassthroughSubject` and applied in `SettingsStore.onReceiveContextUpdate` (watchOS only).
