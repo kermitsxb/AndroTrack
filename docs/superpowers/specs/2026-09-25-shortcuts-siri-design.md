@@ -36,10 +36,14 @@ toggles schedule, because those depend on `RecordStore.shared.current` and
     instead of storing it (accidental toggle).
 - Keep local notifications correct from every entry point, **including the
   widget button** (removes the current documented simplification):
-  - start → cancel reminder-to-start, schedule notify-end at the estimated
-    end of today's goal (if `notifyEnd` is enabled);
-  - stop → cancel notify-end, schedule the repeating reminder-to-start (if
-    `reminderStart` is enabled).
+  the same `Notifications` calls as `RecordStore` makes, with the same
+  conditions:
+  - start → `scheduleNotifyEnd` (if `notifyEnd` is enabled: cancel
+    reminder-to-start and notify-end, schedule notify-end at the estimated
+    end of today's goal);
+  - stop (stored or discarded) → `scheduleReminderStart` (if `reminderStart`
+    is enabled: cancel notify-end and reminder-to-start, schedule the
+    repeating reminder-to-start).
 
 ## Non-goals
 
@@ -150,8 +154,9 @@ Each mutating call:
 
 1. checks HealthKit authorisation; if not `.sharingAuthorized`, throws
    `WearSessionError.healthKitNotAuthorized`;
-2. fetches recent records (`fetchRecords(since:)`, two days back, like the
-   widget provider);
+2. fetches recent records (`fetchRecords(since:)`, seven days back: an open
+   session is stored as a sample whose end equals its start, so the window
+   must cover the longest plausible ongoing session, not just today);
 3. asks `WearSessionLogic` which action to take;
 4. performs it through `HealthKitService` (`storeRecord` / `removeRecord`),
    bridged to `async` with checked continuations (moved from the current
