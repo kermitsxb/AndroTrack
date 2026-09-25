@@ -29,13 +29,13 @@ Projet is not distributed on the stores yet
 - [x] HealthKit authorization onboarding view
 - [x] Localization
 - [x] Past record editing
+- [x] Calendar view for session history
+- [x] CSV export of session history
+- [x] Widget
 
 ## Feature suggestions
 
-- [ ] Other persistant storage 
-- [ ] Calendar view for session history
-- [x] Widget
-- [ ] Shortcut
+- [ ] Other persistent storage
 - [ ] Shortcuts app integration
 - [ ] Siri integration
 
