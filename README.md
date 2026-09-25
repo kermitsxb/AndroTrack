@@ -36,8 +36,8 @@ Projet is not distributed on the stores yet
 ## Feature suggestions
 
 - [ ] Other persistent storage
-- [x] Shortcuts app integration
-- [x] Siri integration
+- [x] Shortcuts app integration (iOS 17+)
+- [x] Siri integration (iOS 17+)
 
 ## License
 
