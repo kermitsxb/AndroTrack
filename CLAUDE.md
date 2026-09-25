@@ -23,7 +23,7 @@ xcodebuild -project AndroRingTrack.xcodeproj -scheme AndroRingTrackTests -destin
 
 To release a new version, run `scripts/bump-version.sh <X.Y.Z> [build]` on a clean tree. It updates `MARKETING_VERSION` in the project and `CFBundleVersion` in every Info.plist (build number auto-increments when omitted) and creates the `chore: bump version to ...` commit. It does not push.
 
-Unit tests live in `Tests/` in the `AndroRingTrackTests` target. It has no host app: it compiles the pure model files it needs (`Shared/Models/Day.swift`, `Shared/Models/Record.swift`, `Shared/Extensions/Date+Extension.swift`) directly. Add any new pure-logic source under test to that target's compile sources; code depending on HealthKit, WatchConnectivity or SwiftUI is not testable there.
+Unit tests live in `Tests/` in the `AndroRingTrackTests` target. It has no host app: it compiles the pure model files it needs (`Shared/Models/Day.swift`, `Shared/Models/Record.swift`, `Shared/Models/WearStatus.swift`, `Shared/Extensions/Date+Extension.swift`) directly. Add any new pure-logic source under test to that target's compile sources; code depending on HealthKit, WatchConnectivity or SwiftUI is not testable there.
 
 - Swift version: 5.0
 - Deployment targets: iOS 15.0, watchOS 8.0

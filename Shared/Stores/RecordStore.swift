@@ -153,8 +153,10 @@ class RecordStore: ObservableObject {
         return Day(date: date, records: overlapping)
     }
     
-    public func refreshHealthData() {
+    public func refreshHealthData(completion: (() -> Void)? = nil) {
         HealthKitService.shared.fetchRecords { results, error in
+            defer { completion?() }
+
             if let error = error {
                 AppLogger.error(context: "RecordStore", "Failure: \(error.errorDescription!)")
                 return
@@ -164,9 +166,7 @@ class RecordStore: ObservableObject {
                 self.records = results
                 WidgetCenter.shared.reloadAllTimelines()
 
-                if (self.records.count > 0) {
-                    self.state = self.records[self.records.endIndex - 1].end != nil ? RingState.off : RingState.worn
-                }
+                self.state = self.records.last.map { $0.end == nil ? .worn : .off } ?? .off
             }
         }
     }

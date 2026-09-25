@@ -80,3 +80,25 @@
 "WIDGET_DESCRIPTION" = "Affiche le statut de port actuel et la durée de port du jour.";
 "WIDGET_UNAUTHORIZED" = "Ouvrez l'application pour configurer";
 "WIDGET_INLINE_IN_PROGRESS" = "En cours";
+
+// SIRI & SHORTCUTS
+"INTENT_START_TITLE" = "Démarrer une session de port";
+"INTENT_START_DESCRIPTION" = "Démarre une session de port maintenant.";
+"INTENT_STOP_TITLE" = "Arrêter la session de port";
+"INTENT_STOP_DESCRIPTION" = "Arrête la session de port en cours.";
+"INTENT_STATUS_TITLE" = "État de la session de port";
+"INTENT_STATUS_DESCRIPTION" = "Indique si l'anneau est porté et ce qu'il reste pour l'objectif du jour. Renvoie vrai quand une session est en cours.";
+"SHORTCUT_START" = "Démarrer la session";
+"SHORTCUT_STOP" = "Arrêter la session";
+"SHORTCUT_STATUS" = "État de la session";
+"INTENT_STARTED" = "Session démarrée. Objectif du jour atteint à %@.";
+"INTENT_STARTED_GOAL_DONE" = "Session démarrée. L'objectif du jour est déjà atteint.";
+"INTENT_ALREADY_WORN" = "Une session est déjà en cours, depuis %@.";
+"INTENT_STOPPED" = "Session arrêtée après %@.";
+"INTENT_DISCARDED" = "Session arrêtée. Elle a duré moins de 3 minutes, elle n'a donc pas été enregistrée.";
+"INTENT_NOT_WORN" = "Aucune session en cours.";
+"INTENT_STATUS_WORN" = "Anneau porté depuis %1$@. Encore %2$@ pour l'objectif du jour.";
+"INTENT_STATUS_WORN_GOAL_DONE" = "Anneau porté depuis %@. L'objectif du jour est atteint.";
+"INTENT_STATUS_OFF" = "Anneau non porté. %1$@ de port aujourd'hui, encore %2$@ pour l'objectif.";
+"INTENT_STATUS_OFF_GOAL_DONE" = "Anneau non porté. L'objectif du jour est atteint, avec %@ de port.";
+"INTENT_ERROR_HEALTHKIT" = "Impossible d'accéder aux données Santé. Ouvrez ThermoTrack pour vérifier ses autorisations.";

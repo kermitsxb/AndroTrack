@@ -68,13 +68,13 @@ extension Notifications {
     }
     
     static func scheduleNotifyEnd() {
+        Notifications.cancelReminderStartNotification()
         if SettingsStore.shared.notifications.notifyEnd {
             guard let estimatedEnd = RecordStore.shared.current.estimatedEnd(forDuration: SettingsStore.shared.sessionLength) else {
                 AppLogger.error(context: "RecordStore", "Can't determine estimatedEnd")
                 return
             }
             
-            Notifications.cancelReminderStartNotification()
             Notifications.cancelNotifyEndNotification()
             Notifications.scheduleNotifyEndNotification(at: estimatedEnd)
         }
@@ -98,8 +98,8 @@ extension Notifications {
     }
     
     static func scheduleReminderStart() {
+        Notifications.cancelNotifyEndNotification()
         if SettingsStore.shared.notifications.reminderStart {
-            Notifications.cancelNotifyEndNotification()
             Notifications.cancelReminderStartNotification()
             Notifications.scheduleReminderStartNotification()
         }

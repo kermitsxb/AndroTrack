@@ -36,8 +36,8 @@ Projet is not distributed on the stores yet
 - [ ] Calendar view for session history
 - [x] Widget
 - [ ] Shortcut
-- [ ] Shortcuts app integration
-- [ ] Siri integration
+- [x] Shortcuts app integration
+- [x] Siri integration
 
 ## License
 
