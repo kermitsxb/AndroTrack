@@ -1,0 +1,17 @@
+//
+//  StartWearIntent.swift
+//  ThermoTrack
+//
+
+import AppIntents
+
+@available(iOS 17.0, *)
+struct StartWearIntent: AppIntent {
+    static var title: LocalizedStringResource = "INTENT_START_TITLE"
+    static var openAppWhenRun = false
+
+    func perform() async throws -> some IntentResult & ProvidesDialog {
+        let outcome = try await WearSessionService.shared.start()
+        return .result(dialog: "\(WearDialog.text(for: outcome))")
+    }
+}

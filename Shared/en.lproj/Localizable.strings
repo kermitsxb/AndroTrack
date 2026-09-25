@@ -80,3 +80,18 @@
 "WIDGET_DESCRIPTION" = "Shows current wear status and today's worn duration.";
 "WIDGET_UNAUTHORIZED" = "Open app to set up";
 "WIDGET_INLINE_IN_PROGRESS" = "In progress";
+
+// INTENTS
+"INTENT_START_TITLE" = "Start session";
+"INTENT_STOP_TITLE" = "Stop session";
+"INTENT_TOGGLE_TITLE" = "Toggle wear status";
+"INTENT_STATUS_TITLE" = "Get wear status";
+"INTENT_STARTED" = "Session started at %@.";
+"INTENT_ALREADY_STARTED" = "Already worn since %@.";
+"INTENT_STOPPED" = "Session ended: %@.";
+"INTENT_DISCARDED" = "Session cancelled (under 3 min).";
+"INTENT_NOT_RUNNING" = "No session in progress.";
+"INTENT_STATUS_WORN" = "Worn since %1$@ · %2$@ today (%3$d%% of the %4$d h goal).";
+"INTENT_STATUS_OFF" = "Not worn · %1$@ today (%2$d%% of the %3$d h goal).";
+"INTENT_ERROR_NOT_AUTHORIZED" = "Open ThermoTrack to allow Health access.";
+"INTENT_ERROR_HEALTHKIT" = "Health error: %@";

@@ -80,3 +80,18 @@
 "WIDGET_DESCRIPTION" = "Affiche le statut de port actuel et la durée de port du jour.";
 "WIDGET_UNAUTHORIZED" = "Ouvrez l'application pour configurer";
 "WIDGET_INLINE_IN_PROGRESS" = "En cours";
+
+// INTENTS
+"INTENT_START_TITLE" = "Démarrer une session";
+"INTENT_STOP_TITLE" = "Arrêter la session";
+"INTENT_TOGGLE_TITLE" = "Basculer le statut de port";
+"INTENT_STATUS_TITLE" = "Obtenir le statut de port";
+"INTENT_STARTED" = "Session démarrée à %@.";
+"INTENT_ALREADY_STARTED" = "Déjà porté depuis %@.";
+"INTENT_STOPPED" = "Session terminée : %@.";
+"INTENT_DISCARDED" = "Session annulée (moins de 3 min).";
+"INTENT_NOT_RUNNING" = "Aucune session en cours.";
+"INTENT_STATUS_WORN" = "Porté depuis %1$@ · %2$@ aujourd'hui (%3$d %% de l'objectif de %4$d h).";
+"INTENT_STATUS_OFF" = "Non porté · %1$@ aujourd'hui (%2$d %% de l'objectif de %3$d h).";
+"INTENT_ERROR_NOT_AUTHORIZED" = "Ouvrez ThermoTrack pour autoriser l'accès à Santé.";
+"INTENT_ERROR_HEALTHKIT" = "Erreur Santé : %@";
