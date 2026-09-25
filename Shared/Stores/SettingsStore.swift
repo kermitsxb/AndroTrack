@@ -39,6 +39,7 @@ class SettingsStore: ObservableObject {
             } catch {
                 AppLogger.warning(context: "SettingsStore", "Unable to save notifications settings")
             }
+            AppGroupSettings.mirror(notifications: notifications)
         }
     }
     
@@ -56,6 +57,8 @@ class SettingsStore: ObservableObject {
         sessionLength = UserDefaults.standard.nonNulInteger(forKey: "sessionLength") ?? 15
         notifications = UserDefaults.standard.typed(forKey: "notifications") ?? NotificationsSettings()
         mirrorSessionLengthToAppGroup()
+        // `didSet` doesn't fire for the value assigned in `init()` either.
+        AppGroupSettings.mirror(notifications: notifications)
 
         #if os(watchOS)
         subscription = watchConnectivity.publisher
@@ -69,7 +72,7 @@ class SettingsStore: ObservableObject {
     /// `didSet` never fires for the value assigned during `init()`, so `init()`
     /// calls this explicitly too — see docs/superpowers/specs/2026-08-24-watch-widget-design.md.
     private func mirrorSessionLengthToAppGroup() {
-        UserDefaults(suiteName: "group.com.astralym.AndroRingTrack")?.set(sessionLength, forKey: "sessionLength")
+        AppGroupSettings.mirror(sessionLength: sessionLength)
         WidgetCenter.shared.reloadAllTimelines()
     }
 
