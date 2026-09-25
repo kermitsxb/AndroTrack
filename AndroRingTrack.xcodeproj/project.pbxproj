@@ -18,6 +18,7 @@
 		11961CAA8712FC69703B08A3 /* UserDefaults+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A8B2D8F26A1B51E00D63862 /* UserDefaults+Extension.swift */; };
 		15A119D3127200E640DE8282 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9A662626A748C800E7526A /* Notifications.swift */; };
 		16909737A5CC14CC7DF16195 /* Bundle+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A0322E826A60584008E97C8 /* Bundle+Extension.swift */; };
+		184ABA824D10292F87DF00B9 /* AppGroupSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D309EE9704C1A7D186F4485E /* AppGroupSettings.swift */; };
 		1877C35ABF5648AA49BFBCCF /* TimeRingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9A6F6E269E3C6C00A78C5C /* TimeRingView.swift */; };
 		1EEABE7CFF973D3E8EB1CA19 /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9A6F72269E3CBC00A78C5C /* Color+Extension.swift */; };
 		224CEB9227AB4EDBA4E480B9 /* SettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ADBD5DD26A1D4FF009FDB3D /* SettingsStore.swift */; };
@@ -159,14 +160,18 @@
 		8095AF78D145A099F96087B2 /* Wiggling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AB8DD762705E1B6002EEB0B /* Wiggling.swift */; };
 		8C1D19E64DEE317ACE71E491 /* Day.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A4FD2C4269F0A6D00F7081D /* Day.swift */; };
 		8FE265977BD1030C09DA0009 /* DateFormatter+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE99A34274289E5002837B7 /* DateFormatter+extension.swift */; };
+		9279D8484CA6CC8B6C7318E0 /* AppGroupSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D309EE9704C1A7D186F4485E /* AppGroupSettings.swift */; };
+		935C37926E69CD56E87EEAA5 /* AppGroupSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D309EE9704C1A7D186F4485E /* AppGroupSettings.swift */; };
 		9890D5061C4FB7977DCDC0CA /* TimeInterval+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A93AF2A26A5A10B00702DC7 /* TimeInterval+Extension.swift */; };
 		9A0A392BF69EE68430281C8B /* Double+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9A6F7C269E457100A78C5C /* Double+Extension.swift */; };
+		9A72BA446195EC0F39092D85 /* AppGroupSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D309EE9704C1A7D186F4485E /* AppGroupSettings.swift */; };
 		9ECC0EE1E1510C81ED206E5D /* NotificationsSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A0322DD26A5E7D0008E97C8 /* NotificationsSettings.swift */; };
 		A03657BA5543A5196D4560AA /* WearStatusEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798B5ABE065217B03E13D95C /* WearStatusEntry.swift */; };
 		A2DA9B126E61E302D3598CC1 /* WatchWearStatusAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A33F9C0A258E9A1E6C29026 /* WatchWearStatusAccessoryView.swift */; };
 		A6114A223E8E6AC11A6303ED /* Number+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A0D4903277215B50043125F /* Number+Extension.swift */; };
 		A7568A4E09F7BE42A5BE2E38 /* SettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ADBD5DD26A1D4FF009FDB3D /* SettingsStore.swift */; };
 		A77817152307C87762957616 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9A6F75269E402300A78C5C /* Date+Extension.swift */; };
+		A94B9874A2304F244D3D544D /* WearStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = E334B472496794E08823883A /* WearStatus.swift */; };
 		AC34AA1DE25AC580E87035B9 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9A6F75269E402300A78C5C /* Date+Extension.swift */; };
 		ACAE20A8AC62F962C1D1DCC3 /* AndroRingTrackWatchWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0CD730FC2AB33895607DD5 /* AndroRingTrackWatchWidgetBundle.swift */; };
 		AF5AED2D1FA5B882DC9A0366 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B20064F44855864BC1F4E939 /* Foundation.framework */; };
@@ -371,6 +376,7 @@
 		C1FAB7E4033498B007E231CC /* WearSessionIntents.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WearSessionIntents.swift; sourceTree = "<group>"; };
 		C9FA7996931E6F5D3E349848 /* AndroRingTrackWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = AndroRingTrackWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEE05680D517832ECBB4CFF3 /* DurationFormatting.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DurationFormatting.swift; sourceTree = "<group>"; };
+		D309EE9704C1A7D186F4485E /* AppGroupSettings.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AppGroupSettings.swift; sourceTree = "<group>"; };
 		E334B472496794E08823883A /* WearStatus.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WearStatus.swift; sourceTree = "<group>"; };
 		F71F6FBDCBA558ED9728A355 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FAC1F209E74B63FA13E1FFE7 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -674,6 +680,7 @@
 				6A9A6F6B269E2FE700A78C5C /* RecordStore.swift */,
 				6A040AA3277CFB2000D69C0A /* RecordStore+Extension.swift */,
 				6ADBD5DD26A1D4FF009FDB3D /* SettingsStore.swift */,
+				D309EE9704C1A7D186F4485E /* AppGroupSettings.swift */,
 			);
 			path = Stores;
 			sourceTree = "<group>";
@@ -1028,6 +1035,7 @@
 				6A922C8026A45B2F005782DB /* TodayView.swift in Sources */,
 				6A922C5B26A4574A005782DB /* NotificationView.swift in Sources */,
 				6A922C7126A4588F005782DB /* UserDefaults+Extension.swift in Sources */,
+				184ABA824D10292F87DF00B9 /* AppGroupSettings.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1099,6 +1107,7 @@
 				FA0080C71ACC3F4023BA7070 /* WearStatus.swift in Sources */,
 				41FD4A2EA5C998698B62BA25 /* WearSession.swift in Sources */,
 				22DF7EB32BB0F84758C0BCE4 /* WearSessionIntents.swift in Sources */,
+				9279D8484CA6CC8B6C7318E0 /* AppGroupSettings.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1138,6 +1147,8 @@
 				01037657422FB479212689B6 /* DurationFormatting.swift in Sources */,
 				A2DA9B126E61E302D3598CC1 /* WatchWearStatusAccessoryView.swift in Sources */,
 				3D93B00B85A40A7521F008D8 /* WatchWearStatusWidget.swift in Sources */,
+				A94B9874A2304F244D3D544D /* WearStatus.swift in Sources */,
+				9A72BA446195EC0F39092D85 /* AppGroupSettings.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1198,6 +1209,7 @@
 				45AF91A2ADC58B49C62C9C65 /* WidgetBackgroundCompat.swift in Sources */,
 				2BD58BD0F53DDF4DF7B4654C /* WearStatus.swift in Sources */,
 				B6173DC3E6EC3669D0E80E3F /* WearSession.swift in Sources */,
+				935C37926E69CD56E87EEAA5 /* AppGroupSettings.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

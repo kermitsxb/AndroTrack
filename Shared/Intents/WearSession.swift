@@ -39,7 +39,7 @@ enum WearSession {
     }
 
     static func start() async throws -> StartOutcome {
-        if let openRecord = try await fetchRecords().first(where: { $0.end == nil }) {
+        if let openRecord = try await WearStatus.openSession(in: fetchRecords()) {
             return .alreadyWorn(openRecord)
         }
 
@@ -49,7 +49,7 @@ enum WearSession {
     }
 
     static func stop() async throws -> StopOutcome {
-        guard let openRecord = try await fetchRecords().first(where: { $0.end == nil }) else {
+        guard let openRecord = try await WearStatus.openSession(in: fetchRecords()) else {
             return .notWorn
         }
 

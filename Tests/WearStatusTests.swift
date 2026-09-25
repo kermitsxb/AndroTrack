@@ -69,4 +69,30 @@ final class WearStatusTests: XCTestCase {
 
         XCTAssertEqual(status.wornToday, 0, accuracy: 0.001)
     }
+
+    // MARK: - openSession(in:)
+
+    func testOpenSessionIsNilWhenAllSessionsAreFinished() {
+        let finished = Record(start: at(0, 1), end: at(0, 5))
+
+        XCTAssertNil(WearStatus.openSession(in: [finished]))
+    }
+
+    func testOpenSessionPicksMostRecentRegardlessOfOrder() {
+        // HealthKit returns samples unsorted; the most recent open one must win either way.
+        let older = Record(start: at(-1, 8), end: nil)
+        let newer = Record(start: at(0, 8), end: nil)
+
+        XCTAssertTrue(WearStatus.openSession(in: [newer, older]) === newer)
+        XCTAssertTrue(WearStatus.openSession(in: [older, newer]) === newer)
+    }
+
+    func testStatusUsesMostRecentOpenSession() {
+        let older = Record(start: at(-1, 8), end: nil)
+        let newer = Record(start: at(0, 8), end: nil)
+
+        let status = WearStatus(records: [newer, older], sessionLength: 15, now: at(0, 10))
+
+        XCTAssertTrue(status.currentSession === newer)
+    }
 }

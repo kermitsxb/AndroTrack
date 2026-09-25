@@ -33,8 +33,10 @@ struct WearStatusProvider: TimelineProvider {
             return
         }
 
-        let twoDaysAgo = Calendar.current.date(byAdding: .day, value: -2, to: Date()) ?? Date().addingTimeInterval(-2 * 24 * 60 * 60)
-        HealthKitService.shared.fetchRecords(since: twoDaysAgo) { records, error in
+        // Fetch the whole history, like WearSession (Siri/Shortcuts and the toggle button):
+        // an ongoing session is stored with end == start, so a date window would miss one
+        // that started before it and show "off" while the intents see it as worn.
+        HealthKitService.shared.fetchRecords { records, error in
             if let error = error {
                 AppLogger.error(context: "Widget", "Failed to fetch records: \(error.errorDescription ?? "unknown")")
                 completion(self.unauthorizedEntry())
@@ -43,7 +45,7 @@ struct WearStatusProvider: TimelineProvider {
 
             let allRecords = records ?? []
             let today = Day.today(from: allRecords)
-            let openRecord = allRecords.first(where: { $0.end == nil })
+            let openRecord = WearStatus.openSession(in: allRecords)
             let state: RingState = openRecord != nil ? .worn : .off
             let sessionStart = openRecord?.start
 
@@ -63,11 +65,7 @@ struct WearStatusProvider: TimelineProvider {
     }
 
     private func currentGoalInHours() -> Int {
-        let suite = UserDefaults(suiteName: "group.com.astralym.AndroRingTrack")
-        if let stored = suite?.object(forKey: "sessionLength") as? Int {
-            return stored
-        }
-        return 15
+        AppGroupSettings.sessionLength
     }
 
     private func unauthorizedEntry() -> WearStatusEntry {

@@ -68,10 +68,19 @@ extension Notifications {
     }
     
     static func scheduleNotifyEnd() {
+        scheduleNotifyEnd(
+            today: RecordStore.shared.current,
+            sessionLength: SettingsStore.shared.sessionLength,
+            settings: SettingsStore.shared.notifications
+        )
+    }
+
+    /// Variant for processes where `RecordStore`/`SettingsStore` hold no real data (widget extension).
+    static func scheduleNotifyEnd(today: Day, sessionLength: Int, settings: NotificationsSettings) {
         Notifications.cancelReminderStartNotification()
-        if SettingsStore.shared.notifications.notifyEnd {
-            guard let estimatedEnd = RecordStore.shared.current.estimatedEnd(forDuration: SettingsStore.shared.sessionLength) else {
-                AppLogger.error(context: "RecordStore", "Can't determine estimatedEnd")
+        if settings.notifyEnd {
+            guard let estimatedEnd = today.estimatedEnd(forDuration: sessionLength) else {
+                AppLogger.error(context: "Notifications", "Can't determine estimatedEnd")
                 return
             }
             
@@ -82,13 +91,13 @@ extension Notifications {
 }
 
 extension Notifications {
-    static func scheduleReminderStartNotification() {
+    static func scheduleReminderStartNotification(reminderTime: Date = SettingsStore.shared.notifications.reminderTime) {
         let content = UNMutableNotificationContent()
         content.title = NSLocalizedString("REMINDED_START_NOTIF.TITLE", comment: "")
         content.subtitle = NSLocalizedString("REMINDED_START_NOTIF.SUBTITLE", comment: "")
         content.sound = UNNotificationSound.default
         
-        let dateComponents = Calendar.current.dateComponents([.hour, .minute], from: SettingsStore.shared.notifications.reminderTime)
+        let dateComponents = Calendar.current.dateComponents([.hour, .minute], from: reminderTime)
         
         Notifications.scheduleNotification(content, at: dateComponents, repeats: true, forId: NotificationType.reminderStart.rawValue)
     }
@@ -98,10 +107,15 @@ extension Notifications {
     }
     
     static func scheduleReminderStart() {
+        scheduleReminderStart(settings: SettingsStore.shared.notifications)
+    }
+
+    /// Variant for processes where `SettingsStore` holds no real data (widget extension).
+    static func scheduleReminderStart(settings: NotificationsSettings) {
         Notifications.cancelNotifyEndNotification()
-        if SettingsStore.shared.notifications.reminderStart {
+        if settings.reminderStart {
             Notifications.cancelReminderStartNotification()
-            Notifications.scheduleReminderStartNotification()
+            Notifications.scheduleReminderStartNotification(reminderTime: settings.reminderTime)
         }
     }
 }
