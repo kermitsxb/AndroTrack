@@ -11,7 +11,7 @@ final class RecordTests: XCTestCase {
     func testMatchesTheSampleWithTheSameStart() {
         let starts = [start.addingTimeInterval(-3600), start, start.addingTimeInterval(3600)]
 
-        XCTAssertEqual(Record.indexOfSession(startingAt: start, in: starts), 1)
+        XCTAssertEqual(Record.sessionMatch(startingAt: start, in: starts), .unique(1))
     }
 
     func testIgnoresSamplesThatOnlyOverlapTheSession() {
@@ -19,22 +19,34 @@ final class RecordTests: XCTestCase {
         // picked when closing or editing the session that started earlier.
         let starts = [start.addingTimeInterval(600), start.addingTimeInterval(7200)]
 
-        XCTAssertNil(Record.indexOfSession(startingAt: start, in: starts))
+        XCTAssertEqual(Record.sessionMatch(startingAt: start, in: starts), .none)
     }
 
-    func testToleratesSubSecondDrift() {
+    func testDoesNotTreatSubSecondDriftAsTheSameSession() {
         let starts = [start.addingTimeInterval(0.0004)]
 
-        XCTAssertEqual(Record.indexOfSession(startingAt: start, in: starts), 0)
+        XCTAssertEqual(Record.sessionMatch(startingAt: start, in: starts), .none)
     }
 
-    func testPicksTheClosestStartWithinTolerance() {
-        let starts = [start.addingTimeInterval(0.8), start.addingTimeInterval(-0.1), start.addingTimeInterval(0.5)]
+    func testFindsExactStartAmongNearbySessions() {
+        let starts = [start.addingTimeInterval(0.8), start, start.addingTimeInterval(0.5)]
 
-        XCTAssertEqual(Record.indexOfSession(startingAt: start, in: starts), 1)
+        XCTAssertEqual(Record.sessionMatch(startingAt: start, in: starts), .unique(1))
     }
 
     func testNoSamplesMatchesNothing() {
-        XCTAssertNil(Record.indexOfSession(startingAt: start, in: []))
+        XCTAssertEqual(Record.sessionMatch(startingAt: start, in: []), .none)
+    }
+
+    func testDoesNotMatchAnotherSessionWhenTargetIsMissing() {
+        let starts = [start.addingTimeInterval(0.5)]
+
+        XCTAssertEqual(Record.sessionMatch(startingAt: start, in: starts), .none)
+    }
+
+    func testDoesNotChooseBetweenSamplesWithTheSameStart() {
+        let starts = [start, start]
+
+        XCTAssertEqual(Record.sessionMatch(startingAt: start, in: starts), .ambiguous)
     }
 }

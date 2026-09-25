@@ -147,7 +147,7 @@ class HealthKitService {
                     }
                 }
             }
-            
+
             // Replace the sample of the same session (e.g. the open one being closed), if any
             self.findSample(startingAt: start) { sample, error in
                 if let error = error {
@@ -165,39 +165,41 @@ class HealthKitService {
                         completion(HealthKitServiceError.Failure(error))
                         return
                     }
-                    
+
                     proceedStoringRecord(record, completion)
                 }
             }
         }
     }
-    
+
     /// Finds the sample of the session starting at `start`. HealthKit samples are immutable,
     /// so an edit is a delete + recreate: this must return that exact session, never another
     /// sample that merely overlaps the same period.
     private func findSample(startingAt start: Date, completion: @escaping (HKCategorySample?, HealthKitServiceError?) -> ()) {
-        let predicate = HKQuery.predicateForSamples(
-            withStart: start.addingTimeInterval(-Record.startMatchTolerance),
-            end: start.addingTimeInterval(Record.startMatchTolerance),
-            options: .strictStartDate
-        )
-        
+        let predicate = NSPredicate(format: "%K == %@", HKPredicateKeyPathStartDate, start as NSDate)
+
         let query = HKSampleQuery(sampleType: contraceptiveType, predicate: predicate, limit: HKObjectQueryNoLimit, sortDescriptors: nil) {
             query, results, error in
-            
+
             if let error = error {
                 completion(nil, HealthKitServiceError.Failure(error))
                 return
             }
-            
+
             let samples = results as? [HKCategorySample] ?? []
-            let index = Record.indexOfSession(startingAt: start, in: samples.map { $0.startDate })
-            completion(index.map { samples[$0] }, nil)
+            switch Record.sessionMatch(startingAt: start, in: samples.map { $0.startDate }) {
+            case .none:
+                completion(nil, nil)
+            case .unique(let index):
+                completion(samples[index], nil)
+            case .ambiguous:
+                completion(nil, .AmbiguousRecord(start))
+            }
         }
-        
+
         store.execute(query)
     }
-    
+
     public func fetchRecords(since: Date? = nil, completion: @escaping ([Record]?, HealthKitServiceError?) -> ()) {
         guard HKHealthStore.isHealthDataAvailable() else {
             completion(nil, HealthKitServiceError.HealthDataUnavailable)
@@ -304,6 +306,7 @@ enum HealthKitServiceError: Error {
     case CategoryTypeNotFound
     case InvalidRecord(property: String)
     case RecordNotFound(Date)
+    case AmbiguousRecord(Date)
     case AccessDenied
     case Failure(Error)
 }
@@ -323,6 +326,8 @@ extension HealthKitServiceError: LocalizedError {
                 return NSLocalizedString("HealthKit: Invalid record can't be stored. Property \(property) is missing", comment: "")
         case .RecordNotFound(let start):
             return NSLocalizedString("HealthKit: Record with start \(start) not found", comment: "")
+        case .AmbiguousRecord(let start):
+            return NSLocalizedString("HealthKit: Multiple records with start \(start) found", comment: "")
         }
     }
 }
