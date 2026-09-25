@@ -158,6 +158,7 @@
 		7993C9E6F238D7397EC17AC2 /* WearStatusEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798B5ABE065217B03E13D95C /* WearStatusEntry.swift */; };
 		7A1D122E3F0B8865CE4341AB /* WearStatusProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB8C80B396DCF06D49A6981 /* WearStatusProvider.swift */; };
 		8095AF78D145A099F96087B2 /* Wiggling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AB8DD762705E1B6002EEB0B /* Wiggling.swift */; };
+		89EECF8BBCD05BA54838BB62 /* WearStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = E334B472496794E08823883A /* WearStatus.swift */; };
 		8C1D19E64DEE317ACE71E491 /* Day.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A4FD2C4269F0A6D00F7081D /* Day.swift */; };
 		8FE265977BD1030C09DA0009 /* DateFormatter+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE99A34274289E5002837B7 /* DateFormatter+extension.swift */; };
 		9279D8484CA6CC8B6C7318E0 /* AppGroupSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D309EE9704C1A7D186F4485E /* AppGroupSettings.swift */; };
@@ -804,6 +805,7 @@
 			buildPhases = (
 				6A922C4426A45747005782DB /* Resources */,
 				6A922C6B26A4574B005782DB /* Embed App Extensions */,
+				F68AA891DF588113CC7987A2 /* Sources */,
 			);
 			buildRules = (
 			);
@@ -1036,6 +1038,7 @@
 				6A922C5B26A4574A005782DB /* NotificationView.swift in Sources */,
 				6A922C7126A4588F005782DB /* UserDefaults+Extension.swift in Sources */,
 				184ABA824D10292F87DF00B9 /* AppGroupSettings.swift in Sources */,
+				89EECF8BBCD05BA54838BB62 /* WearStatus.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1210,6 +1213,13 @@
 				2BD58BD0F53DDF4DF7B4654C /* WearStatus.swift in Sources */,
 				B6173DC3E6EC3669D0E80E3F /* WearSession.swift in Sources */,
 				935C37926E69CD56E87EEAA5 /* AppGroupSettings.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F68AA891DF588113CC7987A2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
