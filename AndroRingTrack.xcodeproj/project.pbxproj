@@ -32,6 +32,7 @@
 		31FDB54AAFA5F99FF84193C6 /* Comparable+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A93AF2D26A5B22600702DC7 /* Comparable+Extension.swift */; };
 		33E6272A64816CDB6677344B /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9A662626A748C800E7526A /* Notifications.swift */; };
 		348E5A4117AD2CB8A3B5557A /* WearStatusTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC2544FDE428396992B7D57 /* WearStatusTests.swift */; };
+		A11C0DE0000000000000B001 /* RecordTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11C0DE0000000000000F001 /* RecordTests.swift */; };
 		3BCE6497F19B7BFC53E099E9 /* DayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76CCB22D0183B62229C09889 /* DayTests.swift */; };
 		3CF2FD4847F3BDEC56244250 /* NotificationsSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A0322DD26A5E7D0008E97C8 /* NotificationsSettings.swift */; };
 		3D93B00B85A40A7521F008D8 /* WatchWearStatusWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030360B67F414D9220345F51 /* WatchWearStatusWidget.swift */; };
@@ -270,6 +271,7 @@
 /* Begin PBXFileReference section */
 		030360B67F414D9220345F51 /* WatchWearStatusWidget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WatchWearStatusWidget.swift; sourceTree = "<group>"; };
 		0CC2544FDE428396992B7D57 /* WearStatusTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WearStatusTests.swift; sourceTree = "<group>"; };
+		A11C0DE0000000000000F001 /* RecordTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RecordTests.swift; sourceTree = "<group>"; };
 		1A2B1D98A36E26ED166E7CE5 /* WidgetBackgroundCompat.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WidgetBackgroundCompat.swift; sourceTree = "<group>"; };
 		20CCD4F57E79B7E612499007 /* AndroRingTrackWidget.entitlements */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.entitlements; path = AndroRingTrackWidget.entitlements; sourceTree = "<group>"; };
 		28B525A955CE1F3CA9A737D2 /* fr */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/AppShortcuts.strings; sourceTree = "<group>"; };
@@ -429,6 +431,7 @@
 			children = (
 				76CCB22D0183B62229C09889 /* DayTests.swift */,
 				0CC2544FDE428396992B7D57 /* WearStatusTests.swift */,
+				A11C0DE0000000000000F001 /* RecordTests.swift */,
 			);
 			name = Tests;
 			path = Tests;
@@ -1161,6 +1164,7 @@
 				E0C0FE43CD62234CFA5A965E /* Record.swift in Sources */,
 				56629DB0EB8A10661EC6D676 /* Date+Extension.swift in Sources */,
 				348E5A4117AD2CB8A3B5557A /* WearStatusTests.swift in Sources */,
+				A11C0DE0000000000000B001 /* RecordTests.swift in Sources */,
 				01BAC5FE87D7703C32154B58 /* WearStatus.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

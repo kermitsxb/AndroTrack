@@ -57,6 +57,25 @@ extension Record {
 }
 
 extension Record {
+    enum SessionMatch: Equatable {
+        case none
+        case unique(Int)
+        case ambiguous
+    }
+
+    /// Match by the exact HealthKit start date. A nearby or duplicate start cannot
+    /// safely identify which immutable sample to delete.
+    static func sessionMatch(startingAt start: Date, in starts: [Date]) -> SessionMatch {
+        let matches = starts.indices.filter { starts[$0] == start }
+        switch matches.count {
+        case 0: return .none
+        case 1: return .unique(matches[0])
+        default: return .ambiguous
+        }
+    }
+}
+
+extension Record {
     static var today: Record {
         return Record(
             start: Date().addingTimeInterval(-18000),
